@@ -1,0 +1,24 @@
+package com.magistuarmory.item;
+
+import com.magistuarmory.KnightlyArmory;
+import com.magistuarmory.client.proxy.ClientProxy;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+public class HalfarmorItem extends ArmorItem
+{
+    public HalfarmorItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
+    {
+        super(materialIn, slot, properties);
+        setRegistryName(unlocName);
+    }
+
+    public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
+    {
+        return (KnightlyArmory.PROXY instanceof ClientProxy) ? (A)((ClientProxy)KnightlyArmory.PROXY).getHalfarmorModel(armorSlot) : null;
+    }
+}
