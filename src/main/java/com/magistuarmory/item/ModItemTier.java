@@ -29,6 +29,8 @@ public class ModItemTier implements IItemTier
     public static ModItemTier COPPER = new ModItemTier("copper", 1, 150, 0.7F, 0.0F, 10, () -> Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/copper"))), 1);
     public static ModItemTier SILVER = new ModItemTier("silver", 2, 230, 5.5F, 1.0F, 18, () -> Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/silver"))), 2);
     public static ModItemTier STEEL = new ModItemTier("steel", 2, 400, 6.0F, 2.5F, 14, () -> Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))), 2);
+    public static ModItemTier TIN = new ModItemTier("tin", 2, 130, 6.0F, 0.0F, 20, () -> Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/tin"))), 2);
+    public static ModItemTier BRONZE = new ModItemTier("bronze", 2, 200, 6.0F, 2.0F, 15, () -> Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/bronze"))), 2);
 
     public ModItemTier(String name, IItemTier tier, float density)
     {

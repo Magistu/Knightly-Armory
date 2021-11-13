@@ -41,11 +41,34 @@ public class EpicConfigBuilder
         }
     }
 
-    Weapon[] weapons = new Weapon[]
-            { new Weapon("stylet", 0.2F, 1.0F, 0.2F, 1, "DAGGER", 0.0F, 0.0F), new Weapon("katzbalger", 0.0F, 1.0F, 0.2F, 2, "SWORD", 0.0F), new Weapon("pike", 0.0F, 1.1F, 0.3F, 1, "SPEAR", 0.01F), new Weapon("ranseur", 0.0F, 1.1F, 0.5F, 2, "SPEAR", 0.02F), new Weapon("ahlspiess", 0.18F, 1.2F, 0.55F, 1, "SPEAR", 0.02F), new Weapon("chivalrylance", 0.1F, 2.4F, 0.4F, 1, "SPEAR", 0.04F), new Weapon("bastardsword", 0.0F, 1.2F, 0.4F, 3, "LONGSWORD", 0.01F), new Weapon("estoc", 0.03F, 1.3F, 0.3F, 2, "LONGSWORD", 0.01F), new Weapon("claymore", 0.0F, 1.3F, 0.4F, 3, "LONGSWORD", 0.01F), new Weapon("zweihander", 0.04F, 2.2F, 0.4F, 4, "GREATSWORD", 0.04F),  new Weapon("flamebladedsword", 0.04F, 2.2F, 0.4F, 4, "GREATSWORD", 0.02F), new Weapon("lochaberaxe", 0.0F, 2.1F, 0.4F, 3, "SPEAR", 0.02F), new Weapon("concavehalberd", 0.02F, 2.3F, 0.5F, 4, "SPEAR", 0.03F), new Weapon("heavymace", 0.11F, 2.0F, 0.6F, 2, "AXE", 0.03F), new Weapon("heavywarhammer", 0.12F, 1.9F, 0.5F, 2, "AXE", 0.04F), new Weapon("lucernhammer", 0.16F, 1.8F, 0.5F, 2, "AXE", 0.04F), new Weapon("morgenstern", 0.0F, 1.9F, 0.6F, 2, "AXE", 0.01F), new Weapon("chainmorgenstern", 0.0F, 2.1F, 0.8F, 2, "AXE", 0.01F), new Weapon("guisarme", 0.0F, 0.9F, 0.5F, 3, "SPEAR", 0.02F) };
+    Weapon[] weapons = new Weapon[] {
+            new Weapon("stylet", 0.2F, 1.0F, 0.2F, 1, "DAGGER", 0.0F, 0.0F),
+            new Weapon("katzbalger", 0.0F, 1.0F, 0.2F, 2, "SWORD", 0.0F),
+            new Weapon("pike", 0.0F, 1.1F, 0.3F, 1, "SPEAR", 0.01F),
+            new Weapon("ranseur", 0.0F, 1.1F, 0.5F, 2, "SPEAR", 0.02F),
+            new Weapon("ahlspiess", 0.18F, 1.2F, 0.55F, 1, "SPEAR", 0.02F),
+            new Weapon("chivalrylance", 0.1F, 2.4F, 0.4F, 1, "SPEAR", 0.04F),
+            new Weapon("bastardsword", 0.0F, 1.2F, 0.4F, 3, "LONGSWORD", 0.01F),
+            new Weapon("estoc", 0.03F, 1.3F, 0.3F, 2, "LONGSWORD", 0.01F),
+            new Weapon("claymore", 0.0F, 1.3F, 0.4F, 3, "LONGSWORD", 0.01F),
+            new Weapon("zweihander", 0.04F, 2.2F, 0.4F, 4, "GREATSWORD", 0.04F),
+            new Weapon("flamebladedsword", 0.04F, 2.2F, 0.4F, 4, "GREATSWORD", 0.02F),
+            new Weapon("lochaberaxe", 0.0F, 2.1F, 0.4F, 3, "SPEAR", 0.02F),
+            new Weapon("concavehalberd", 0.02F, 2.3F, 0.5F, 4, "SPEAR", 0.03F),
+            new Weapon("heavymace", 0.11F, 2.0F, 0.6F, 2, "AXE", 0.03F),
+            new Weapon("heavywarhammer", 0.12F, 1.9F, 0.5F, 2, "AXE", 0.04F),
+            new Weapon("lucernhammer", 0.16F, 1.8F, 0.5F, 2, "AXE", 0.04F),
+            new Weapon("morgenstern", 0.0F, 1.9F, 0.6F, 2, "AXE", 0.01F),
+            new Weapon("chainmorgenstern", 0.0F, 2.1F, 0.8F, 2, "AXE", 0.01F),
+            new Weapon("guisarme", 0.0F, 0.9F, 0.5F, 3, "SPEAR", 0.02F) };
 
-    Weapon[] particular_weapons = new Weapon[]
-            { new Weapon("noble_sword", 0.03F, 1.2F, 0.4F, 3, "SWORD", 0.01F), new Weapon("barbedclub", 0.0F, 2.2F, 0.7F, 2, "AXE", 0.01F), new Weapon("pitchfork", 0.02F, 1.1F, 0.3F, 1, "SPEAR", 0.01F), new Weapon("blacksmith_hammer", 0.04F, 1.9F, 0.5F, 2, "AXE", 0.04F) };
+    Weapon[] particular_weapons = new Weapon[] {
+            new Weapon("noble_sword", 0.03F, 1.2F, 0.4F, 3, "SWORD", 0.01F),
+            new Weapon("barbedclub", 0.0F, 2.2F, 0.7F, 2, "AXE", 0.01F),
+            new Weapon("pitchfork", 0.02F, 1.1F, 0.3F, 1, "SPEAR", 0.01F),
+            new Weapon("blacksmith_hammer", 0.04F, 1.9F, 0.5F, 2, "AXE", 0.04F),
+            new Weapon("rusted_bastardsword", 0.03f, 1.2f, 0.4f, 3, "LONGSWORD", 0.01f),
+            new Weapon("rusted_heavymace", 0.04f, 1.9f, 0.5f, 2, "AXE", 0.04f)};
 
     public class Armor
     {
@@ -75,8 +98,18 @@ public class EpicConfigBuilder
         }
     }
 
-    Material[] materials = new Material[]
-            { new Material("wood", 0.0F, 0.8F), new Material("stone", 1.0F, 0.7F), new Material("iron", 2.0F, 1.0F), new Material("diamond", 3.0F, 1.2F), new Material("gold", 4.0F, 0.8F), new Material("netherite", 5.0F, 1.0F), new Material("silver", 2.0F, 1.0F), new Material("copper", 1.0F, 1.0F), new Material("steel", 2.0F, 1.1F) };
+    Material[] materials = new Material[] {
+            new Material("wood", 0.0F, 0.8F),
+            new Material("stone", 1.0F, 0.7F),
+            new Material("iron", 2.0F, 1.0F),
+            new Material("diamond", 3.0F, 1.2F),
+            new Material("gold", 4.0F, 0.8F),
+            new Material("netherite", 5.0F, 1.0F),
+            new Material("silver", 2.0F, 1.0F),
+            new Material("copper", 1.0F, 1.0F),
+            new Material("steel", 2.0F, 1.1F),
+            new Material("tin", 0.8F, 1.0F),
+            new Material("bronze", 2.0F, 1.0F) };
 
     public String generateWeaponConfig()
     {

@@ -1,16 +1,24 @@
 package com.magistuarmory.event;
 
+import com.magistuarmory.client.renderer.entity.layer.SunblockLayer;
 import com.magistuarmory.item.MedievalWeaponItem;
 import com.magistuarmory.network.PacketHandler;
 import com.magistuarmory.network.PacketLongWeaponAttack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.settings.KeyBinding;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileHelper;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -20,10 +28,13 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 @EventBusSubscriber
 public class ClientEventHandler
@@ -107,4 +118,6 @@ public class ClientEventHandler
         }
         return result;
     }
+
+
 }

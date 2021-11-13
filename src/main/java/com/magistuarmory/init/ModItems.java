@@ -2,7 +2,6 @@ package com.magistuarmory.init;
 
 import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.client.proxy.ClientProxy;
-import com.magistuarmory.config.ModConfigurations;
 import com.magistuarmory.item.*;
 import com.magistuarmory.item.crafting.RecipesShieldHeraldy;
 import net.minecraft.client.renderer.Atlases;
@@ -53,10 +52,10 @@ public class ModItems
     public static final GothicItem GOTHIC_LEGGINGS = new GothicItem("gothic_leggings", ArmorMaterials.GOTHIC, EquipmentSlotType.LEGS, (new Item.Properties()).tab(GROUP_KA));
     public static final GothicItem GOTHIC_BOOTS = new GothicItem("gothic_boots", ArmorMaterials.GOTHIC, EquipmentSlotType.FEET, (new Item.Properties()).tab(GROUP_KA));
 
-    public static final MaximilianItem MAXMILIAN_HELMET = new MaximilianItem("maximilian_helmet", ArmorMaterials.MAXIMILIANHELMET, EquipmentSlotType.HEAD, (new Item.Properties()).tab(GROUP_KA));
-    public static final MaximilianItem MAXMILIAN_CHESTPLATE = new MaximilianItem("maximilian_chestplate", ArmorMaterials.MAXIMILIAN, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
-    public static final MaximilianItem MAXMILIAN_LEGGINGS = new MaximilianItem("maximilian_leggings", ArmorMaterials.MAXIMILIAN, EquipmentSlotType.LEGS, (new Item.Properties()).tab(GROUP_KA));
-    public static final MaximilianItem MAXMILIAN_BOOTS = new MaximilianItem("maximilian_boots", ArmorMaterials.MAXIMILIAN, EquipmentSlotType.FEET, (new Item.Properties()).tab(GROUP_KA));
+    public static final MaximilianItem MAXIMILIAN_HELMET = new MaximilianItem("maximilian_helmet", ArmorMaterials.MAXIMILIANHELMET, EquipmentSlotType.HEAD, (new Item.Properties()).tab(GROUP_KA));
+    public static final MaximilianItem MAXIMILIAN_CHESTPLATE = new MaximilianItem("maximilian_chestplate", ArmorMaterials.MAXIMILIAN, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
+    public static final MaximilianItem MAXIMILIAN_LEGGINGS = new MaximilianItem("maximilian_leggings", ArmorMaterials.MAXIMILIAN, EquipmentSlotType.LEGS, (new Item.Properties()).tab(GROUP_KA));
+    public static final MaximilianItem MAXIMILIAN_BOOTS = new MaximilianItem("maximilian_boots", ArmorMaterials.MAXIMILIAN, EquipmentSlotType.FEET, (new Item.Properties()).tab(GROUP_KA));
 
     public static final MedievalArmorItem CHAINMAIL_HELMET = new MedievalArmorItem("chainmail_helmet", ArmorMaterials.CHAINMAIL, EquipmentSlotType.HEAD, (new Item.Properties()).tab(GROUP_KA));
     public static final MedievalArmorItem CHAINMAIL_CHESTPLATE = new MedievalArmorItem("chainmail_chestplate", ArmorMaterials.CHAINMAIL, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
@@ -123,7 +122,7 @@ public class ModItems
 
     public static final Item[] armor = new Item[] {
             ARMET, KNIGHT_CHESTPLATE, KNIGHT_LEGGINGS, KNIGHT_BOOTS, STECHHELM, JOUSTING_CHESTPLATE, JOUSTING_LEGGINGS, JOUSTING_BOOTS, SALLET, GOTHIC_CHESTPLATE,
-            GOTHIC_LEGGINGS, GOTHIC_BOOTS, MAXMILIAN_HELMET, MAXMILIAN_CHESTPLATE, MAXMILIAN_LEGGINGS, MAXMILIAN_BOOTS, CHAINMAIL_HELMET, CHAINMAIL_CHESTPLATE, CHAINMAIL_LEGGINGS, CHAINMAIL_BOOTS,
+            GOTHIC_LEGGINGS, GOTHIC_BOOTS, MAXIMILIAN_HELMET, MAXIMILIAN_CHESTPLATE, MAXIMILIAN_LEGGINGS, MAXIMILIAN_BOOTS, CHAINMAIL_HELMET, CHAINMAIL_CHESTPLATE, CHAINMAIL_LEGGINGS, CHAINMAIL_BOOTS,
             KETTLEHAT, PLATEMAIL_CHESTPLATE, PLATEMAIL_LEGGINGS, PLATEMAIL_BOOTS, BARBUTE, HALFARMOR_CHESTPLATE,
             GREATHELM,
             CRUSADER_CHESTPLATE,
@@ -252,7 +251,12 @@ public class ModItems
     public static final Item BARBED_CLUB = new MedievalWeaponItem("barbedclub", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.IRON, 5.6F, 1.1F, -3.0F);
     public static final Item PITCHFORK = new MedievalWeaponItem("pitchfork", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.IRON, 2.8F, 1.0F, -3.0F, 0, 1.0F);
     public static final Item NOBLE_SWORD = new MedievalWeaponItem("noble_sword", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.IRON, 4.25F, 1.0F, -2.49F).setTwoHanded(1);
-    public static final Item RUSTEDBASTARDSWORD = new MedievalWeaponItem("rusted_bastardsword", new Item.Properties(), ModItemTier.IRON, 2.25F, 1.0F, -2.49F).setTwoHanded(1);
+	public static final Item RUSTEDBASTARDSWORD = new MedievalWeaponItem("rusted_bastardsword", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F).setTwoHanded(1);
+	public static final Item RUSTEDHEAVYMACE = new MedievalWeaponItem("rusted_heavymace", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F);
+
+
+
+    public static final Item LONGBOW = new MedievalBowItem("longbow", new Item.Properties().tab(GROUP_KPW), 20.0f);
 
     public static final ArrayList<IHasModelProperty> customizableItems = new ArrayList<>();
 
@@ -268,6 +272,8 @@ public class ModItems
         public ShieldItem steel;
         public ShieldItem silver;
         public ShieldItem netherite;
+        public ShieldItem tin;
+        public ShieldItem bronze;
 
         public String shieldName;
 
@@ -281,6 +287,8 @@ public class ModItems
         public String copperTexture;
         public String steelTexture;
         public String silverTexture;
+        public String tinTexture;
+        public String bronzeTexture;
 
 
 
@@ -305,6 +313,8 @@ public class ModItems
             this.steel = workshop.apply(ModItemTier.STEEL, prop);
             this.silver = workshop.apply(ModItemTier.SILVER, prop);
             this.netherite = workshop.apply(ModItemTier.NETHERITE, prop);
+            this.tin = workshop.apply(ModItemTier.TIN, prop);
+            this.bronze = workshop.apply(ModItemTier.BRONZE, prop);
 
             this.woodTexture = "entity/" + ModItemTier.WOOD.getMaterialName() + "_" + shieldName;
             this.stoneTexture = "entity/" + ModItemTier.STONE.getMaterialName() + "_" + shieldName;
@@ -315,12 +325,14 @@ public class ModItems
             this.steelTexture = "entity/" + ModItemTier.STEEL.getMaterialName() + "_" + shieldName;
             this.silverTexture = "entity/" + ModItemTier.SILVER.getMaterialName() + "_" + shieldName;
             this.netheriteTexture = "entity/" + ModItemTier.NETHERITE.getMaterialName() + "_" + shieldName;
+            this.tinTexture = "entity/" + ModItemTier.TIN.getMaterialName() + "_" + shieldName;
+            this.bronzeTexture = "entity/" + ModItemTier.BRONZE.getMaterialName() + "_" + shieldName;
 
         }
 
         public void registerItems(IForgeRegistry<Item> reg)
         {
-            Item[] items = new Item[] { this.wood, this.stone, this.iron, this.gold, this.diamond, this.copper, this.steel, this.silver, this.netherite };
+            Item[] items = new Item[] { this.wood, this.stone, this.iron, this.gold, this.diamond, this.copper, this.steel, this.silver, this.netherite, this.tin, this.bronze };
             for (Item item : items)
             {
                 customizableItems.add((IHasModelProperty)item);
@@ -333,7 +345,7 @@ public class ModItems
         {
             if (ev.getMap().location() == AtlasTexture.LOCATION_BLOCKS)
             {
-                String[] textures = new String[] { this.woodTexture, this.stoneTexture, this.ironTexture, this.goldTexture, this.diamondTexture, this.netheriteTexture, this.copperTexture, this.steelTexture, this.silverTexture, this.netheriteTexture };
+                String[] textures = new String[] { this.woodTexture, this.stoneTexture, this.ironTexture, this.goldTexture, this.diamondTexture, this.netheriteTexture, this.copperTexture, this.steelTexture, this.silverTexture, this.netheriteTexture, this.tinTexture, this.bronzeTexture };
                 for (String texture : textures)
                 {
                     ev.addSprite(new ResourceLocation(KnightlyArmory.ID, texture + "_pattern"));
@@ -365,6 +377,8 @@ public class ModItems
         public SwordItem copper;
         public SwordItem steel;
         public SwordItem silver;
+        public SwordItem tin;
+        public SwordItem bronze;
 
         public WeaponsSupply(BiFunction<ModItemTier, Item.Properties, SwordItem> workshop)
         {
@@ -380,11 +394,13 @@ public class ModItems
             this.copper = workshop.apply(ModItemTier.COPPER, prop);
             this.steel = workshop.apply(ModItemTier.STEEL, prop);
             this.silver = workshop.apply(ModItemTier.SILVER, prop);
+            this.tin = workshop.apply(ModItemTier.TIN, prop);
+            this.bronze = workshop.apply(ModItemTier.BRONZE, prop);
         }
 
         public void registerItems(IForgeRegistry<Item> reg)
         {
-            Item[] items = { this.wood, this.stone, this.iron, this.gold, this.diamond, this.netherite, this.copper, this.steel, this.silver };
+            Item[] items = { this.wood, this.stone, this.iron, this.gold, this.diamond, this.netherite, this.copper, this.steel, this.silver, this.tin, this.bronze };
             if (items[0] instanceof IHasModelProperty)
             {
                 for (Item item : items)
@@ -421,10 +437,10 @@ public class ModItems
         reg.register(TREE_PATTERN);
         reg.register(TWOHEADED_EAGLE_PATTERN);
 
-        if (ModConfigurations.steel_enabled.get())
-        {
-            reg.register(STEEL_INGOT);
-        }
+        reg.register(STEEL_INGOT);
+
+
+
         reg.register(STEEL_NUGGET);
         reg.register(STEEL_PLATE);
         reg.register(STEEL_RING);
@@ -440,6 +456,9 @@ public class ModItems
         reg.register(PITCHFORK);
         reg.register(NOBLE_SWORD);
         reg.register(RUSTEDBASTARDSWORD);
+        reg.register(RUSTEDHEAVYMACE);
+
+		reg.register(LONGBOW);
 
         stylets.registerItems(reg);
         shortswords.registerItems(reg);
