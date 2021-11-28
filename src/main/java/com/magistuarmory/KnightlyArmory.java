@@ -74,6 +74,8 @@ public class KnightlyArmory
         {
             event.enqueueWork(item::registerModelProperty);
         }
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        PROXY.onLateInit(modEventBus);
     }
 
     private void enqueueIMC(InterModEnqueueEvent event)
@@ -106,12 +108,5 @@ public class KnightlyArmory
         {
             KnightlyArmory.LOGGER.info("HELLO from Register Block");
         }
-    }
-
-    @SubscribeEvent
-    public void init(FMLLoadCompleteEvent event)
-    {
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        PROXY.onLateInit(modEventBus);
     }
 }

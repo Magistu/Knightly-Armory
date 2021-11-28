@@ -5,11 +5,9 @@ import com.magistuarmory.client.proxy.ClientProxy;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
@@ -22,7 +20,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class JoustingItem extends ArmorItem
+public class  JoustingItem extends ArmorItem implements INoHatLayer, ISurcoat
 {
     public JoustingItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {
@@ -38,11 +36,6 @@ public class JoustingItem extends ArmorItem
   	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player)
 	{
-		if (player.inventory.armor.get(3).getItem().equals(this) && world.isClientSide && player.isModelPartShown(PlayerModelPart.HAT))
-		{
-			Minecraft.getInstance().options.toggleModelPart(PlayerModelPart.HAT);
-		}
-		
 		player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 40, 1, false, false, false));
 	}
   

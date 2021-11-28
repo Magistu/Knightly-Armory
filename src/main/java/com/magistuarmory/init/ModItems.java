@@ -4,6 +4,7 @@ import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.client.proxy.ClientProxy;
 import com.magistuarmory.item.*;
 import com.magistuarmory.item.crafting.RecipesShieldHeraldy;
+import com.magistuarmory.item.crafting.RecipesSurcoatHeraldy;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -247,11 +248,11 @@ public class ModItems
     public static ShieldsSupply roundshields = new ShieldsSupply(ShieldsWorkshop.ROUNDSHIELD, "roundshield", true);
     public static ShieldsSupply paveses = new ShieldsSupply(ShieldsWorkshop.PAVESE, "pavese", true);
 
-    public static final Item BLACKSMITH_HAMMER = new MedievalWeaponItem("blacksmith_hammer", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.STEEL, 5.0F, 1.0F, -3.0F, 4, 0.0F);
-    public static final Item BARBED_CLUB = new MedievalWeaponItem("barbedclub", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.IRON, 5.6F, 1.1F, -3.0F);
-    public static final Item PITCHFORK = new MedievalWeaponItem("pitchfork", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.IRON, 2.8F, 1.0F, -3.0F, 0, 1.0F);
-    public static final Item NOBLE_SWORD = new MedievalWeaponItem("noble_sword", (new Item.Properties()).tab(GROUP_KPW), ModItemTier.IRON, 4.25F, 1.0F, -2.49F).setTwoHanded(1);
-	public static final Item RUSTEDBASTARDSWORD = new MedievalWeaponItem("rusted_bastardsword", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F).setTwoHanded(1);
+    public static final Item BLACKSMITH_HAMMER = new MedievalWeaponItem("blacksmith_hammer", new Item.Properties().tab(GROUP_KPW), ModItemTier.STEEL, 5.0f, 1.0f, -3.0f, 4, 0.0f);
+	public static final Item BARBED_CLUB = new MedievalWeaponItem("barbedclub", new Item.Properties().tab(GROUP_KPW), ModItemTier.IRON, 5.6f, 1.1f, -3.0f);
+	public static final Item PITCHFORK = new MedievalWeaponItem("pitchfork", new Item.Properties().tab(GROUP_KPW), ModItemTier.IRON, 2.8f, 1.0f, -3.0f, 0, 1.0f);
+	public static final Item NOBLE_SWORD = new MedievalWeaponItem("noble_sword", new Item.Properties().tab(GROUP_KPW), ModItemTier.IRON, 4.25f, 1.0f, -2.49f).setTwoHanded(1).setBlocking(5.0f, 5.0f);
+	public static final Item RUSTEDBASTARDSWORD = new MedievalWeaponItem("rusted_bastardsword", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F).setTwoHanded(1).setBlocking(5.0f, 5.0f);
 	public static final Item RUSTEDHEAVYMACE = new MedievalWeaponItem("rusted_heavymace", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F);
 
 
@@ -439,8 +440,6 @@ public class ModItems
 
         reg.register(STEEL_INGOT);
 
-
-
         reg.register(STEEL_NUGGET);
         reg.register(STEEL_PLATE);
         reg.register(STEEL_RING);
@@ -503,6 +502,18 @@ public class ModItems
         ellipticalshields.registerStitches(ev);
         roundshields.registerStitches(ev);
         paveses.registerStitches(ev);
+
+        if (ev.getMap().location() == AtlasTexture.LOCATION_BLOCKS)
+        {
+            ev.addSprite(new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"));
+        }
+        if (ev.getMap().location() == Atlases.SHIELD_SHEET)
+        {
+            for (BannerPattern bannerPattern : BannerPattern.values())
+            {
+                ev.addSprite(new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat/" + bannerPattern.getFilename()));
+            }
+        }
     }
 
     @SubscribeEvent

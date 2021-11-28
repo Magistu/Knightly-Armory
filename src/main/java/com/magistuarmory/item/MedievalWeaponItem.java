@@ -3,6 +3,8 @@ package com.magistuarmory.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.magistuarmory.effects.LacerationEffect;
+
+import java.time.Clock;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
@@ -12,22 +14,22 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
-public class MedievalWeaponItem extends SwordItem
+public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
 {
 
     protected float attackDamage;
@@ -36,15 +38,18 @@ public class MedievalWeaponItem extends SwordItem
     private float currentAttackSpeed;
     private float decreasedAttackDamage;
     private float decreasedAttackSpeed;
+    private float maxBlockDamage = 0.0f;
+    private float weight = 1.0f;
 
+    private boolean canBlock = false;
     private boolean isSilver = false;
-
     private boolean isFlamebladed = false;
 
     int armorPiercing = 0;
 
     private float reachDistance = 0.0F;
     private int twoHanded;
+    private boolean blockingPriority;
 
     public MedievalWeaponItem(String unlocName, Item.Properties build, IItemTier material, float attackDamage, float materialFactor, float attackSpeed, int armorPiercing, float reachDistance)
     {
@@ -78,6 +83,14 @@ public class MedievalWeaponItem extends SwordItem
         twoHanded = level;
         decreasedAttackDamage = 12.0f * attackDamage / (5.0f * level + 10.0f);
         decreasedAttackSpeed = 14.0f * (attackSpeed + 4.0f) / (15.0f * level + 5.0f) - 4.0f;
+        return this;
+    }
+
+    public MedievalWeaponItem setBlocking(float weight, float maxBlockDamage)
+    {
+        this.weight = weight;
+        this.maxBlockDamage = maxBlockDamage;
+        this.canBlock = true;
         return this;
     }
 
@@ -141,6 +154,11 @@ public class MedievalWeaponItem extends SwordItem
             }
         }
 
+        if (canBlock() && entityIn instanceof LivingEntity)
+        {
+            blockingPriority = !(((LivingEntity) entityIn).getMainHandItem().getItem() instanceof ShieldItem) && !(((LivingEntity) entityIn).getOffhandItem().getItem() instanceof ShieldItem);
+        }
+
         super.inventoryTick(par1ItemStack, world, entityIn, par4, par5);
     }
 
@@ -151,7 +169,7 @@ public class MedievalWeaponItem extends SwordItem
             p_77644_2_.hurt(DamageSource.MAGIC, this.getAttackDamage() + 3.0F);
         if (this.isFlamebladed)
         {
-            float damage = (float)(this.attackDamage * (1.0D - Math.min(20.0D, Math.max((p_77644_2_.getArmorValue() / 5), p_77644_2_.getArmorValue() - this.attackDamage / (p_77644_2_.getAttributeValue(Attributes.ARMOR_TOUGHNESS) / 4.0D + 2.0D))) / 25.0D));
+            float damage = CombatRules.getDamageAfterAbsorb(this.attackDamage, (float)p_77644_2_.getArmorValue(), (float)p_77644_2_.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
             p_77644_2_.addEffect(new EffectInstance(LacerationEffect.LACERATION.setDamageValue(damage), 300, 1, true, true, true));
         }
         return super.hurtEnemy(p_77644_1_, p_77644_2_, p_77644_3_);
@@ -172,6 +190,9 @@ public class MedievalWeaponItem extends SwordItem
             tooltip.add((new StringTextComponent("Two-Handed I")).withStyle(TextFormatting.BLUE));
         else if (twoHanded > 1)
             tooltip.add((new StringTextComponent("Two-Handed II")).withStyle(TextFormatting.BLUE));
+        if (canBlock())
+            tooltip.add(new StringTextComponent(getMaxBlockDamage() + " max damage block").withStyle(TextFormatting.BLUE));
+            tooltip.add(new StringTextComponent(getWeight() + "kg weight").withStyle(TextFormatting.BLUE));
     }
 
     public float getAttackDamage()
@@ -187,5 +208,103 @@ public class MedievalWeaponItem extends SwordItem
     public float getReachDistance()
     {
         return reachDistance + 5.0f;
+    }
+
+    @Override
+    public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_)
+    {
+        if (canBlock() && blockingPriority)
+        {
+            ItemStack itemstack = p_77659_2_.getItemInHand(p_77659_3_);
+            p_77659_2_.startUsingItem(p_77659_3_);
+
+            return ActionResult.consume(itemstack);
+        }
+
+        return super.use(p_77659_1_, p_77659_2_, p_77659_3_);
+    }
+
+    public int getUseDuration(ItemStack p_77626_1_)
+    {
+        return canBlock() ? (int) (500 / getWeight()) : 0;
+    }
+
+    @Override
+    public UseAction getUseAnimation(ItemStack p_77661_1_)
+    {
+        return (canBlock() && blockingPriority) ? UseAction.BLOCK : super.getUseAnimation(p_77661_1_);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void registerModelProperty()
+    {
+        if (canBlock())
+        {
+            ItemModelsProperties.register(this, new ResourceLocation("blocking"), (p_239421_0_, p_239421_1_, p_239421_2_) ->
+            {
+                return p_239421_2_ != null && p_239421_2_.isUsingItem() && p_239421_2_.getUseItem() == p_239421_0_ ? 1.0F : 0.0F;
+            });
+        }
+    }
+
+    public void onBlocked(ItemStack stack, float damage, PlayerEntity player, DamageSource source)
+    {
+        if (canBlock())
+        {
+            float armorPiercingFactor = 1.0f;
+            if (source.getEntity() instanceof LivingEntity)
+            {
+                LivingEntity attacker = (LivingEntity) source.getEntity();
+                if (attacker.getMainHandItem().getItem() instanceof MedievalWeaponItem)
+                {
+                    armorPiercingFactor += ((MedievalWeaponItem) attacker.getMainHandItem().getItem()).armorPiercing / 100.0f;
+                }
+            }
+            if (source.isProjectile())
+            {
+                float damage2 = CombatRules.getDamageAfterAbsorb(damage, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
+                player.hurt(DamageSource.GENERIC, damage2);
+            }
+            else if (source.isExplosion())
+            {
+                player.hurt(DamageSource.GENERIC, damage);
+
+                return;
+            }
+            else if (damage > getMaxBlockDamage())
+            {
+                stack.hurtAndBreak((int) (armorPiercingFactor * 0.2f * stack.getMaxDamage()), player, (p_220044_0_) ->
+                {
+                    p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+                });
+                float damage1 = damage - getMaxBlockDamage();
+                float damage2 = CombatRules.getDamageAfterAbsorb(damage1, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
+                System.out.println("breakpoint 3");
+                player.hurt(DamageSource.GENERIC, damage2);
+
+                return;
+            }
+
+            stack.hurtAndBreak((int) (armorPiercingFactor * damage), player, (p_220044_0_) ->
+            {
+                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+            });
+        }
+    }
+
+    public float getMaxBlockDamage()
+    {
+        return maxBlockDamage;
+    }
+
+    public float getWeight()
+    {
+        return weight;
+    }
+
+    public boolean canBlock()
+    {
+        return canBlock;
     }
 }

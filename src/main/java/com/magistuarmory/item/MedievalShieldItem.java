@@ -28,6 +28,7 @@ import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
@@ -58,7 +59,7 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
 
     public MedievalShieldItem(String shieldName, Item.Properties build, ModItemTier material, int durability, float weigth, float maxBlockDamage, boolean paintable)
     {
-        super(build.defaultDurability(durability));
+        super(build.durability(durability));
         setRegistryName(material.getMaterialName() + "_" + shieldName);
         this.shieldName = shieldName;
         this.materialName = material.getMaterialName();
@@ -66,8 +67,9 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
         this.paintable = paintable;
         this.maxBlockDamage = maxBlockDamage + material.getAttackDamageBonus();
         this.weight = weigth + material.getAttackDamageBonus();
-
     }
+
+
 
     public String getShieldName()
     {
@@ -116,7 +118,7 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
     @Override
     public int getUseDuration(ItemStack p_43107_)
     {
-        return (int) (12000 * weight);
+        return (int) (1200 / getWeight());
     }
 
     @Override
@@ -167,7 +169,8 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
             });
 
             float damage1 = damage - getMaxBlockDamage();
-            float damage2 = (float) (damage1 * (1 - Math.min(20, Math.max( player.getArmorValue() / 5, player.getArmorValue() - damage1 / (player.getAttributeValue(Attributes.ARMOR_TOUGHNESS) / 4 + 2))) / 25));
+            float damage2 = CombatRules.getDamageAfterAbsorb(damage1, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
+
             player.hurt(DamageSource.GENERIC, damage2);
             return;
         }

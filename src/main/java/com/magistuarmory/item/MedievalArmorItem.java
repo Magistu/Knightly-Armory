@@ -9,7 +9,7 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class MedievalArmorItem extends ArmorItem
+public class MedievalArmorItem extends ArmorItem implements ISurcoat
 {
     public MedievalArmorItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {

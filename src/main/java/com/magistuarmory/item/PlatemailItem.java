@@ -9,7 +9,7 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class PlatemailItem extends ArmorItem
+public class PlatemailItem extends ArmorItem implements ISurcoat
 {
     public PlatemailItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {

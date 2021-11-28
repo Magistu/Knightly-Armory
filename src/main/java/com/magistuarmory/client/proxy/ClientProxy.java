@@ -1,21 +1,20 @@
 package com.magistuarmory.client.proxy;
 
-import com.magistuarmory.client.renderer.entity.layer.SunblockLayer;
+import com.magistuarmory.KnightlyArmory;
+import com.magistuarmory.client.renderer.entity.layer.RemovingHatLayer;
+import com.magistuarmory.client.renderer.entity.layer.ArmorDecorationLayer;
 import com.magistuarmory.client.renderer.model.entity.*;
-import com.magistuarmory.client.renderer.model.item.AbstractShieldModel;
 import com.magistuarmory.client.renderer.tileentity.HeraldyItemStackRenderer;
-import com.magistuarmory.item.MedievalShieldItem;
 import com.magistuarmory.proxy.IProxy;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.BipedRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ShieldItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -104,17 +103,20 @@ public class ClientProxy implements IProxy
     }
 
     @Override
-    public void onLateInit(final IEventBus modbus) {
-        for (EntityRenderer<?> entityRenderer : Minecraft.getInstance().getEntityRenderDispatcher().renderers.values()) {
-            if (entityRenderer instanceof LivingRenderer) {
-                LivingRenderer livingRenderer = (LivingRenderer) entityRenderer;
-                livingRenderer.addLayer(new SunblockLayer(livingRenderer));
-            }
-        }
-        for (PlayerRenderer playerRenderer : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
-            playerRenderer.addLayer(new SunblockLayer(playerRenderer));
-        }
-        //IItemPropertyGetter pulling = ItemModelsProperties.getProperty(Items.BOW, new ResourceLocation("pulling"));
-        //ItemModelsProperties.register(BasicComboBoxUI.ItemHandler.BLOWGUN.asItem(), new ResourceLocation("pulling"), pulling);
+    public void onLateInit(final IEventBus modbus)
+    {
+//        for (EntityRenderer<?> entityRenderer : Minecraft.getInstance().getEntityRenderDispatcher().renderers.values())
+//        {
+//            if (entityRenderer instanceof BipedRenderer)
+//            {
+//                BipedRenderer<?, ?> bipedRenderer = (BipedRenderer<?, ?>) entityRenderer;
+//                bipedRenderer.addLayer(new RemovingHatLayer(bipedRenderer));
+//                bipedRenderer.addLayer(new ArmorDecorationLayer(bipedRenderer, new SurcoatModel(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png")));
+//            }
+//        }
+//        for (PlayerRenderer playerRenderer : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
+//            playerRenderer.addLayer(new RemovingHatLayer(playerRenderer));
+//            playerRenderer.addLayer(new ArmorDecorationLayer(playerRenderer, new SurcoatModel(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png")));
+//        }
     }
 }

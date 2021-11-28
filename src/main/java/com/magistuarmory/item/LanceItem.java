@@ -33,6 +33,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 public class LanceItem extends MedievalWeaponItem implements IHasModelProperty
 {
@@ -46,7 +47,7 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty
     }
 
     @Override
-    public ActionResult<ItemStack> use(World p_41432_, PlayerEntity p_41433_, Hand p_41434_)
+    public @NotNull ActionResult<ItemStack> use(World p_41432_, PlayerEntity p_41433_, @NotNull Hand p_41434_)
     {
         setRaised((LivingEntity)p_41433_, !isRaised((LivingEntity)p_41433_));
 
@@ -54,7 +55,7 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack par1ItemStack)
+    public @NotNull UseAction getUseAnimation(ItemStack par1ItemStack)
     {
         return UseAction.BOW;
     }

@@ -9,7 +9,7 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class GothicItem extends ArmorItem
+public class GothicItem extends ArmorItem implements INoHatLayer, ISurcoat
 {
     public GothicItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {

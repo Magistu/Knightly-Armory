@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.item.MedievalShieldItem;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -48,7 +49,7 @@ public class RecipesShieldHeraldy extends SpecialRecipe
             }
             else
             {
-               if (!(itemstack2.getItem() instanceof MedievalShieldItem) || !((MedievalShieldItem)itemstack2.getItem()).isPaintable())
+               if (!(itemstack2.getItem() instanceof ArmorItem) && (!(itemstack2.getItem() instanceof MedievalShieldItem) || !((MedievalShieldItem)itemstack2.getItem()).isPaintable()))
                {
                   return false;
                }
@@ -85,7 +86,7 @@ public class RecipesShieldHeraldy extends SpecialRecipe
             {
                itemstack = itemstack2;
             }
-            else if (itemstack2.getItem() instanceof MedievalShieldItem && ((MedievalShieldItem)itemstack2.getItem()).isPaintable())
+            else if (itemstack2.getItem() instanceof MedievalShieldItem && ((MedievalShieldItem)itemstack2.getItem()).isPaintable() || itemstack2.getItem() instanceof ArmorItem)
             {
                itemstack1 = itemstack2.copy();
             }

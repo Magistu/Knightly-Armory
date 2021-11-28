@@ -4,6 +4,7 @@ import com.magistuarmory.config.ModConfigurations;
 import com.magistuarmory.init.ModItems;
 import com.magistuarmory.item.MedievalShieldItem;
 
+import com.magistuarmory.item.MedievalWeaponItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.*;
@@ -65,21 +66,19 @@ public class EventHandler
                 PlayerEntity player = (PlayerEntity) entity;
                 ItemStack activeItem = player.getUseItem();
 
-                if (player.isBlocking() && (activeItem).getItem() instanceof MedievalShieldItem)
+                if (player.isBlocking())
                 {
-                    ((MedievalShieldItem) activeItem.getItem()).onBlocked(activeItem, damage, player, ev.getSource());
+                    if (activeItem.getItem() instanceof MedievalShieldItem)
+                    {
+                        ((MedievalShieldItem) activeItem.getItem()).onBlocked(activeItem, damage, player, ev.getSource());
+                    }
+
+                    if (activeItem.getItem() instanceof MedievalWeaponItem)
+                    {
+                        ((MedievalWeaponItem) activeItem.getItem()).onBlocked(activeItem, damage, player, ev.getSource());
+                    }
                 }
             }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTickEvent(TickEvent.PlayerTickEvent ev)
-    {
-        PlayerEntity player = ev.player;
-        if (player.getItemBySlot(EquipmentSlotType.HEAD).isEmpty() && ev.side.isClient() && !player.isModelPartShown(PlayerModelPart.HAT))
-        {
-			Minecraft.getInstance().options.setModelPart(PlayerModelPart.HAT, true);
         }
     }
 
@@ -92,7 +91,7 @@ public class EventHandler
         {
             Entity entity = ev.getEntity();
 
-            if (entity instanceof ZombieEntity && !((ZombieEntity)entity).isBaby() && !(entity instanceof ZombieVillagerEntity) && !(entity instanceof ZombifiedPiglinEntity))
+            if (entity instanceof ZombieEntity && !((ZombieEntity)entity).isBaby() && !(entity instanceof ZombifiedPiglinEntity) && !(entity instanceof ZombieVillagerEntity))
             {
                 entity.setItemSlot(EquipmentSlotType.HEAD, getRandomItemStack(rustedHelmets, chance, new Random()));
                 entity.setItemSlot(EquipmentSlotType.CHEST, getRandomItemStack(rustedChestplates, chance, new Random()));
