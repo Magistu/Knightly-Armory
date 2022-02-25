@@ -3,8 +3,7 @@ package com.magistuarmory.init;
 import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.client.proxy.ClientProxy;
 import com.magistuarmory.item.*;
-import com.magistuarmory.item.crafting.RecipesShieldHeraldy;
-import com.magistuarmory.item.crafting.RecipesSurcoatHeraldy;
+import com.magistuarmory.item.crafting.RecipesHeraldy;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -39,9 +38,9 @@ public class ModItems
     };
 
     public static final KnightItem ARMET = new KnightItem("armet", ArmorMaterials.ARMET, EquipmentSlotType.HEAD, (new Item.Properties()).tab(GROUP_KA));
-    public static final KnightItem KNIGHT_CHESTPLATE = new KnightItem("knight_chestplate", ArmorMaterials.KNIGHT, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
-    public static final KnightItem KNIGHT_LEGGINGS = new KnightItem("knight_leggings", ArmorMaterials.KNIGHT, EquipmentSlotType.LEGS, (new Item.Properties()).tab(GROUP_KA));
-    public static final KnightItem KNIGHT_BOOTS = new KnightItem("knight_boots", ArmorMaterials.KNIGHT, EquipmentSlotType.FEET, (new Item.Properties()).tab(GROUP_KA));
+    public static final MedievalArmorItem KNIGHT_CHESTPLATE = new MedievalArmorItem("knight_chestplate", ArmorMaterials.KNIGHT, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
+    public static final MedievalArmorItem KNIGHT_LEGGINGS = new MedievalArmorItem("knight_leggings", ArmorMaterials.KNIGHT, EquipmentSlotType.LEGS, (new Item.Properties()).tab(GROUP_KA));
+    public static final MedievalArmorItem KNIGHT_BOOTS = new MedievalArmorItem("knight_boots", ArmorMaterials.KNIGHT, EquipmentSlotType.FEET, (new Item.Properties()).tab(GROUP_KA));
 
     public static final JoustingItem STECHHELM = new JoustingItem("stechhelm", ArmorMaterials.STECHHELM, EquipmentSlotType.HEAD, (new Item.Properties()).tab(GROUP_KA));
     public static final JoustingItem JOUSTING_CHESTPLATE = new JoustingItem("jousting_chestplate", ArmorMaterials.JOUSTING, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
@@ -72,20 +71,20 @@ public class ModItems
     public static final HalfarmorItem HALFARMOR_CHESTPLATE = new HalfarmorItem("halfarmor_chestplate", ArmorMaterials.HALFARMOR, EquipmentSlotType.CHEST, (new Item.Properties()).tab(GROUP_KA));
 
     public static final MedievalArmorItem GREATHELM = new MedievalArmorItem("greathelm", ArmorMaterials.CRUSADER, EquipmentSlotType.HEAD, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem CRUSADER_CHESTPLATE = new MedievalArmorItem("crusader_chestplate", ArmorMaterials.CRUSADER, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
+    public static final DyeableMedievalArmorItem CRUSADER_CHESTPLATE = new DyeableMedievalArmorItem("crusader_chestplate", ArmorMaterials.CRUSADER, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA), -3227226);
     public static final MedievalArmorItem CRUSADER_LEGGINGS = new MedievalArmorItem("crusader_leggings", ArmorMaterials.CRUSADER, EquipmentSlotType.LEGS, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem CRUSADER_BOOTS = new MedievalArmorItem("crusader_boots", ArmorMaterials.CRUSADER, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA));
+    public static final DyeableMedievalArmorItem CRUSADER_BOOTS = new DyeableMedievalArmorItem("crusader_boots", ArmorMaterials.CRUSADER, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA), -3227226);
 
     public static final KnightItem CEREMONIALARMET = new KnightItem("ceremonialarmet", ArmorMaterials.CEREMONIALARMET, EquipmentSlotType.HEAD, new Item.Properties().tab(GROUP_KA));
-    public static final KnightItem CEREMONIAL_CHESTPLATE = new KnightItem("ceremonial_chestplate", ArmorMaterials.CEREMONIAL, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
-    public static final KnightItem CEREMONIAL_BOOTS = new KnightItem("ceremonial_boots", ArmorMaterials.CEREMONIAL, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA));
+    public static final MedievalArmorItem CEREMONIAL_CHESTPLATE = new MedievalArmorItem("ceremonial_chestplate", ArmorMaterials.CEREMONIAL, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
+    public static final MedievalArmorItem CEREMONIAL_BOOTS = new MedievalArmorItem("ceremonial_boots", ArmorMaterials.CEREMONIAL, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA));
 
-    public static final MedievalArmorItem COIF = new MedievalArmorItem("coif", ArmorMaterials.GAMBESON, EquipmentSlotType.HEAD, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem GAMBESON = new MedievalArmorItem("gambeson_chestplate", ArmorMaterials.GAMBESON, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem PANTYHOSE = new MedievalArmorItem("pantyhose", ArmorMaterials.GAMBESON, EquipmentSlotType.LEGS, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem GAMBESONBOOTS = new MedievalArmorItem("gambeson_boots", ArmorMaterials.GAMBESON, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA));
+    public static final DyeableMedievalArmorItem COIF = new DyeableMedievalArmorItem("coif", ArmorMaterials.GAMBESON, EquipmentSlotType.HEAD, new Item.Properties().tab(GROUP_KA), -4280691);
+    public static final DyeableMedievalArmorItem GAMBESON = new DyeableMedievalArmorItem("gambeson_chestplate", ArmorMaterials.GAMBESON, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA), -4280691);
+    public static final DyeableMedievalArmorItem PANTYHOSE = new DyeableMedievalArmorItem("pantyhose", ArmorMaterials.GAMBESON, EquipmentSlotType.LEGS, new Item.Properties().tab(GROUP_KA), -14531028);
+    public static final DyeableMedievalArmorItem GAMBESONBOOTS = new DyeableMedievalArmorItem("gambeson_boots", ArmorMaterials.GAMBESON, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA), -4280691);
 
-    public static final MedievalArmorItem BRIGANDINE = new MedievalArmorItem("brigandine_chestplate", ArmorMaterials.BRIGANDINE, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
+    public static final DyeableMedievalArmorItem BRIGANDINE = new DyeableMedievalArmorItem("brigandine_chestplate", ArmorMaterials.BRIGANDINE, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA), 10511680);
 
     public static final MedievalArmorItem NORMAN_HELMET = new MedievalArmorItem("norman_helmet", ArmorMaterials.NORMAN, EquipmentSlotType.HEAD, new Item.Properties().tab(GROUP_KA));
 
@@ -115,8 +114,8 @@ public class ModItems
     public static final WingedHussarItem WINGEDHUSSAR_CHESTPLATE = new WingedHussarItem("wingedhussar_chestplate", ArmorMaterials.WINGEDHUSSARCHESTPLATE, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
 
     public static final MedievalArmorItem BURGONET = new MedievalArmorItem("cuirassier_helmet", ArmorMaterials.CUIRASSIER, EquipmentSlotType.HEAD, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem CUIRASSIER_CHESTPLATE = new MedievalArmorItem("cuirassier_chestplate", ArmorMaterials.CUIRASSIER, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA));
-    public static final MedievalArmorItem CUIRASSIER_LEGGINGS = new MedievalArmorItem("cuirassier_leggings", ArmorMaterials.CUIRASSIER, EquipmentSlotType.LEGS, new Item.Properties().tab(GROUP_KA));
+    public static final DyeableMedievalArmorItem CUIRASSIER_CHESTPLATE = new DyeableMedievalArmorItem("cuirassier_chestplate", ArmorMaterials.CUIRASSIER, EquipmentSlotType.CHEST, new Item.Properties().tab(GROUP_KA), -5465480);
+    public static final DyeableMedievalArmorItem CUIRASSIER_LEGGINGS = new DyeableMedievalArmorItem("cuirassier_leggings", ArmorMaterials.CUIRASSIER, EquipmentSlotType.LEGS, new Item.Properties().tab(GROUP_KA), -5465480);
     public static final MedievalArmorItem CUIRASSIER_BOOTS = new MedievalArmorItem("cuirassier_boots", ArmorMaterials.CUIRASSIER, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA));
 
 
@@ -185,6 +184,10 @@ public class ModItems
             return new ItemStack(heatershields.iron);
         }
     };
+
+    public static final Item BARDING = new HorseArmorItem(12, new ResourceLocation(KnightlyArmory.ID, "textures/entity/horse/armor/barding.png"), new Item.Properties().stacksTo(1).tab(GROUP_KA)).setRegistryName("barding");
+    public static final Item CHAINMAIL_HORSE_ARMOR = new HorseArmorItem(6, new ResourceLocation(KnightlyArmory.ID, "textures/entity/horse/armor/horse_armor_chainmail.png"), new Item.Properties().stacksTo(1).tab(GROUP_KA)).setRegistryName("chainmail_horse_armor");
+
 
     public static final Item APOSTOLIC_CROSS_PATTERN = new BannerPatternItem(HeraldyPatterns.APOSTOLIC_CROSS_PATTERN, new Item.Properties().tab(ItemGroup.TAB_MATERIALS)).setRegistryName("apostolic_cross_pattern");
     public static final Item BOWL_PATTERN = new BannerPatternItem(HeraldyPatterns.BOWL_PATTERN, new Item.Properties().tab(ItemGroup.TAB_MATERIALS)).setRegistryName("bowl_pattern");
@@ -260,6 +263,8 @@ public class ModItems
     public static final Item LONGBOW = new MedievalBowItem("longbow", new Item.Properties().tab(GROUP_KPW), 20.0f);
 
     public static final ArrayList<IHasModelProperty> customizableItems = new ArrayList<>();
+    public static final ArrayList<Item> dyeableItems = new ArrayList<>();
+
 
     public static class ShieldsSupply
     {
@@ -417,7 +422,22 @@ public class ModItems
     public static void registerItems(RegistryEvent.Register<Item> ev)
     {
         IForgeRegistry<Item> reg = ev.getRegistry();
+
+        for (Item armor0 : armor)
+		{
+			if (armor0 instanceof IHasModelProperty)
+			{
+				customizableItems.add((IHasModelProperty) armor0);
+			}
+			if (armor0 instanceof IDyeableArmorItem)
+			{
+				dyeableItems.add(armor0);
+			}
+		}
         reg.registerAll(armor);
+
+        reg.register(BARDING);
+        reg.register(CHAINMAIL_HORSE_ARMOR);
 
         reg.register(APOSTOLIC_CROSS_PATTERN);
         reg.register(BOWL_PATTERN);
@@ -439,7 +459,6 @@ public class ModItems
         reg.register(TWOHEADED_EAGLE_PATTERN);
 
         reg.register(STEEL_INGOT);
-
         reg.register(STEEL_NUGGET);
         reg.register(STEEL_PLATE);
         reg.register(STEEL_RING);
@@ -502,23 +521,11 @@ public class ModItems
         ellipticalshields.registerStitches(ev);
         roundshields.registerStitches(ev);
         paveses.registerStitches(ev);
-
-        if (ev.getMap().location() == AtlasTexture.LOCATION_BLOCKS)
-        {
-            ev.addSprite(new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"));
-        }
-        if (ev.getMap().location() == Atlases.SHIELD_SHEET)
-        {
-            for (BannerPattern bannerPattern : BannerPattern.values())
-            {
-                ev.addSprite(new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat/" + bannerPattern.getFilename()));
-            }
-        }
     }
 
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> ev)
     {
-        ev.getRegistry().register(RecipesShieldHeraldy.SHIELD_HERALDY);
+        ev.getRegistry().register(RecipesHeraldy.HERALDY_RECIPES);
     }
 }

@@ -32,6 +32,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -177,9 +178,9 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        tooltip.add((new StringTextComponent("Rider Only")).withStyle(TextFormatting.BLUE));
-        tooltip.add((new StringTextComponent("Left-click before hitting to dismount target")).withStyle(TextFormatting.BLUE));
-        tooltip.add((new StringTextComponent("+bonus damage based on mass and speed")).withStyle(TextFormatting.BLUE));
+        tooltip.add((new TranslationTextComponent("lance.rideronly")).withStyle(TextFormatting.BLUE));
+        tooltip.add((new TranslationTextComponent("lance.leftclick")).withStyle(TextFormatting.BLUE));
+        tooltip.add((new TranslationTextComponent("lance.bonusdamage")).withStyle(TextFormatting.BLUE));
 
         super.appendHoverText(stack, level, tooltip, flagIn);
     }

@@ -1,18 +1,13 @@
 package com.magistuarmory.item;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.proxy.ClientProxy;
-import com.magistuarmory.client.renderer.model.item.AbstractShieldModel;
+import com.magistuarmory.client.renderer.model.item.MedievalShieldModel;
 import com.magistuarmory.client.renderer.tileentity.HeraldyItemStackRenderer;
-import com.magistuarmory.init.ModItems;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.ItemModelsProperties;
@@ -34,21 +28,18 @@ import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.ModelLoader;
 
 public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
 {
     private int durability;
     private LazyValue<Ingredient> repairItem = new LazyValue(() -> { return Ingredient.of(ItemTags.PLANKS);});
     private boolean paintable;
-    private AbstractShieldModel model;
+    private MedievalShieldModel model;
     private HeraldyItemStackRenderer renderer;
     private float maxBlockDamage;
     private float weight;
@@ -178,6 +169,12 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
         {
             p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
         });
+    }
+
+    @Override
+    public boolean isShield(ItemStack stack, LivingEntity entity)
+    {
+        return true;
     }
 
     @Override

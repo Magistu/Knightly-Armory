@@ -19,6 +19,6 @@ public class GothicItem extends ArmorItem implements INoHatLayer, ISurcoat
 
     public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
     {
-        return (KnightlyArmory.PROXY instanceof ClientProxy) ? (A)((ClientProxy)KnightlyArmory.PROXY).getGohicModel(armorSlot) : null;
+        return (KnightlyArmory.PROXY instanceof ClientProxy) ? (A)((ClientProxy)KnightlyArmory.PROXY).getGothicModel(armorSlot) : null;
     }
 }

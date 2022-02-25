@@ -6,6 +6,4 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class ServerProxy implements IProxy
 {
     public void setup(IEventBus modEventBus, IEventBus forgeEventBus) {}
-
-    public void onLateInit(final IEventBus modbus) {}
 }

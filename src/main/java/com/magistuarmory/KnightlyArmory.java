@@ -1,5 +1,6 @@
 package com.magistuarmory;
 
+import com.magistuarmory.client.proxy.ClientProxy;
 import com.magistuarmory.config.EpicFightConfig;
 import com.magistuarmory.config.ModConfigurations;
 import com.magistuarmory.event.EventHandler;
@@ -46,6 +47,7 @@ public class KnightlyArmory
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doLateInit);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(EventHandler.class);
@@ -74,8 +76,14 @@ public class KnightlyArmory
         {
             event.enqueueWork(item::registerModelProperty);
         }
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        PROXY.onLateInit(modEventBus);
+    }
+
+    private void doLateInit(FMLLoadCompleteEvent event)
+    {
+        if (PROXY instanceof ClientProxy)
+        {
+            ((ClientProxy) PROXY).onLateInit();
+        }
     }
 
     private void enqueueIMC(InterModEnqueueEvent event)

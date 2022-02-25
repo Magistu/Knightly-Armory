@@ -6,6 +6,7 @@ import com.magistuarmory.effects.LacerationEffect;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.CreatureAttribute;
@@ -45,7 +46,7 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     private boolean isSilver = false;
     private boolean isFlamebladed = false;
 
-    int armorPiercing = 0;
+    public int armorPiercing = 0;
 
     private float reachDistance = 0.0F;
     private int twoHanded;
@@ -183,16 +184,16 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
         if (this.isFlamebladed)
             tooltip.add((new TranslationTextComponent("flamebladed.hurt")).withStyle(TextFormatting.BLUE));
         if (this.armorPiercing != 0)
-            tooltip.add((new StringTextComponent(this.armorPiercing + "% armor piercing")).withStyle(TextFormatting.BLUE));
+            tooltip.add(new StringTextComponent(this.armorPiercing + "% ").append(new TranslationTextComponent("armorpiercing")).withStyle(TextFormatting.BLUE));
         if (this.reachDistance != 0.0F)
-            tooltip.add((new StringTextComponent("+" + this.reachDistance + " reach distance")).withStyle(TextFormatting.BLUE));
+            tooltip.add(new StringTextComponent("+" + this.reachDistance + " ").append(new TranslationTextComponent("reachdistance")).withStyle(TextFormatting.BLUE));
         if (twoHanded == 1)
-            tooltip.add((new StringTextComponent("Two-Handed I")).withStyle(TextFormatting.BLUE));
+            tooltip.add((new TranslationTextComponent("twohandedi")).withStyle(TextFormatting.BLUE));
         else if (twoHanded > 1)
-            tooltip.add((new StringTextComponent("Two-Handed II")).withStyle(TextFormatting.BLUE));
+            tooltip.add(new TranslationTextComponent("twohandedii").withStyle(TextFormatting.BLUE));
         if (canBlock())
-            tooltip.add(new StringTextComponent(getMaxBlockDamage() + " max damage block").withStyle(TextFormatting.BLUE));
-            tooltip.add(new StringTextComponent(getWeight() + "kg weight").withStyle(TextFormatting.BLUE));
+            tooltip.add(new StringTextComponent(getMaxBlockDamage() + " ").append(new TranslationTextComponent("maxdamageblock")).withStyle(TextFormatting.BLUE));
+            tooltip.add(new StringTextComponent(getWeight() + "").append(new TranslationTextComponent("kgweight")).withStyle(TextFormatting.BLUE));
     }
 
     public float getAttackDamage()
@@ -261,16 +262,17 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
                     armorPiercingFactor += ((MedievalWeaponItem) attacker.getMainHandItem().getItem()).armorPiercing / 100.0f;
                 }
             }
-            if (source.isProjectile())
-            {
-                float damage2 = CombatRules.getDamageAfterAbsorb(damage, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-                player.hurt(DamageSource.GENERIC, damage2);
-            }
-            else if (source.isExplosion())
+
+            if (source.isExplosion())
             {
                 player.hurt(DamageSource.GENERIC, damage);
 
                 return;
+            }
+            else if (!haveBlocked(new Random(), source))
+            {
+                float damage2 = CombatRules.getDamageAfterAbsorb(damage, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
+                player.hurt(DamageSource.GENERIC, damage2);
             }
             else if (damage > getMaxBlockDamage())
             {
@@ -280,7 +282,6 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
                 });
                 float damage1 = damage - getMaxBlockDamage();
                 float damage2 = CombatRules.getDamageAfterAbsorb(damage1, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-                System.out.println("breakpoint 3");
                 player.hurt(DamageSource.GENERIC, damage2);
 
                 return;
@@ -307,4 +308,15 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     {
         return canBlock;
     }
+
+    @Override
+    public boolean isShield(ItemStack stack, LivingEntity entity)
+    {
+        return canBlock();
+    }
+
+    boolean haveBlocked(Random rand, DamageSource source)
+	{
+		return !source.isProjectile() && rand.nextInt(14) > getWeight();
+	}
 }

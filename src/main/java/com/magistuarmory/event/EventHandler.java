@@ -5,23 +5,20 @@ import com.magistuarmory.init.ModItems;
 import com.magistuarmory.item.MedievalShieldItem;
 
 import com.magistuarmory.item.MedievalWeaponItem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.monster.piglin.PiglinBruteEntity;
-import net.minecraft.entity.monster.piglin.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.world.Difficulty;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Random;
+
 
 
 public class EventHandler
@@ -157,4 +154,6 @@ public class EventHandler
 
         return id < items.length ? new ItemStack(items[id]) : new ItemStack(defaultItem);
     }
+
+
 }

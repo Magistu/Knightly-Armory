@@ -5,13 +5,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.datafixers.util.Pair;
 import java.util.List;
-import java.util.function.Function;
 
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import com.magistuarmory.client.renderer.model.item.AbstractShieldModel;
+import com.magistuarmory.client.renderer.model.item.MedievalShieldModel;
 import com.magistuarmory.client.renderer.model.item.EllipticalShieldModel;
 import com.magistuarmory.client.renderer.model.item.HeaterShieldModel;
 import com.magistuarmory.client.renderer.model.item.PaveseModel;
@@ -21,11 +20,9 @@ import com.magistuarmory.client.renderer.model.item.TartscheModel;
 import com.magistuarmory.item.MedievalShieldItem;
 
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.tileentity.BannerTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -49,7 +46,7 @@ public class HeraldyItemStackRenderer extends ItemStackTileEntityRenderer
 	
 	private String textureName;
 	private String shieldName;
-	private AbstractShieldModel model;
+	private MedievalShieldModel model;
 	private RenderMaterial SHIELD_BASE;
 	private RenderMaterial NO_PATTERN_SHIELD;
 	private boolean initialized = false;
@@ -125,6 +122,7 @@ public class HeraldyItemStackRenderer extends ItemStackTileEntityRenderer
 			Pair<BannerPattern, DyeColor> pair = p_241717_7_.get(i);
 			float[] afloat = pair.getSecond().getTextureDiffuseColors();
 			BannerPattern bannerpattern = pair.getFirst();
+
 			RenderMaterial rendermaterial = new RenderMaterial(Atlases.SHIELD_SHEET, new ResourceLocation(KnightlyArmory.ID, "entity/" + shieldName + "/" + bannerpattern.getFilename()));
 			p_241717_4_.render(p_241717_0_, rendermaterial.buffer(p_241717_1_, RenderType::entityNoOutline), p_241717_2_, p_241717_3_, afloat[0], afloat[1], afloat[2], 1.0F);
 		}

@@ -1,10 +1,13 @@
 package com.magistuarmory.event;
 
+import com.magistuarmory.init.ModItems;
+import com.magistuarmory.item.INoHatLayer;
 import com.magistuarmory.item.MedievalWeaponItem;
 import com.magistuarmory.network.PacketHandler;
 import com.magistuarmory.network.PacketLongWeaponAttack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.settings.KeyBinding;
 
 import net.minecraft.entity.Entity;
@@ -12,6 +15,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.IDyeableArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -20,7 +25,10 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;

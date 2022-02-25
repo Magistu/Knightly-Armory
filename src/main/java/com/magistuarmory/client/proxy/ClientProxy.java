@@ -1,18 +1,18 @@
 package com.magistuarmory.client.proxy;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.renderer.entity.layer.RemovingHatLayer;
+import com.magistuarmory.client.renderer.entity.layer.HorseArmorDecorationLayer;
 import com.magistuarmory.client.renderer.entity.layer.ArmorDecorationLayer;
 import com.magistuarmory.client.renderer.model.entity.*;
 import com.magistuarmory.client.renderer.tileentity.HeraldyItemStackRenderer;
+import com.magistuarmory.init.ModItems;
 import com.magistuarmory.proxy.IProxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.BipedRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -55,7 +55,7 @@ public class ClientProxy implements IProxy
     }
 
     @OnlyIn(Dist.CLIENT)
-    public <A extends BipedModel<?>> A getGohicModel(EquipmentSlotType armorSlot)
+    public <A extends BipedModel<?>> A getGothicModel(EquipmentSlotType armorSlot)
     {
         return (armorSlot == EquipmentSlotType.HEAD) ? (A)this.salletModel : ((armorSlot == EquipmentSlotType.LEGS) ? (A)this.armorLeggingsModel : (A)this.armorModel);
     }
@@ -102,21 +102,47 @@ public class ClientProxy implements IProxy
         return prop.setISTER(() -> HeraldyItemStackRenderer::new);
     }
 
-    @Override
-    public void onLateInit(final IEventBus modbus)
+    @OnlyIn(Dist.CLIENT)
+    public void onLateInit()
     {
-//        for (EntityRenderer<?> entityRenderer : Minecraft.getInstance().getEntityRenderDispatcher().renderers.values())
-//        {
-//            if (entityRenderer instanceof BipedRenderer)
-//            {
-//                BipedRenderer<?, ?> bipedRenderer = (BipedRenderer<?, ?>) entityRenderer;
-//                bipedRenderer.addLayer(new RemovingHatLayer(bipedRenderer));
-//                bipedRenderer.addLayer(new ArmorDecorationLayer(bipedRenderer, new SurcoatModel(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png")));
-//            }
-//        }
-//        for (PlayerRenderer playerRenderer : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
-//            playerRenderer.addLayer(new RemovingHatLayer(playerRenderer));
-//            playerRenderer.addLayer(new ArmorDecorationLayer(playerRenderer, new SurcoatModel(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png")));
-//        }
+        for (EntityRenderer<?> renderer : Minecraft.getInstance().getEntityRenderDispatcher().renderers.values())
+        {
+            if (renderer instanceof ArmorStandRenderer)
+            {
+                ArmorStandRenderer renderer0 = (ArmorStandRenderer) renderer;
+				renderer0.addLayer(new ArmorDecorationLayer<>(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
+            }
+			if (renderer instanceof VillagerRenderer)
+            {
+                VillagerRenderer renderer0 = (VillagerRenderer) renderer;
+				renderer0.addLayer(new ArmorDecorationLayer(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
+			}
+            if (renderer instanceof BipedRenderer<?, ?>)
+            {
+                BipedRenderer<?, ?> renderer0 = (BipedRenderer<?, ?>) renderer;
+                renderer0.addLayer(new ArmorDecorationLayer(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
+            }
+            if (renderer instanceof HorseRenderer)
+            {
+                HorseRenderer renderer0 = (HorseRenderer) renderer;
+                renderer0.addLayer(new HorseArmorDecorationLayer(renderer0, new CaparisonModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/entity/horse/armor/caparison.png"), "caparison"));
+            }
+        }
+        for (EntityRenderer<?> renderer : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values())
+        {
+			if (renderer instanceof PlayerRenderer)
+			{
+                PlayerRenderer renderer0 = (PlayerRenderer) renderer;
+				renderer0.addLayer(new ArmorDecorationLayer<>(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
+			}
+		}
+
+        for (Item item : ModItems.dyeableItems)
+		{
+			Minecraft.getInstance().getItemColors().register((p_92708_, p_92709_) ->
+			{
+				return p_92709_ > 0 ? -1 : ((IDyeableArmorItem) p_92708_.getItem()).getColor(p_92708_);
+			}, item);
+		}
     }
 }
