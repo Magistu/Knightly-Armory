@@ -67,12 +67,12 @@ public class EventHandler
                 {
                     if (activeItem.getItem() instanceof MedievalShieldItem)
                     {
-                        ((MedievalShieldItem) activeItem.getItem()).onBlocked(activeItem, damage, player, ev.getSource());
+                        ((MedievalShieldItem) activeItem.getItem()).onBlock(activeItem, damage, player, ev.getSource());
                     }
 
                     if (activeItem.getItem() instanceof MedievalWeaponItem)
                     {
-                        ((MedievalWeaponItem) activeItem.getItem()).onBlocked(activeItem, damage, player, ev.getSource());
+                        ((MedievalWeaponItem) activeItem.getItem()).onBlock(activeItem, damage, player, ev.getSource());
                     }
                 }
             }

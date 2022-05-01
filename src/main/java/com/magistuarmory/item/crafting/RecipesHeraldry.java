@@ -20,11 +20,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
-public class RecipesHeraldy extends SpecialRecipe
+public class RecipesHeraldry extends SpecialRecipe
 {
-    public static Serializer HERALDY_RECIPES = new Serializer(RecipesHeraldy::new);
+    public static Serializer HERALDRY_RECIPES = new Serializer(RecipesHeraldry::new);
 
-    public RecipesHeraldy(ResourceLocation p_i48160_1_)
+    public RecipesHeraldry(ResourceLocation p_i48160_1_)
     {
         super(p_i48160_1_);
     }
@@ -50,7 +50,7 @@ public class RecipesHeraldy extends SpecialRecipe
                 }
                 else
                 {
-                    if (!hasHeraldy(itemstack2.getItem()))
+                    if (!isHeraldic(itemstack2.getItem()))
                     {
                         return false;
                     }
@@ -87,7 +87,7 @@ public class RecipesHeraldy extends SpecialRecipe
                 {
                     itemstack = itemstack2;
                 }
-                else if (hasHeraldy(itemstack2.getItem()))
+                else if (isHeraldic(itemstack2.getItem()))
                 {
                     itemstack1 = itemstack2.copy();
                 }
@@ -137,30 +137,30 @@ public class RecipesHeraldy extends SpecialRecipe
 
     public @NotNull IRecipeSerializer<?> getSerializer()
     {
-        return HERALDY_RECIPES;
+        return HERALDRY_RECIPES;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipesHeraldy>
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipesHeraldry>
     {
-        private final Function<ResourceLocation, RecipesHeraldy> constructor;
+        private final Function<ResourceLocation, RecipesHeraldry> constructor;
 
-        public Serializer(Function<ResourceLocation, RecipesHeraldy> p_44399_)
+        public Serializer(Function<ResourceLocation, RecipesHeraldry> p_44399_)
         {
             this.constructor = p_44399_;
             setRegistryName(new ResourceLocation(KnightlyArmory.ID, "shield_heraldy"));
         }
 
-        public @NotNull RecipesHeraldy fromJson(@NotNull ResourceLocation p_44404_, @NotNull JsonObject p_44405_)
+        public @NotNull RecipesHeraldry fromJson(@NotNull ResourceLocation p_44404_, @NotNull JsonObject p_44405_)
         {
             return this.constructor.apply(p_44404_);
         }
 
-        public RecipesHeraldy fromNetwork(@NotNull ResourceLocation p_44407_, @NotNull PacketBuffer p_44408_)
+        public RecipesHeraldry fromNetwork(@NotNull ResourceLocation p_44407_, @NotNull PacketBuffer p_44408_)
         {
             return this.constructor.apply(p_44407_);
         }
 
-        public void toNetwork(@NotNull PacketBuffer p_44401_, @NotNull RecipesHeraldy p_44402_) {}
+        public void toNetwork(@NotNull PacketBuffer p_44401_, @NotNull RecipesHeraldry p_44402_) {}
     }
 
     boolean isPaintableShield(Item item)
@@ -178,7 +178,7 @@ public class RecipesHeraldy extends SpecialRecipe
         return item instanceof ArmorItem && (ModConfigurations.decorations_for_all_armor.get() || item instanceof ISurcoat) && ((ArmorItem) item).getSlot().equals(EquipmentSlotType.CHEST);
     }
 
-    boolean hasHeraldy(Item item)
+    boolean isHeraldic(Item item)
     {
         return isPaintableShield(item) || wornWithCaparison(item)  || wornWithSurcoat(item);
     }

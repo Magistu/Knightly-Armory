@@ -309,6 +309,17 @@
 	"item.magistuarmory.steel_ellipticalshield": "Stahlelliptischer Schild",
 	"item.magistuarmory.tin_ellipticalshield": "Zinelliptischer Schild",
 	"item.magistuarmory.bronze_ellipticalshield": "Bronzeelliptischer Schild",
+	"item.magistuarmory.diamond_ellipticalshield": "Diamantennormannenschild",
+	"item.magistuarmory.stone_ellipticalshield": "Steinnormannenschild",
+	"item.magistuarmory.wood_ellipticalshield": "Holznormannenschild",
+	"item.magistuarmory.iron_ellipticalshield": "Eisennormannenschild",
+	"item.magistuarmory.netherite_ellipticalshield": "Netheritnormannenschild",
+	"item.magistuarmory.gold_ellipticalshield": "Goldnormannenschild",
+	"item.magistuarmory.silver_ellipticalshield": "Silbernormannenschild",
+	"item.magistuarmory.copper_ellipticalshield": "Kupfernormannenschild",
+	"item.magistuarmory.steel_ellipticalshield": "Stahlnormannenschild",
+	"item.magistuarmory.tin_ellipticalshield": "Zinnormannenschild",
+	"item.magistuarmory.bronze_ellipticalshield": "Bronzenormannenschild",
 
 
 
@@ -411,6 +422,7 @@
 	"item.magistuarmory.noble_sword": "Edles Schwert",
 	"item.magistuarmory.rusted_bastardsword": "Verrostetes Bastardschwert",
 	"item.magistuarmory.rusted_heavymace": "Schwerer Verrosteterstreitkolben",
+	"item.magistuarmory.longbow": "Langbogen",
 
 
 

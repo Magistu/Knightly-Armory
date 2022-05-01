@@ -3,7 +3,7 @@ package com.magistuarmory.init;
 import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.client.proxy.ClientProxy;
 import com.magistuarmory.item.*;
-import com.magistuarmory.item.crafting.RecipesHeraldy;
+import com.magistuarmory.item.crafting.RecipesHeraldry;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -23,6 +23,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.BiFunction;
 
 @EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -119,7 +120,6 @@ public class ModItems
     public static final MedievalArmorItem CUIRASSIER_BOOTS = new MedievalArmorItem("cuirassier_boots", ArmorMaterials.CUIRASSIER, EquipmentSlotType.FEET, new Item.Properties().tab(GROUP_KA));
 
 
-
     public static final Item[] armor = new Item[] {
             ARMET, KNIGHT_CHESTPLATE, KNIGHT_LEGGINGS, KNIGHT_BOOTS, STECHHELM, JOUSTING_CHESTPLATE, JOUSTING_LEGGINGS, JOUSTING_BOOTS, SALLET, GOTHIC_CHESTPLATE,
             GOTHIC_LEGGINGS, GOTHIC_BOOTS, MAXIMILIAN_HELMET, MAXIMILIAN_CHESTPLATE, MAXIMILIAN_LEGGINGS, MAXIMILIAN_BOOTS, CHAINMAIL_HELMET, CHAINMAIL_CHESTPLATE, CHAINMAIL_LEGGINGS, CHAINMAIL_BOOTS,
@@ -162,7 +162,7 @@ public class ModItems
 
     public static final ItemGroup GROUP_KW = new ItemGroup(KnightlyArmory.ID + ".weapons")
     {
-        public ItemStack makeIcon()
+        public @NotNull ItemStack makeIcon()
         {
             return new ItemStack(flamebladedswords.iron);
         }
@@ -170,7 +170,7 @@ public class ModItems
 
     public static final ItemGroup GROUP_KPW = new ItemGroup(KnightlyArmory.ID + ".particular_weapons")
     {
-        public ItemStack makeIcon()
+        public @NotNull ItemStack makeIcon()
         {
             return new ItemStack(NOBLE_SWORD);
         }
@@ -179,7 +179,7 @@ public class ModItems
     public static final ItemGroup GROUP_KS = new ItemGroup(KnightlyArmory.ID + ".shields")
     {
         @Override
-        public ItemStack makeIcon()
+        public @NotNull ItemStack makeIcon()
         {
             return new ItemStack(heatershields.iron);
         }
@@ -250,6 +250,7 @@ public class ModItems
     public static ShieldsSupply ellipticalshields = new ShieldsSupply(ShieldsWorkshop.ELLIPTICALSHIELD, "ellipticalshield", true);
     public static ShieldsSupply roundshields = new ShieldsSupply(ShieldsWorkshop.ROUNDSHIELD, "roundshield", true);
     public static ShieldsSupply paveses = new ShieldsSupply(ShieldsWorkshop.PAVESE, "pavese", true);
+    public static ShieldsSupply kiteshields = new ShieldsSupply(ShieldsWorkshop.KITESHIELD, "kiteshield", true);
 
     public static final Item BLACKSMITH_HAMMER = new MedievalWeaponItem("blacksmith_hammer", new Item.Properties().tab(GROUP_KPW), ModItemTier.STEEL, 5.0f, 1.0f, -3.0f, 4, 0.0f);
 	public static final Item BARBED_CLUB = new MedievalWeaponItem("barbedclub", new Item.Properties().tab(GROUP_KPW), ModItemTier.IRON, 5.6f, 1.1f, -3.0f);
@@ -258,29 +259,63 @@ public class ModItems
 	public static final Item RUSTEDBASTARDSWORD = new MedievalWeaponItem("rusted_bastardsword", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F).setTwoHanded(1).setBlocking(5.0f, 5.0f);
 	public static final Item RUSTEDHEAVYMACE = new MedievalWeaponItem("rusted_heavymace", new Item.Properties(), ModItemTier.IRON, 2.0F, 1.0F, -2.49F);
 
+    public static final Item LONGBOW = new MedievalBowItem("longbow", new Item.Properties().tab(GROUP_KPW), 4.2f, 26.0f);
 
-
-    public static final Item LONGBOW = new MedievalBowItem("longbow", new Item.Properties().tab(GROUP_KPW), 20.0f);
-
-    public static final ArrayList<IHasModelProperty> customizableItems = new ArrayList<>();
+    public static final ArrayList<IHasModelProperty> modelProperties = new ArrayList<>();
     public static final ArrayList<Item> dyeableItems = new ArrayList<>();
 
-
-    public static class ShieldsSupply
+    public static class ItemsSupply<T extends Item>
     {
-        public ShieldItem wood;
-        public ShieldItem stone;
-        public ShieldItem iron;
-        public ShieldItem gold;
-        public ShieldItem diamond;
+        public T wood;
+        public T stone;
+        public T iron;
+        public T gold;
+        public T diamond;
+        public T netherite;
 
-        public ShieldItem copper;
-        public ShieldItem steel;
-        public ShieldItem silver;
-        public ShieldItem netherite;
-        public ShieldItem tin;
-        public ShieldItem bronze;
+        public T copper;
+        public T steel;
+        public T silver;
+        public T tin;
+        public T bronze;
 
+        public ItemsSupply(BiFunction<ModItemTier, Item.Properties, T> workshop, Item.Properties prop)
+        {
+            this.wood = workshop.apply(ModItemTier.WOOD, prop);
+            this.stone = workshop.apply(ModItemTier.STONE, prop);
+            this.iron = workshop.apply(ModItemTier.IRON, prop);
+            this.gold = workshop.apply(ModItemTier.GOLD, prop);
+            this.diamond = workshop.apply(ModItemTier.DIAMOND, prop);
+            this.netherite = workshop.apply(ModItemTier.NETHERITE, prop.fireResistant());
+
+            this.copper = workshop.apply(ModItemTier.COPPER, prop);
+            this.steel = workshop.apply(ModItemTier.STEEL, prop);
+            this.silver = workshop.apply(ModItemTier.SILVER, prop);
+            this.tin = workshop.apply(ModItemTier.TIN, prop);
+            this.bronze = workshop.apply(ModItemTier.BRONZE, prop);
+        }
+
+        public Item[] get()
+        {
+            return new Item[] { this.wood, this.stone, this.iron, this.gold, this.diamond, this.copper, this.steel, this.silver, this.netherite, this.tin, this.bronze };
+        }
+
+        public void registerItems(IForgeRegistry<Item> reg)
+        {
+            Item[] items = this.get();
+            if (items[0] instanceof IHasModelProperty)
+            {
+                for (Item item : items)
+                {
+                    ModItems.modelProperties.add((IHasModelProperty) item);
+                }
+            }
+            reg.registerAll(items);
+        }
+    }
+
+    public static class ShieldsSupply extends ItemsSupply<ShieldItem>
+    {
         public String shieldName;
 
         public String woodTexture;
@@ -296,31 +331,21 @@ public class ModItems
         public String tinTexture;
         public String bronzeTexture;
 
-
+        public static Item.Properties getProperties(boolean is3d)
+        {
+            Item.Properties prop = new Item.Properties().tab(ModItems.GROUP_KS);
+            if (KnightlyArmory.PROXY instanceof ClientProxy && is3d)
+            {
+                prop = ClientProxy.setHeraldyItemStackRenderer(prop);
+            }
+            return prop;
+        }
 
         public ShieldsSupply(BiFunction<ModItemTier, Properties, ShieldItem> workshop, String shieldName, boolean is3d)
         {
-            Item.Properties prop = (new Item.Properties()).tab(ModItems.GROUP_KS);
-
-            if (KnightlyArmory.PROXY instanceof ClientProxy && is3d)
-            {
-                prop = ((ClientProxy)KnightlyArmory.PROXY).setHeraldyItemStackRenderer(prop);
-            }
+            super(workshop, getProperties(is3d));
 
             this.shieldName = shieldName;
-
-            this.wood = workshop.apply(ModItemTier.WOOD, prop);
-            this.stone = workshop.apply(ModItemTier.STONE, prop);
-            this.iron = workshop.apply(ModItemTier.IRON, prop);
-            this.gold = workshop.apply(ModItemTier.GOLD, prop);
-            this.diamond = workshop.apply(ModItemTier.DIAMOND, prop);
-
-            this.copper = workshop.apply(ModItemTier.COPPER, prop);
-            this.steel = workshop.apply(ModItemTier.STEEL, prop);
-            this.silver = workshop.apply(ModItemTier.SILVER, prop);
-            this.netherite = workshop.apply(ModItemTier.NETHERITE, prop);
-            this.tin = workshop.apply(ModItemTier.TIN, prop);
-            this.bronze = workshop.apply(ModItemTier.BRONZE, prop);
 
             this.woodTexture = "entity/" + ModItemTier.WOOD.getMaterialName() + "_" + shieldName;
             this.stoneTexture = "entity/" + ModItemTier.STONE.getMaterialName() + "_" + shieldName;
@@ -333,18 +358,18 @@ public class ModItems
             this.netheriteTexture = "entity/" + ModItemTier.NETHERITE.getMaterialName() + "_" + shieldName;
             this.tinTexture = "entity/" + ModItemTier.TIN.getMaterialName() + "_" + shieldName;
             this.bronzeTexture = "entity/" + ModItemTier.BRONZE.getMaterialName() + "_" + shieldName;
-
         }
 
-        public void registerItems(IForgeRegistry<Item> reg)
+        public void registerStitchesWithoutPatterns(TextureStitchEvent.Pre ev)
         {
-            Item[] items = new Item[] { this.wood, this.stone, this.iron, this.gold, this.diamond, this.copper, this.steel, this.silver, this.netherite, this.tin, this.bronze };
-            for (Item item : items)
+            if (ev.getMap().location() == AtlasTexture.LOCATION_BLOCKS)
             {
-                customizableItems.add((IHasModelProperty)item);
+                String[] textures = new String[] { this.woodTexture, this.stoneTexture, this.ironTexture, this.goldTexture, this.diamondTexture, this.netheriteTexture, this.copperTexture, this.steelTexture, this.silverTexture, this.netheriteTexture, this.tinTexture, this.bronzeTexture };
+                for (String texture : textures)
+                {
+                    ev.addSprite(new ResourceLocation(KnightlyArmory.ID, texture + "_nopattern"));
+                }
             }
-
-            reg.registerAll(items);
         }
 
         public void registerStitches(TextureStitchEvent.Pre ev)
@@ -366,55 +391,14 @@ public class ModItems
                     ev.addSprite(new ResourceLocation(KnightlyArmory.ID, "entity/" + shieldName + "/" + bannerPattern.getFilename()));
                 }
             }
-
-
         }
     }
 
-    public static class WeaponsSupply
+    public static class WeaponsSupply extends ItemsSupply<SwordItem>
     {
-        public SwordItem wood;
-        public SwordItem stone;
-        public SwordItem iron;
-        public SwordItem gold;
-        public SwordItem diamond;
-        public SwordItem netherite;
-
-        public SwordItem copper;
-        public SwordItem steel;
-        public SwordItem silver;
-        public SwordItem tin;
-        public SwordItem bronze;
-
         public WeaponsSupply(BiFunction<ModItemTier, Item.Properties, SwordItem> workshop)
         {
-            Item.Properties prop = (new Item.Properties()).tab(ModItems.GROUP_KW);
-
-            this.wood = workshop.apply(ModItemTier.WOOD, prop);
-            this.stone = workshop.apply(ModItemTier.STONE, prop);
-            this.iron = workshop.apply(ModItemTier.IRON, prop);
-            this.gold = workshop.apply(ModItemTier.GOLD, prop);
-            this.diamond = workshop.apply(ModItemTier.DIAMOND, prop);
-            this.netherite = workshop.apply(ModItemTier.NETHERITE, prop.fireResistant());
-
-            this.copper = workshop.apply(ModItemTier.COPPER, prop);
-            this.steel = workshop.apply(ModItemTier.STEEL, prop);
-            this.silver = workshop.apply(ModItemTier.SILVER, prop);
-            this.tin = workshop.apply(ModItemTier.TIN, prop);
-            this.bronze = workshop.apply(ModItemTier.BRONZE, prop);
-        }
-
-        public void registerItems(IForgeRegistry<Item> reg)
-        {
-            Item[] items = { this.wood, this.stone, this.iron, this.gold, this.diamond, this.netherite, this.copper, this.steel, this.silver, this.tin, this.bronze };
-            if (items[0] instanceof IHasModelProperty)
-            {
-                for (Item item : items)
-                {
-                    ModItems.customizableItems.add((IHasModelProperty) item);
-                }
-            }
-            reg.registerAll(items);
+            super(workshop, new Item.Properties().tab(GROUP_KW));
         }
     }
 
@@ -427,13 +411,17 @@ public class ModItems
 		{
 			if (armor0 instanceof IHasModelProperty)
 			{
-				customizableItems.add((IHasModelProperty) armor0);
+				modelProperties.add((IHasModelProperty) armor0);
 			}
 			if (armor0 instanceof IDyeableArmorItem)
 			{
 				dyeableItems.add(armor0);
 			}
 		}
+        dyeableItems.addAll(Arrays.asList(chivalrylances.get()));
+        modelProperties.add((IHasModelProperty) LONGBOW);
+        modelProperties.add((IHasModelProperty) NOBLE_SWORD);
+
         reg.registerAll(armor);
 
         reg.register(BARDING);
@@ -507,6 +495,7 @@ public class ModItems
         ellipticalshields.registerItems(reg);
         roundshields.registerItems(reg);
         paveses.registerItems(reg);
+        kiteshields.registerItems(reg);
     }
 
     @SubscribeEvent
@@ -514,18 +503,17 @@ public class ModItems
     public static void onTextureStitchEvent(TextureStitchEvent.Pre ev)
     {
         heatershields.registerStitches(ev);
-        targets.registerStitches(ev);
-        bucklers.registerStitches(ev);
-        rondaches.registerStitches(ev);
+        rondaches.registerStitchesWithoutPatterns(ev);
         tartsches.registerStitches(ev);
         ellipticalshields.registerStitches(ev);
         roundshields.registerStitches(ev);
         paveses.registerStitches(ev);
+        kiteshields.registerStitches(ev);
     }
 
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> ev)
     {
-        ev.getRegistry().register(RecipesHeraldy.HERALDY_RECIPES);
+        ev.getRegistry().register(RecipesHeraldry.HERALDRY_RECIPES);
     }
 }

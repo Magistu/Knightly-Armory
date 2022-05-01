@@ -309,6 +309,17 @@
   "item.magistuarmory.steel_ellipticalshield": "Стальной овальный щит",
   "item.magistuarmory.tin_ellipticalshield": "Оловянный овальный щит",
   "item.magistuarmory.bronze_ellipticalshield": "Бронзовый овальный щит",
+  "item.magistuarmory.diamond_kiteshield": "Алмазный каплевидный щит",
+  "item.magistuarmory.stone_kiteshield": "Каменный каплевидный щит",
+  "item.magistuarmory.wood_kiteshield": "Деревянный каплевидный щит",
+  "item.magistuarmory.iron_kiteshield": "Железный каплевидный щит",
+  "item.magistuarmory.netherite_kiteshield": "Незеритовый каплевидный щит",
+  "item.magistuarmory.gold_kiteshield": "Золотой каплевидный щит",
+  "item.magistuarmory.silver_kiteshield": "Серебряный каплевидный щит",
+  "item.magistuarmory.copper_kiteshield": "Медный каплевидный щит",
+  "item.magistuarmory.steel_kiteshield": "Стальной каплевидный щит",
+  "item.magistuarmory.tin_kiteshield": "Оловянный каплевидный щит",
+  "item.magistuarmory.bronze_kiteshield": "Бронзовый каплевидный щит",
 
 
 
@@ -337,11 +348,11 @@
   "item.magistuarmory.maximilian_boots": "Максимилиановские сабатоны", 
   "item.magistuarmory.chainmail_helmet": "Кольчужный капюшон", 
   "item.magistuarmory.chainmail_chestplate": "Хауберк", 
-  "item.magistuarmory.chainmail_leggings": "Кальчужные чулки", 
+  "item.magistuarmory.chainmail_leggings": "Кольчужные чулки", 
   "item.magistuarmory.chainmail_boots": "Сапоги", 
   "item.magistuarmory.kettlehat": "Шапель", 
   "item.magistuarmory.platemail_chestplate": "Укреплённый хауберк", 
-  "item.magistuarmory.platemail_leggings": "Укреплённые кальчужные чулки", 
+  "item.magistuarmory.platemail_leggings": "Укреплённые кольчужные чулки", 
   "item.magistuarmory.platemail_boots": "Укреплённые сапоги", 
   "item.magistuarmory.barbute": "Барбют", 
   "item.magistuarmory.halfarmor_chestplate": "Неполный доспех",
@@ -411,6 +422,7 @@
   "item.magistuarmory.noble_sword": "Дворянский меч",
   "item.magistuarmory.rusted_bastardsword": "Ржавый полуторный меч",
   "item.magistuarmory.rusted_heavymace": "Ржавая тяжёлая булава",
+  "item.magistuarmory.longbow": "Длинный лук",
 
 
 

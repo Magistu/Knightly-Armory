@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.magistuarmory.effects.LacerationEffect;
 
-import java.time.Clock;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
@@ -18,7 +17,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
@@ -82,8 +80,8 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     public MedievalWeaponItem setTwoHanded(int level)
     {
         twoHanded = level;
-        decreasedAttackDamage = 12.0f * attackDamage / (5.0f * level + 10.0f);
-        decreasedAttackSpeed = 14.0f * (attackSpeed + 4.0f) / (15.0f * level + 5.0f) - 4.0f;
+        decreasedAttackDamage = 14.0f * attackDamage / (3.0f * level + 12.0f);
+        decreasedAttackSpeed = 14.0f * (attackSpeed + 4.0f) / (10.0f * level + 10.0f) - 4.0f;
         return this;
     }
 
@@ -109,7 +107,7 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     }
 
     @Override
-    public void inventoryTick(ItemStack par1ItemStack, World world, Entity entityIn, int par4, boolean par5)
+    public void inventoryTick(@NotNull ItemStack par1ItemStack, @NotNull World world, @NotNull Entity entityIn, int par4, boolean par5)
     {
         boolean flag = false;
         if (twoHanded > 0 && entityIn instanceof LivingEntity && !((LivingEntity)entityIn).getOffhandItem().getItem().equals(Items.AIR))
@@ -155,7 +153,7 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
             }
         }
 
-        if (canBlock() && entityIn instanceof LivingEntity)
+        if (this.canBlock() && entityIn instanceof LivingEntity)
         {
             blockingPriority = !(((LivingEntity) entityIn).getMainHandItem().getItem() instanceof ShieldItem) && !(((LivingEntity) entityIn).getOffhandItem().getItem() instanceof ShieldItem);
         }
@@ -164,7 +162,7 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_)
+    public boolean hurtEnemy(@NotNull ItemStack p_77644_1_, @NotNull LivingEntity p_77644_2_, @NotNull LivingEntity p_77644_3_)
     {
         if (this.isSilver && p_77644_2_.getMobType().equals(CreatureAttribute.UNDEAD))
             p_77644_2_.hurt(DamageSource.MAGIC, this.getAttackDamage() + 3.0F);
@@ -177,7 +175,7 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable World worldIn, @NotNull List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn)
     {
         if (this.isSilver)
             tooltip.add((new TranslationTextComponent("silvertools.hurt")).withStyle(TextFormatting.GREEN));
@@ -187,18 +185,18 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
             tooltip.add(new StringTextComponent(this.armorPiercing + "% ").append(new TranslationTextComponent("armorpiercing")).withStyle(TextFormatting.BLUE));
         if (this.reachDistance != 0.0F)
             tooltip.add(new StringTextComponent("+" + this.reachDistance + " ").append(new TranslationTextComponent("reachdistance")).withStyle(TextFormatting.BLUE));
-        if (twoHanded == 1)
+        if (this.twoHanded == 1)
             tooltip.add((new TranslationTextComponent("twohandedi")).withStyle(TextFormatting.BLUE));
-        else if (twoHanded > 1)
+        else if (this.twoHanded > 1)
             tooltip.add(new TranslationTextComponent("twohandedii").withStyle(TextFormatting.BLUE));
-        if (canBlock())
+        if (this.canBlock())
             tooltip.add(new StringTextComponent(getMaxBlockDamage() + " ").append(new TranslationTextComponent("maxdamageblock")).withStyle(TextFormatting.BLUE));
             tooltip.add(new StringTextComponent(getWeight() + "").append(new TranslationTextComponent("kgweight")).withStyle(TextFormatting.BLUE));
     }
 
     public float getAttackDamage()
     {
-        return currentAttackDamage;
+        return this.currentAttackDamage;
     }
 
     public float getAttackSpeed()
@@ -212,9 +210,9 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
     }
 
     @Override
-    public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_)
+    public @NotNull ActionResult<ItemStack> use(@NotNull World p_77659_1_, @NotNull PlayerEntity p_77659_2_, @NotNull Hand p_77659_3_)
     {
-        if (canBlock() && blockingPriority)
+        if (this.canBlock() && this.blockingPriority)
         {
             ItemStack itemstack = p_77659_2_.getItemInHand(p_77659_3_);
             p_77659_2_.startUsingItem(p_77659_3_);
@@ -225,33 +223,31 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
         return super.use(p_77659_1_, p_77659_2_, p_77659_3_);
     }
 
-    public int getUseDuration(ItemStack p_77626_1_)
+    public int getUseDuration(@NotNull ItemStack p_77626_1_)
     {
         return canBlock() ? (int) (500 / getWeight()) : 0;
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack p_77661_1_)
+    public @NotNull UseAction getUseAnimation(@NotNull ItemStack p_77661_1_)
     {
-        return (canBlock() && blockingPriority) ? UseAction.BLOCK : super.getUseAnimation(p_77661_1_);
+        return (this.canBlock() && this.blockingPriority) ? UseAction.BLOCK : super.getUseAnimation(p_77661_1_);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void registerModelProperty()
     {
-        if (canBlock())
+        if (this.canBlock())
         {
             ItemModelsProperties.register(this, new ResourceLocation("blocking"), (p_239421_0_, p_239421_1_, p_239421_2_) ->
-            {
-                return p_239421_2_ != null && p_239421_2_.isUsingItem() && p_239421_2_.getUseItem() == p_239421_0_ ? 1.0F : 0.0F;
-            });
+                    p_239421_2_ != null && p_239421_2_.isUsingItem() && p_239421_2_.getUseItem() == p_239421_0_ ? 1.0F : 0.0F);
         }
     }
 
-    public void onBlocked(ItemStack stack, float damage, PlayerEntity player, DamageSource source)
+    public void onBlock(ItemStack stack, float damage, PlayerEntity player, DamageSource source)
     {
-        if (canBlock())
+        if (this.canBlock())
         {
             float armorPiercingFactor = 1.0f;
             if (source.getEntity() instanceof LivingEntity)
@@ -259,7 +255,7 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
                 LivingEntity attacker = (LivingEntity) source.getEntity();
                 if (attacker.getMainHandItem().getItem() instanceof MedievalWeaponItem)
                 {
-                    armorPiercingFactor += ((MedievalWeaponItem) attacker.getMainHandItem().getItem()).armorPiercing / 100.0f;
+                    armorPiercingFactor += (float) ((MedievalWeaponItem) attacker.getMainHandItem().getItem()).armorPiercing / 100.0f;
                 }
             }
 
@@ -269,17 +265,15 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
 
                 return;
             }
-            else if (!haveBlocked(new Random(), source))
+            else if (!this.haveBlocked(new Random(), source))
             {
                 float damage2 = CombatRules.getDamageAfterAbsorb(damage, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
                 player.hurt(DamageSource.GENERIC, damage2);
             }
             else if (damage > getMaxBlockDamage())
             {
-                stack.hurtAndBreak((int) (armorPiercingFactor * 0.2f * stack.getMaxDamage()), player, (p_220044_0_) ->
-                {
-                    p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-                });
+                stack.hurtAndBreak((int) (armorPiercingFactor * 0.1f * stack.getMaxDamage()), player, (p_220044_0_) ->
+                        p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
                 float damage1 = damage - getMaxBlockDamage();
                 float damage2 = CombatRules.getDamageAfterAbsorb(damage1, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
                 player.hurt(DamageSource.GENERIC, damage2);
@@ -288,35 +282,33 @@ public class MedievalWeaponItem extends SwordItem implements IHasModelProperty
             }
 
             stack.hurtAndBreak((int) (armorPiercingFactor * damage), player, (p_220044_0_) ->
-            {
-                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-            });
+                    p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
         }
     }
 
     public float getMaxBlockDamage()
     {
-        return maxBlockDamage;
+        return this.maxBlockDamage;
     }
 
     public float getWeight()
     {
-        return weight;
+        return this.weight;
     }
 
     public boolean canBlock()
     {
-        return canBlock;
+        return this.canBlock;
     }
 
     @Override
     public boolean isShield(ItemStack stack, LivingEntity entity)
     {
-        return canBlock();
+        return this.canBlock();
     }
 
     boolean haveBlocked(Random rand, DamageSource source)
 	{
-		return !source.isProjectile() && rand.nextInt(14) > getWeight();
+		return !source.isProjectile() && rand.nextInt(18) > this.getWeight();
 	}
 }

@@ -72,7 +72,7 @@ public class KnightlyArmory
 
     private void doClientStuff(FMLClientSetupEvent event)
     {
-        for (IHasModelProperty item : ModItems.customizableItems)
+        for (IHasModelProperty item : ModItems.modelProperties)
         {
             event.enqueueWork(item::registerModelProperty);
         }
