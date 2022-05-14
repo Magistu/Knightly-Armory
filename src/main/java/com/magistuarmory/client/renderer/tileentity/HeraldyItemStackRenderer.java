@@ -1,6 +1,7 @@
 package com.magistuarmory.client.renderer.tileentity;
 
 import com.magistuarmory.KnightlyArmory;
+import com.magistuarmory.client.renderer.model.item.*;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.datafixers.util.Pair;
@@ -10,13 +11,6 @@ import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import com.magistuarmory.client.renderer.model.item.MedievalShieldModel;
-import com.magistuarmory.client.renderer.model.item.EllipticalShieldModel;
-import com.magistuarmory.client.renderer.model.item.HeaterShieldModel;
-import com.magistuarmory.client.renderer.model.item.PaveseModel;
-import com.magistuarmory.client.renderer.model.item.RondacheModel;
-import com.magistuarmory.client.renderer.model.item.RoundShieldModel;
-import com.magistuarmory.client.renderer.model.item.TartscheModel;
 import com.magistuarmory.item.MedievalShieldItem;
 
 import net.minecraft.client.renderer.ItemRenderer;
@@ -43,6 +37,7 @@ public class HeraldyItemStackRenderer extends ItemStackTileEntityRenderer
 	public static final EllipticalShieldModel ellipticalShieldModel = new EllipticalShieldModel();
 	public static final TartscheModel tartscheModel = new TartscheModel();
 	public static final RondacheModel rondacheModel = new RondacheModel();
+	public static final KiteShieldModel kiteShieldModel = new KiteShieldModel();
 	
 	private String textureName;
 	private String shieldName;
@@ -62,7 +57,8 @@ public class HeraldyItemStackRenderer extends ItemStackTileEntityRenderer
 			shieldName == "roundshield" ? roundShieldModel :
 			shieldName == "ellipticalshield" ? ellipticalShieldModel :
 			shieldName == "tartsche" ? tartscheModel :
-			shieldName == "rondache" ? rondacheModel : null;
+			shieldName == "rondache" ? rondacheModel :
+			shieldName == "kiteshield" ? kiteShieldModel : null;
 
 		this.SHIELD_BASE = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(KnightlyArmory.ID, "entity/" + textureName + "_pattern"));
 		this.NO_PATTERN_SHIELD = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS, new ResourceLocation(KnightlyArmory.ID, "entity/" + textureName + "_nopattern"));

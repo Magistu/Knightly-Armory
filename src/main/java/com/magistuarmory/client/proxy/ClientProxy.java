@@ -97,7 +97,7 @@ public class ClientProxy implements IProxy
     }
 	
     @OnlyIn(Dist.CLIENT)
-    public Item.Properties setHeraldyItemStackRenderer(Item.Properties prop)
+    public static Item.Properties setHeraldyItemStackRenderer(Item.Properties prop)
     {
         return prop.setISTER(() -> HeraldyItemStackRenderer::new);
     }
