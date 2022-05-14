@@ -1,0 +1,6 @@
+{
+  "parent": "magistuarmory:item/buckler_blocking",
+  "textures": {
+    "layer0": "magistuarmory:items/wood_buckler"
+  }
+}

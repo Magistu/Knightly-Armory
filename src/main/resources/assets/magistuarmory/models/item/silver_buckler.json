@@ -1,0 +1,14 @@
+{
+  "parent": "magistuarmory:item/buckler",
+  "textures": {
+    "layer0": "magistuarmory:items/silver_buckler"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "magistuarmory:item/silver_buckler_blocking"
+    }
+  ]
+}

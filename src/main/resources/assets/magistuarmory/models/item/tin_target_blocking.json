@@ -1,0 +1,6 @@
+{
+  "parent": "magistuarmory:item/target_blocking",
+  "textures": {
+    "layer0": "magistuarmory:items/tin_target"
+  }
+}

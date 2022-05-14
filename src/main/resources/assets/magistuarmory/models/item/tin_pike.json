@@ -1,0 +1,6 @@
+{
+  "parent": "magistuarmory:item/iron_pike",
+  "textures": {
+    "layer0": "magistuarmory:items/tin_pike"
+  }
+}

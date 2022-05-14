@@ -1,0 +1,14 @@
+{
+  "parent": "magistuarmory:item/target",
+  "textures": {
+    "layer0": "magistuarmory:items/iron_target"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "magistuarmory:item/iron_target_blocking"
+    }
+  ]
+}

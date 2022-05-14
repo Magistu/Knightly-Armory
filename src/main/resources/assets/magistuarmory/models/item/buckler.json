@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/handheld",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [86, -26, 0],
+			"translation": [1, 1.5, 0],
+			"scale": [1.875, 1.875, 1.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [86, -26, 0],
+			"translation": [1, 1.5, 0],
+			"scale": [1.875, 1.875, 1.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -9, 9],
+			"translation": [-3, 0, 2.75],
+			"scale": [1.5, 1.5, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -9, 9],
+			"translation": [-3, 0, 2.75],
+			"scale": [1.5, 1.5, 1]
+		},
+		"ground": {
+			"translation": [0, 4.25, 0],
+			"scale": [0.9375, 0.9375, 0.46875]
+		},
+		"gui": {
+			"scale": [1.75, 1.75, 1]
+		},
+		"fixed": {
+			"translation": [1, 0, 0],
+			"scale": [4, 4, 4]
+		}
+	}
+}

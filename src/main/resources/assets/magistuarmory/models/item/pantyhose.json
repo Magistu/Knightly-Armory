@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "magistuarmory:items/pantyhose",
+    "layer1": "magistuarmory:items/pantyhose_overlay"
+  }
+}

@@ -1,0 +1,43 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/handheld",
+	"overrides": [
+		{
+			"predicate": {
+				"blocking": 1
+			},
+			"model": "magistuarmory:item/buckler_blocking"
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [36, -32, 0],
+			"translation": [2, 3.25, 0.7],
+			"scale": [1.875, 1.875, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [36, -32, 0],
+			"translation": [2, 3.25, 0.7],
+			"scale": [1.875, 1.875, 1]
+		},
+		"firstperson_righthand": {
+			"translation": [-5, 4, 3],
+			"scale": [1.5, 1.5, 1]
+		},
+		"firstperson_lefthand": {
+			"translation": [-5, 4, 3],
+			"scale": [1.5, 1.5, 1]
+		},
+		"ground": {
+			"translation": [0, 4.25, 0],
+			"scale": [0.9375, 0.9375, 0.46875]
+		},
+		"gui": {
+			"scale": [1.75, 1.75, 1]
+		},
+		"fixed": {
+			"translation": [0.75, 0, 0],
+			"scale": [4, 4, 4]
+		}
+	}
+}

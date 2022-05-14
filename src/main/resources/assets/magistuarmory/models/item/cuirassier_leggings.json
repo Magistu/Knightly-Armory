@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "magistuarmory:items/cuirassier_leggings",
+    "layer1": "magistuarmory:items/cuirassier_leggings_overlay"
+  }
+}

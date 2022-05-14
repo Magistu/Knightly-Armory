@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "magistuarmory:items/knight_helmet",
+    "layer1": "magistuarmory:items/knight_helmet_overlay"
+  }
+}
