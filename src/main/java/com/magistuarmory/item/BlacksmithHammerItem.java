@@ -7,19 +7,8 @@ import net.minecraft.util.IItemProvider;
 
 public class BlacksmithHammerItem extends MedievalWeaponItem
 {
-    public BlacksmithHammerItem(String unlocName, Item.Properties build, IItemTier material, float attackDamage, float materialFactor, float attackSpeed)
+    public BlacksmithHammerItem(Item.Properties build, IItemTier material, float baseAttackDamage, float baseAttackSpeed, float weight)
     {
-        super(unlocName, build, material, attackDamage, materialFactor, attackSpeed);
-    }
-
-    public ItemStack getContainerItem(ItemStack itemstack)
-    {
-        ItemStack retval = new ItemStack(this);
-        retval.setDamageValue(itemstack.getDamageValue() + 1);
-        if (retval.getDamageValue() >= retval.getMaxDamage())
-        {
-            return ItemStack.EMPTY;
-        }
-        return retval;
+        super(build, material, baseAttackDamage, baseAttackSpeed, weight);
     }
 }

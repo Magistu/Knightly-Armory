@@ -3,7 +3,6 @@ package com.magistuarmory.item;
 import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.client.proxy.ClientProxy;
 import java.util.List;
-import javax.annotation.Nullable;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -22,10 +21,9 @@ import net.minecraft.world.World;
 
 public class  JoustingItem extends ArmorItem implements INoHatLayer, ISurcoat
 {
-    public JoustingItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
+    public JoustingItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {
         super(materialIn, slot, properties);
-        setRegistryName(unlocName);
     }
 
     public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)
@@ -39,7 +37,7 @@ public class  JoustingItem extends ArmorItem implements INoHatLayer, ISurcoat
 		player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 40, 1, false, false, false));
 	}
   
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         tooltip.add((new TranslationTextComponent("joustingarmor.slowness")).withStyle(TextFormatting.RED));
     }

@@ -19,14 +19,5 @@
   "result": {
     "item": "magistuarmory:steel_heavywarhammer",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:ingots/steel"
-      }
-    }
-  ]
+  }
 }

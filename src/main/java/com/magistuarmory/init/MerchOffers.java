@@ -27,24 +27,24 @@ public class MerchOffers
 		{
 			List<ITrade> trades = ev.getTrades().get(1);
 
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.APOSTOLIC_CROSS_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.BOWL_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.BULL_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.CHESS_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.CRUSADER_CROSS_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.DRAGON_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.EAGLE_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.HORSE_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.LILY_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.LION1_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.LION2_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.ORTHODOX_CROSS_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.SNAKE_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.SUN_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.SWORDS_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.TOWER_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.TREE_PATTERN), 100, 0));
-			trades.add(new BasicTrade(1, new ItemStack(ModItems.TWOHEADED_EAGLE_PATTERN), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.APOSTOLIC_CROSS_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.BOWL_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.BULL_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.CHESS_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.CRUSADER_CROSS_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.DRAGON_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.EAGLE_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.HORSE_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.LILY_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.LION1_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.LION2_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.ORTHODOX_CROSS_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.SNAKE_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.SUN_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.SWORDS_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.TOWER_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.TREE_PATTERN.get()), 100, 0));
+			trades.add(new BasicTrade(1, new ItemStack(ModItems.TWOHEADED_EAGLE_PATTERN.get()), 100, 0));
 		}
 	}
 }

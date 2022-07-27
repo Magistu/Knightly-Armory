@@ -401,16 +401,32 @@
 	"item.magistuarmory.cuirassier_chestplate": "胸甲",
 	"item.magistuarmory.cuirassier_leggings": "胸甲护腿",
 	"item.magistuarmory.cuirassier_boots": "胸甲护靴",
+  "item.magistuarmory.grand_bascinet": "巨型中头盔",
+  "item.magistuarmory.kastenbrust_chestplate": "一体式胸甲",
+  "item.magistuarmory.kastenbrust_leggings": "一体式胸甲护腿",
+  "item.magistuarmory.kastenbrust_boots": "一体式胸甲护靴",
+  "item.magistuarmory.face_helmet": "覆面盔",
+  "item.magistuarmory.lamellar_chestplate": "鳞甲",
+  "item.magistuarmory.lamellar_boots": "鳞靴",
 
 
 
   "silvertools.hurt": "对亡灵单位+2伤害",
   "flamebladed.hurt": "造成无法愈合的伤口",
-  "joustingarmor.slowness": "慢速",
+  "slowmovementspeed": "慢速",
   "effect.laceration": "撕裂",
   "lance.rideronly": "只能骑马使用",
   "lance.leftclick": "右键放下骑枪后左键攻击可击落对手",
   "lance.bonusdamage": "根据重量和速度增加额外伤害",
+  "halberd.hurt": "一定几率将敌人推下马",
+  "reachdistance": " 延伸范围",
+  "slowmovementspeed": "慢速",
+  "armorpiercing": "护甲穿透", 
+  "reachdistance": "延伸范围", 
+  "twohandedi": "双手武器 I", 
+  "twohandedii": "双手武器 II", 
+  "kgweight": "重量", 
+  "maxdamageblock": "格挡伤害上限", 
 
 
 
@@ -424,6 +440,8 @@
   "item.magistuarmory.pole": "棍", 
   "item.magistuarmory.steel_chain": "钢链", 
   "item.magistuarmory.woolen_fabric": "毛纺", 
+  "item.magistuarmory.small_steel_plate": "小板甲",
+  "item.magistuarmory.lamellar_rows": "罗斯鳞甲", 
 
 
 
@@ -433,8 +451,14 @@
   "item.magistuarmory.noble_sword": "皇家剑",
   "item.magistuarmory.rusted_bastardsword": "生锈的手半剑",
   "item.magistuarmory.rusted_heavymace": "生锈的重型杖",
-  "item.magistuarmory.longbow": "长弓",
+  "item.magistuarmory.club": "棍棒",
+  "item.magistuarmory.messer_sword": "梅塞尔剑",
 
+
+
+  "item.magistuarmory.longbow": "长弓",
+  "item.magistuarmory.heavy_crossbow": "重弩手",
+  
 
 
   "magistuarmory.withsurcoat.black": " 黑色罩袍",

@@ -4,7 +4,6 @@ import com.magistuarmory.event.ClientEventHandler;
 import com.magistuarmory.network.PacketHandler;
 import com.magistuarmory.network.PacketLanceCollision;
 import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -35,15 +34,15 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty, 
     public double velocityProjection = 0.0D;
     private int clickedTicks = 0;
 
-    public LanceItem(String unlocName, Item.Properties build, IItemTier material, float attackDamage, float materialFactor, float attackSpeed, int armorPiercing, float reachDistance)
+    public LanceItem(Item.Properties build, IItemTier material, float baseAttackDamage, float baseAttackSpeed, int armorPiercing, float reachDistance, float weight)
     {
-        super(unlocName, build, material, attackDamage, materialFactor, attackSpeed, armorPiercing, reachDistance);
+        super(build, material, baseAttackDamage, baseAttackSpeed, armorPiercing, reachDistance, weight);
     }
 
     @Override
     public @NotNull ActionResult<ItemStack> use(@NotNull World p_41432_, @NotNull PlayerEntity p_41433_, @NotNull Hand p_41434_)
     {
-        setRaised((LivingEntity)p_41433_, !isRaised((LivingEntity)p_41433_));
+        setRaised(p_41433_, !isRaised(p_41433_));
 
         return super.use(p_41432_, p_41433_, p_41434_);
     }
@@ -169,7 +168,7 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty, 
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable World level, List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn)
+    public void appendHoverText(@NotNull ItemStack stack, World level, List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn)
     {
         tooltip.add((new TranslationTextComponent("lance.rideronly")).withStyle(TextFormatting.BLUE));
         tooltip.add((new TranslationTextComponent("lance.leftclick")).withStyle(TextFormatting.BLUE));
@@ -252,7 +251,7 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty, 
         }
     }
 
-    public boolean isRaised(@Nullable LivingEntity entityIn)
+    public boolean isRaised(LivingEntity entityIn)
     {
         if (entityIn == null)
         {
@@ -301,5 +300,10 @@ public class LanceItem extends MedievalWeaponItem implements IHasModelProperty, 
     {
         CompoundNBT compoundnbt = p_200886_1_.getTagElement("display");
         return compoundnbt != null && compoundnbt.contains("color", 99) ? compoundnbt.getInt("color") : -10092544;
+    }
+
+    public boolean isSilver()
+    {
+        return isSilver;
     }
 }

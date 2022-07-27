@@ -390,16 +390,32 @@
   "item.magistuarmory.cuirassier_chestplate": "Кираса",
   "item.magistuarmory.cuirassier_leggings": "Шоссы кирасира",
   "item.magistuarmory.cuirassier_boots": "Ботинки кирасира",
+  "item.magistuarmory.grand_bascinet": "Гранд бацинет",
+  "item.magistuarmory.kastenbrust_chestplate": "Нагрудник доспеха кастенбруст",
+  "item.magistuarmory.kastenbrust_leggings": "Поножи доспеха кастенбруст",
+  "item.magistuarmory.kastenbrust_boots": "Сабатоны доспеха кастенбруст",
+  "item.magistuarmory.face_helmet": "Шлем с личиной",
+  "item.magistuarmory.lamellar_chestplate": "Ламеллярный доспех",
+  "item.magistuarmory.lamellar_boots": "Ламеллярные ботинки",
 
 
 
-  "silvertools.hurt": "+2 урон против нежити",
+  "silvertools.hurt": "урон против нежити",
   "flamebladed.hurt": "Наносит незаживающие раны",
   "joustingarmor.slowness": "Медленная скорость передвижения",
   "effect.laceration": "Рваная рана",
   "lance.rideronly": "Только для всадника",
   "lance.leftclick": "ЛКМ перед ударом чтобы спешить цель",
   "lance.bonusdamage": "+бонусный урон, зависящий от массы и скорости",
+  "halberd.hurt": "С некоторым шансом сбрасывает противника с седла",
+  "reachdistance": "дальность атаки",
+  "slowmovementspeed": "Снижает скорость передвижения",
+  "armorpiercing": "пробитие брони", 
+  "reachdistance": "reach distance", 
+  "twohandedi": "Двуручное оружие I", 
+  "twohandedii": "Двуручное оружие II", 
+  "kgweight": "кг вес", 
+  "maxdamageblock": "максимальное блокирование урона", 
 
 
 
@@ -412,7 +428,9 @@
   "item.magistuarmory.hilt": "Рукоять", 
   "item.magistuarmory.pole": "Шест", 
   "item.magistuarmory.steel_chain": "Стальная цепь",
-  "item.magistuarmory.woolen_fabric": "Шерстяная ткань",  
+  "item.magistuarmory.woolen_fabric": "Шерстяная ткань", 
+  "item.magistuarmory.small_steel_plate": "Маленькая стальная пластина",  
+  "item.magistuarmory.lamellar_rows": "Пластинчатые ряды",  
 
 
 
@@ -422,7 +440,15 @@
   "item.magistuarmory.noble_sword": "Дворянский меч",
   "item.magistuarmory.rusted_bastardsword": "Ржавый полуторный меч",
   "item.magistuarmory.rusted_heavymace": "Ржавая тяжёлая булава",
+  "item.magistuarmory.club": "Дубина",
+  "item.magistuarmory.messer_sword": "Гросс-мессер",
+  "item.magistuarmory.club": "Дубина",
+  "item.magistuarmory.messer_sword": "Гросс-мессер",
+
+
+
   "item.magistuarmory.longbow": "Длинный лук",
+  "item.magistuarmory.heavy_crossbow": "Тяжёлый арбалет",
 
 
 

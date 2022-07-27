@@ -14,14 +14,5 @@
   "result": {
     "item": "magistuarmory:silver_claymore",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:ingots/silver"
-      }
-    }
-  ]
+  }
 }

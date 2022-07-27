@@ -10,10 +10,9 @@ import net.minecraft.nbt.CompoundNBT;
 
 public class KnightItem extends ArmorItem implements INoHatLayer, ISurcoat, IDyeableArmorItem
 {
-    public KnightItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
+    public KnightItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {
         super(materialIn, slot, properties);
-        setRegistryName(unlocName);
     }
 
     public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)

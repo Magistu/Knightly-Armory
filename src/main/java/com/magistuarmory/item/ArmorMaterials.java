@@ -43,7 +43,7 @@ public enum ArmorMaterials implements IArmorMaterial
 
     BRIGANDINE("brigandine", 0.25f, 0f, new int[] { 100, 200, 265, 170 }, new int[] { 2, 3, 5, 2 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
 
-    GAMBESON("gambeson", 0f, 0f, new int[] { 100, 0, 128, 88 }, new int[] { 1, 0, 2, 1 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather")), () -> { return Ingredient.of(ModItems.WOOLEN_FABRIC); }),
+    GAMBESON("gambeson", 0f, 0f, new int[] { 100, 0, 128, 88 }, new int[] { 1, 0, 2, 1 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather")), () -> { return Ingredient.of(ModItems.WOOLEN_FABRIC.get()); }),
 
     CEREMONIALARMET("ceremonialarmet", 1.25f, 0f, new int[] { 230, 315, 335, 275 }, new int[] { 2, 5, 8, 3 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
     CEREMONIAL("ceremonial", 1.25f, 0f, new int[] { 230, 315, 335, 275 }, new int[] { 2, 5, 8, 3 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
@@ -68,7 +68,12 @@ public enum ArmorMaterials implements IArmorMaterial
 
     WINGEDHUSSARCHESTPLATE("wingedhussarchestplate", 1.0f, 0f, new int[] { 150, 0, 360, 170 }, new int[] { 1, 0, 7, 2 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
 
-    CUIRASSIER("cuirassier", 0.5f, 0f, new int[] { 150, 0, 315, 170 }, new int[] { 1, 0, 6, 2 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); });
+    CUIRASSIER("cuirassier", 0.5f, 0f, new int[] { 150, 0, 315, 170 }, new int[] { 1, 0, 6, 2 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
+    
+    KASTENBRUST("kastenbrust", 1.25f, 0.5f, new int[] { 230, 315, 335, 275 }, new int[] { 2, 5, 8, 3 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
+    GRAND_BASCINET("grand_bascinet", 1.25f, 0.5f, new int[] { 230, 315, 335, 275 }, new int[] { 2, 5, 8, 3 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_iron")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); }),
+
+    LAMELLAR("lamellar", 0.3f, 0f, new int[] { 200, 270, 200, 240 }, new int[] { 2, 5, 6, 3 }, 9, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_chain")), () -> { return Ingredient.of(ItemTags.getAllTags().getTag(new ResourceLocation("forge:ingots/steel"))); });
 
 
     private final String name;

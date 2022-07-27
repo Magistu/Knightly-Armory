@@ -4,6 +4,14 @@
 	"textures": {
 		"layer0": "magistuarmory:items/iron_claymore"
 	},
+	"overrides": [
+		{
+			"predicate": {
+				"blocking": 1
+			},
+			"model": "magistuarmory:item/iron_claymore_blocking"
+		}
+	],
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [-50, -90, 0],
@@ -30,16 +38,8 @@
 			"scale": [0.9375, 0.9375, 0.46875]
 		},
 		"gui": {
-			"translation": [2.388, 2.388, 0],
-			"scale": [1.28, 1.28, 1]
+			"translation": [1.63, 1.63, 0],
+			"scale": [1.2, 1.2, 1]
 		}
-	},
-	"overrides": [
-		{
-			"predicate": {
-				"blocking": 1
-			},
-			"model": "magistuarmory:item/iron_claymore_blocking"
-		}
-	]
+	}
 }

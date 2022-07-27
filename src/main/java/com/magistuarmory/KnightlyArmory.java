@@ -5,7 +5,6 @@ import com.magistuarmory.config.EpicFightConfig;
 import com.magistuarmory.config.ModConfigurations;
 import com.magistuarmory.event.EventHandler;
 import com.magistuarmory.init.ModItems;
-import com.magistuarmory.item.IHasModelProperty;
 import com.magistuarmory.network.PacketHandler;
 import com.magistuarmory.proxy.IProxy;
 import net.minecraft.block.Block;
@@ -52,6 +51,8 @@ public class KnightlyArmory
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(EventHandler.class);
 
+        ModItems.ITEMS.register(modEventBus);
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfigurations.SPEC, "epic-knights.toml");
 
         PacketHandler.init();
@@ -72,10 +73,7 @@ public class KnightlyArmory
 
     private void doClientStuff(FMLClientSetupEvent event)
     {
-        for (IHasModelProperty item : ModItems.modelProperties)
-        {
-            event.enqueueWork(item::registerModelProperty);
-        }
+        ClientProxy.doClientStuff(event);
     }
 
     private void doLateInit(FMLLoadCompleteEvent event)

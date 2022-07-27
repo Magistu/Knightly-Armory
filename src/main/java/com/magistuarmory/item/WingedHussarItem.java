@@ -10,10 +10,9 @@ import net.minecraft.item.ItemStack;
 
 public class WingedHussarItem extends ArmorItem
 {
-    public WingedHussarItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Properties properties)
+    public WingedHussarItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties properties)
     {
         super(materialIn, slot, properties);
-        setRegistryName(unlocName);
     }
 
     public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)

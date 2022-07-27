@@ -390,16 +390,31 @@
 	"item.magistuarmory.cuirassier_chestplate": "Küriss",
 	"item.magistuarmory.cuirassier_leggings": "Kürassier Strumpfhose",
 	"item.magistuarmory.cuirassier_boots": "Kürassierstiefel",
+	"item.magistuarmory.grand_bascinet": "Grand Bacinet",
+    "item.magistuarmory.kastenbrust_chestplate": "Kastenbrustharnisch",
+    "item.magistuarmory.kastenbrust_leggings": "Kastenbrustbeinschutz",
+    "item.magistuarmory.kastenbrust_boots": "Kastenbruststiefel",
+    "item.magistuarmory.face_helmet": "Gesichtshelm",
+    "item.magistuarmory.lamellar_chestplate": "Lamellen Brust",
+    "item.magistuarmory.lamellar_boots": "Lamellen Stiefel",
 
 
 
-	"silvertools.hurt": "+2 Schaden gegen Untote",
+	"silvertools.hurt": "Schaden gegen Untote",
 	"flamebladed.hurt": "Verursacht unheilbare Wunden",
-	"joustingarmor.slowness": "Verlangsamung",
 	"effect.laceration": "Platzwunde",
-	"lance.rideronly": "Rider only",
-	"lance.leftclick": "Left-click before hitting to dismount target",
-	"lance.bonusdamage": "+bonus damage based on mass and speed",
+	"lance.rideronly": "Wird nur beim Reiten verwendet",
+	"lance.leftclick": "Vor dem Schlagen mit der linken Maustaste klicken, um vom Ziel abzusteigen",
+	"lance.bonusdamage": "+Bonusschaden basierend auf Masse und Geschwindigkeit",
+	"halberd.hurt": "Hat eine Chance den Gegner vom Pferd zu schubsen",
+    "reachdistance": " Reichweite",
+    "slowmovementspeed": "Verlangsamte Bewegungsgeschwindigkeit",
+    "armorpiercing": "Rüstungsdurchdringung", 
+    "reachdistance": "Reichweite", 
+    "twohandedi": "Zweihändig I", 
+    "twohandedii": "Zweihändig II", 
+    "kgweight": "kg Gewicht", 
+    "maxdamageblock": "maximaler Schadensblock", 
 
 
 
@@ -413,6 +428,8 @@
 	"item.magistuarmory.pole": "Stange",
 	"item.magistuarmory.steel_chain": "Stahlkette",
 	"item.magistuarmory.woolen_fabric": "Wollstoff",
+	"item.magistuarmory.small_steel_plate": "Kleine Stahlplatte",
+    "item.magistuarmory.lamellar_rows": "Lamellen Rüstung", 
 
 
 
@@ -422,7 +439,16 @@
 	"item.magistuarmory.noble_sword": "Edles Schwert",
 	"item.magistuarmory.rusted_bastardsword": "Verrostetes Bastardschwert",
 	"item.magistuarmory.rusted_heavymace": "Schwerer Verrosteterstreitkolben",
-	"item.magistuarmory.longbow": "Langbogen",
+	"item.magistuarmory.club": "Knüppel",
+    "item.magistuarmory.messer_sword": "Großes Messer",
+    "item.magistuarmory.heavy_crossbow": "Schwere Armbrust",
+    "item.magistuarmory.club": "Knüppel",
+    "item.magistuarmory.messer_sword": "Messer",
+
+
+
+    "item.magistuarmory.longbow": "Langbogen",
+    "item.magistuarmory.heavy_crossbow": "Schwere Armbrust",
 
 
 

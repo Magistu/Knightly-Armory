@@ -12,10 +12,9 @@ import net.minecraft.item.ItemStack;
 
 public class HalfarmorItem extends ArmorItem implements ISurcoat
 {
-    public HalfarmorItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
+    public HalfarmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {
         super(materialIn, slot, properties);
-        setRegistryName(unlocName);
     }
 
     @Override

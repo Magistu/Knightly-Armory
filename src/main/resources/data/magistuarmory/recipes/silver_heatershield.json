@@ -16,14 +16,5 @@
   "result": {
     "item": "magistuarmory:silver_heatershield",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:ingots/silver"
-      }
-    }
-  ]
+  }
 }

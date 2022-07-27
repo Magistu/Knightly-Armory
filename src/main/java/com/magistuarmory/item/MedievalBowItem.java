@@ -18,13 +18,12 @@ public class MedievalBowItem extends BowItem implements IHasModelProperty
 {
 
     private final float pullTime;
-    private final float arrowSpeed;
+    private final float projectileSpeed;
 
-    public MedievalBowItem(String unlocname, Properties p_i48522_1_, float arrowSpeed, float pullTime)
+    public MedievalBowItem(Properties p_i48522_1_, float projectileSpeed, float pullTime)
     {
         super(p_i48522_1_);
-        setRegistryName(unlocname);
-        this.arrowSpeed = arrowSpeed;
+        this.projectileSpeed = projectileSpeed;
         this.pullTime = pullTime;
     }
 
@@ -54,7 +53,7 @@ public class MedievalBowItem extends BowItem implements IHasModelProperty
 						ArrowItem arrowitem = (ArrowItem)(itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
 						AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(p_77615_2_, itemstack, playerentity);
 						abstractarrowentity = customArrow(abstractarrowentity);
-						abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F, f * this.arrowSpeed, 1.0F);
+						abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F, f * this.projectileSpeed, 1.0F);
 						if (f == 1.0F) {
 							abstractarrowentity.setCritArrow(true);
 						}

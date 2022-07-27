@@ -6,6 +6,7 @@ import com.magistuarmory.client.renderer.entity.layer.ArmorDecorationLayer;
 import com.magistuarmory.client.renderer.model.entity.*;
 import com.magistuarmory.client.renderer.tileentity.HeraldyItemStackRenderer;
 import com.magistuarmory.init.ModItems;
+import com.magistuarmory.item.IHasModelProperty;
 import com.magistuarmory.proxy.IProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.*;
@@ -14,26 +15,47 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientProxy implements IProxy
 {
-    private static final ArmetModel armetModel = new ArmetModel();
-    private static final StechhelmModel stechhelmModel = new StechhelmModel();
-    private static final SalletModel salletModel = new SalletModel();
-    private static final MaximilianHelmetModel maximilianHelmetModel = new MaximilianHelmetModel();
-    private static final KettlehatModel kettlehatModel = new KettlehatModel();
-    private static final BarbuteModel barbuteModel = new BarbuteModel();
-    private static final BascinetModel bascinetModel = new BascinetModel();
-    private static final WingedHussarChestplateModel wingedHussarChestplateModel = new WingedHussarChestplateModel();
+    private static final BipedModel<LivingEntity> armetModel = new ArmetModel();
+    private static final BipedModel<LivingEntity> stechhelmModel = new StechhelmModel();
+    private static final BipedModel<LivingEntity> salletModel = new SalletModel();
+    private static final BipedModel<LivingEntity> maximilianHelmetModel = new MaximilianHelmetModel();
+    private static final BipedModel<LivingEntity> kettlehatModel = new KettlehatModel();
+    private static final BipedModel<LivingEntity> barbuteModel = new BarbuteModel();
+    private static final BipedModel<LivingEntity> bascinetModel = new BascinetModel();
+    private static final BipedModel<LivingEntity> grandBascinetModel = new GrandBascinetModel();
 
+    private static final BipedModel<LivingEntity> wingedHussarChestplateModel = new WingedHussarChestplateModel();
     private static final BipedModel<LivingEntity> armorModel = new BipedModel<>(1.0F);
     private static final BipedModel<LivingEntity> armorLeggingsModel = new BipedModel<>(0.5F);
 
+    public static void doClientStuff(FMLClientSetupEvent ev)
+    {
+        for (ModItems.ShieldsSupply routine : ModItems.shieldsSupply)
+        {
+            routine.get().forEach(item -> ev.enqueueWork(((IHasModelProperty) item.get())::registerModelProperty));
+        }
+
+        for (ModItems.ItemsSupply<SwordItem> routine : ModItems.weaponsSupply)
+        {
+            routine.get().forEach(item -> ev.enqueueWork(((IHasModelProperty) item.get())::registerModelProperty));
+        }
+
+        ev.enqueueWork(((IHasModelProperty) ModItems.LONGBOW.get())::registerModelProperty);
+        ev.enqueueWork(((IHasModelProperty) ModItems.HEAVY_CROSSBOW.get())::registerModelProperty);
+        ev.enqueueWork(((IHasModelProperty) ModItems.NOBLE_SWORD.get())::registerModelProperty);
+        ev.enqueueWork(((IHasModelProperty) ModItems.MESSER_SWORD.get())::registerModelProperty);
+    }
+    
     public void setup(IEventBus modEventBus, IEventBus forgeEventBus)
     {
         modEventBus.addListener(this::clientSetup);
@@ -95,6 +117,12 @@ public class ClientProxy implements IProxy
     {
         return (armorSlot == EquipmentSlotType.CHEST) ? (A)this.wingedHussarChestplateModel : ((armorSlot == EquipmentSlotType.LEGS) ? (A)this.armorLeggingsModel : (A)this.armorModel);
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public <A extends BipedModel<?>> A getKastenbrustModel(EquipmentSlotType armorSlot)
+    {
+        return (armorSlot == EquipmentSlotType.HEAD) ? (A)this.grandBascinetModel : ((armorSlot == EquipmentSlotType.LEGS) ? (A)this.armorLeggingsModel : (A)this.armorModel);
+    }
 	
     @OnlyIn(Dist.CLIENT)
     public static Item.Properties setHeraldyItemStackRenderer(Item.Properties prop)
@@ -107,20 +135,13 @@ public class ClientProxy implements IProxy
     {
         for (EntityRenderer<?> renderer : Minecraft.getInstance().getEntityRenderDispatcher().renderers.values())
         {
-            if (renderer instanceof ArmorStandRenderer)
+            if (renderer instanceof LivingRenderer) 
             {
-                ArmorStandRenderer renderer0 = (ArmorStandRenderer) renderer;
-				renderer0.addLayer(new ArmorDecorationLayer<>(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
-            }
-			if (renderer instanceof VillagerRenderer)
-            {
-                VillagerRenderer renderer0 = (VillagerRenderer) renderer;
-				renderer0.addLayer(new ArmorDecorationLayer(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
-			}
-            if (renderer instanceof BipedRenderer<?, ?>)
-            {
-                BipedRenderer<?, ?> renderer0 = (BipedRenderer<?, ?>) renderer;
-                renderer0.addLayer(new ArmorDecorationLayer(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
+                LivingRenderer<?, ?> renderer0 = (LivingRenderer<?, ?>) renderer;
+                if (renderer0.getModel() instanceof BipedModel) 
+                {
+                    renderer0.addLayer(new ArmorDecorationLayer(renderer0, new SurcoatModel<>(), new ResourceLocation(KnightlyArmory.ID, "textures/models/armor/surcoat.png"), "surcoat"));
+                }
             }
             if (renderer instanceof HorseRenderer)
             {
@@ -137,12 +158,10 @@ public class ClientProxy implements IProxy
 			}
 		}
 
-        for (Item item : ModItems.dyeableItems)
+        for (RegistryObject<? extends Item> itemRegistry : ModItems.dyeableItems)
 		{
 			Minecraft.getInstance().getItemColors().register((p_92708_, p_92709_) ->
-			{
-				return p_92709_ > 0 ? -1 : ((IDyeableArmorItem) p_92708_.getItem()).getColor(p_92708_);
-			}, item);
+                    p_92709_ > 0 ? -1 : ((IDyeableArmorItem) p_92708_.getItem()).getColor(p_92708_), itemRegistry.get());
 		}
     }
 }

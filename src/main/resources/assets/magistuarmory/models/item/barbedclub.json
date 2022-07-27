@@ -1,6 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"gui_light": "front",
 	"texture_size": [32, 32],
 	"textures": {
 		"1": "magistuarmory:items/barbedclub"
@@ -69,6 +68,7 @@
 			}
 		}
 	],
+	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
 			"translation": [0.25, -0.5, 1.75],
@@ -87,7 +87,7 @@
 			"translation": [2.25, 5.25, -3.25]
 		},
 		"ground": {
-			"translation": [7.75, 0, 7.25]
+			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
 			"rotation": [-8, 8, -45],

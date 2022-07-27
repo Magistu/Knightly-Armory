@@ -3,8 +3,6 @@ package com.magistuarmory.item;
 import java.util.List;
 import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -44,7 +42,6 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
     public MedievalShieldItem(String shieldName, Item.Properties build, ModItemTier material, int durability, float weigth, float maxBlockDamage, boolean paintable)
     {
         super(build.durability(durability));
-        this.setRegistryName(material.getMaterialName() + "_" + shieldName);
         this.shieldName = shieldName;
         this.materialName = material.getMaterialName();
         this.paintable = paintable;
@@ -63,7 +60,7 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn)
+    public void appendHoverText(@NotNull ItemStack stack, World worldIn, List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn)
     {
         tooltip.add(new StringTextComponent(getMaxBlockDamage() + " max damage block").withStyle(TextFormatting.BLUE));
         tooltip.add(new StringTextComponent(getWeight() + "kg weight").withStyle(TextFormatting.BLUE));
@@ -138,7 +135,7 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
 
         if (damage > this.getMaxBlockDamage())
         {
-            stack.hurtAndBreak((int) (armorPiercingFactor * 0.2f * stack.getMaxDamage()), player, (p_220044_0_) ->
+            stack.hurtAndBreak((int) (armorPiercingFactor * 1.5f * getMaxBlockDamage()), player, (p_220044_0_) ->
                     p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
 
             float damage1 = damage - this.getMaxBlockDamage();

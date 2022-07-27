@@ -11,10 +11,9 @@ import net.minecraft.item.ItemStack;
 
 public class MedievalArmorItem extends ArmorItem implements ISurcoat
 {
-    public MedievalArmorItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
+    public MedievalArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties properties)
     {
         super(materialIn, slot, properties);
-        setRegistryName(unlocName);
     }
 
     public <A extends net.minecraft.client.renderer.entity.model.BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default)

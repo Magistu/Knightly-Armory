@@ -5,14 +5,5 @@
   },
   "result": "magistuarmory:steel_ingot",
   "experience": 0.5,
-  "cookingtime": 40,
-  "conditions": 
-  [
-    {
-      "type": "magistuarmory:type_disabled",
-      "disabled": [
-        "steel"
-      ]
-    }
-  ]
+  "cookingtime": 40
 }

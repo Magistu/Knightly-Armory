@@ -15,14 +15,5 @@
   "result": {
     "item": "magistuarmory:iron_bastardsword",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:ingots/iron"
-      }
-    }
-  ]
+  }
 }

@@ -390,16 +390,25 @@
 	"item.magistuarmory.cuirassier_chestplate": "Cuirass",
 	"item.magistuarmory.cuirassier_leggings": "Cuirassier Pantyhose",
 	"item.magistuarmory.cuirassier_boots": "Cuirassier Boots",
+  "item.magistuarmory.grand_bascinet": "Grand Bascinet",
+  "item.magistuarmory.kastenbrust_chestplate": "Kasten-brust Armor",
+  "item.magistuarmory.kastenbrust_leggings": "Kasten-brust Leggings",
+  "item.magistuarmory.kastenbrust_boots": "Kasten-brust Boots",
+  "item.magistuarmory.face_helmet": "Face Helmet",
+  "item.magistuarmory.lamellar_chestplate": "Lamellar Armor",
+  "item.magistuarmory.lamellar_boots": "Lamellar Boots",
 
 
 
-  "silvertools.hurt": "+2 damage against undead",
+  "silvertools.hurt": "damage against undead",
   "flamebladed.hurt": "Inflicts non-healing wounds",
-  "joustingarmor.slowness": "Slow movement speed",
+  "halberd.hurt": "Has a chance to push the enemy off the horse",
+  "reachdistance": " reach distance",
+  "slowmovementspeed": "Slow movement speed",
   "effect.laceration": "Laceration",
-  "lance.rideronly": "Rider only",
+  "lance.rideronly": "Used only when riding",
   "lance.leftclick": "Left-click before hitting to dismount target",
-  "lance.bonusdamage": "+bonus damage based on mass and speed",
+  "lance.bonusdamage": "Damage is based on mass and speed",
   "armorpiercing": "armor piercing", 
   "reachdistance": "reach distance", 
   "twohandedi": "Two-Handed I", 
@@ -418,7 +427,9 @@
   "item.magistuarmory.hilt": "Hilt", 
   "item.magistuarmory.pole": "Pole", 
   "item.magistuarmory.steel_chain": "Steel Chain", 
-  "item.magistuarmory.woolen_fabric": "Woolen Fabric", 
+  "item.magistuarmory.woolen_fabric": "Woolen Fabric",
+  "item.magistuarmory.small_steel_plate": "Small Steel Plate",  
+  "item.magistuarmory.lamellar_rows": "Lamellar Rows", 
 
 
 
@@ -428,7 +439,13 @@
   "item.magistuarmory.noble_sword": "Noble Sword",
   "item.magistuarmory.rusted_bastardsword": "Rusted Bastard Sword",
   "item.magistuarmory.rusted_heavymace": "Rusted Heavy Mace",
+  "item.magistuarmory.club": "Club",
+  "item.magistuarmory.messer_sword": "Messer",
+
+
+
   "item.magistuarmory.longbow": "Longbow",
+  "item.magistuarmory.heavy_crossbow": "Heavy Crossbow",
 
 
 

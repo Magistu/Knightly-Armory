@@ -10,9 +10,9 @@ public class DyeableMedievalArmorItem extends MedievalArmorItem implements IDyea
 {
     int defaultcolor;
 
-    public DyeableMedievalArmorItem(String unlocName, IArmorMaterial materialIn, EquipmentSlotType slot, Properties properties, int defaultcolor)
+    public DyeableMedievalArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties properties, int defaultcolor)
     {
-        super(unlocName, materialIn, slot, properties);
+        super(materialIn, slot, properties);
         this.defaultcolor = defaultcolor;
     }
 

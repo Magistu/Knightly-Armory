@@ -3,6 +3,8 @@ package com.magistuarmory.network;
 import com.magistuarmory.item.LanceItem;
 import io.netty.channel.ChannelHandler.Sharable;
 import java.util.function.Supplier;
+
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -86,7 +88,7 @@ public class PacketLanceCollision
             lance.attacking = true;
 
             player.attack(victim);
-            victim.hurt(DamageSource.GENERIC, lance.getAttackDamage() + message.bonusDamage);
+            victim.hurt(DamageSource.GENERIC, lance.getAttackDamage() + message.bonusDamage + (lance.isSilver() && ((LivingEntity)victim).getMobType().equals(CreatureAttribute.UNDEAD) ? lance.getSilverAttackDamage() : 0.0f));
             if (mainStack.getItem() instanceof LanceItem)
             {
                 lance.attacking = false;

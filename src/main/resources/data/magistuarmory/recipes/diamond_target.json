@@ -15,14 +15,5 @@
   "result": {
     "item": "magistuarmory:diamond_target",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:gems/diamond"
-      }
-    }
-  ]
+  }
 }
