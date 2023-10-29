@@ -1,5 +1,8 @@
 {
   "parent": "magistuarmory:item/buckler",
+  "textures": {
+    "layer0": "magistuarmory:items/tin_buckler"
+  },
   "overrides": [
     {
       "predicate": {

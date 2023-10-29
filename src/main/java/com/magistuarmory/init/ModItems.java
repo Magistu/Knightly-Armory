@@ -1,476 +1,563 @@
 package com.magistuarmory.init;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.item.*;
-import com.magistuarmory.item.ArmorMaterials;
-import com.magistuarmory.item.crafting.RecipesHeraldry;
+import com.magistuarmory.config.ModConfigurations;
+import com.magistuarmory.item.BlacksmithHammerItem;
+import com.magistuarmory.item.ArmorItem;
+import com.magistuarmory.item.GothicItem;
+import com.magistuarmory.item.HalfarmorItem;
+import com.magistuarmory.item.JoustingItem;
+import com.magistuarmory.item.KnightItem;
+import com.magistuarmory.item.MaximilianItem;
+import com.magistuarmory.item.MedievalShieldItem;
+import com.magistuarmory.item.MedievalWeaponItem;
+import com.magistuarmory.item.PlatemailItem;
+import com.magistuarmory.item.ShieldsFactory;
+import com.magistuarmory.item.IngridientItem;
+import com.magistuarmory.item.WeaponsFactory;
+import com.magistuarmory.item.WingedHussarItem;
+import com.magistuarmory.item.XIVCenturyKnightItem;
+import com.magistuarmory.item.crafting.RecipesShieldHeraldy;
+import com.magistuarmory.util.IHasModel;
 
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemShield;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
 
-public class ModItems {
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, KnightlyArmory.ID);
+@EventBusSubscriber(modid = KnightlyArmory.ID)
+public class ModItems 
+{
+	public static final CreativeTabs GROUP_KA = new CreativeTabs(KnightlyArmory.ID + ".armor")
+	{
+		@Override
+		public ItemStack getTabIconItem()
+		{
+			return new ItemStack(ARMET);
+		}
+	};
+	
+	public static final Item APOSTOLIC_CROSS_PATTERN = new IngridientItem("apostolic_cross_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item BOWL_PATTERN = new IngridientItem("bowl_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item BULL_PATTERN = new IngridientItem("bull_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item CHESS_PATTERN = new IngridientItem("chess_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item CRUSADER_CROSS_PATTERN = new IngridientItem("crusader_cross_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item DRAGON_PATTERN = new IngridientItem("dragon_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item EAGLE_PATTERN = new IngridientItem("eagle_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item HORSE_PATTERN = new IngridientItem("horse_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item LILY_PATTERN = new IngridientItem("lily_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item LION1_PATTERN = new IngridientItem("lion1_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item LION2_PATTERN = new IngridientItem("lion2_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item ORTHODOX_CROSS_PATTERN = new IngridientItem("orthodox_cross_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item SNAKE_PATTERN = new IngridientItem("snake_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item SUN_PATTERN = new IngridientItem("sun_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item SWORDS_PATTERN = new IngridientItem("swords_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item TOWER_PATTERN = new IngridientItem("tower_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item TREE_PATTERN = new IngridientItem("tree_pattern").setCreativeTab(CreativeTabs.MISC);
+	public static final Item TWOHEADED_EAGLE_PATTERN = new IngridientItem("two-headed_eagle_pattern").setCreativeTab(CreativeTabs.MISC);
+	
+	
+	//Ingridients
+	public static final Item STEEL_INGOT = new IngridientItem("steel_ingot").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item STEEL_NUGGET = new IngridientItem("steel_nugget").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item STEEL_RING = new IngridientItem("steel_ring").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item STEEL_CHAINMAIL = new IngridientItem("steel_chainmail").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item STEEL_PLATE = new IngridientItem("steel_plate").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item LEATHER_STRIP = new IngridientItem("leather_strip").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item HILT = new IngridientItem("hilt").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item POLE = new IngridientItem("pole").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item STEEL_CHAIN = new IngridientItem("steel_chain").setCreativeTab(CreativeTabs.MATERIALS);
+	public static final Item WOOLEN_FABRIC = new IngridientItem("woolen_fabric").setCreativeTab(CreativeTabs.MATERIALS);
 
-	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, KnightlyArmory.ID);
-	public static final RegistryObject<SimpleCraftingRecipeSerializer<RecipesHeraldry>> HERALDRY_RECIPES = RECIPE_SERIALIZERS.register("heraldry_recipes", () -> RecipesHeraldry.HERALDRY_RECIPES);
+	//Tool Materials
+	public static final ToolMaterial TOOL_MATERIAL_COPPER = EnumHelper.addToolMaterial("copper", 1, 160, 0.7F, 0.0F, 10);
+	public static final ToolMaterial TOOL_MATERIAL_SILVER = EnumHelper.addToolMaterial("silver", 2, 230, 5.5F, 1.0F, 18);
+	public static final ToolMaterial TOOL_MATERIAL_STEEL = EnumHelper.addToolMaterial("steel", 2, 400, 6.0F, 2.5F, 14);
+	public static final ToolMaterial TOOL_MATERIAL_TIN = EnumHelper.addToolMaterial("tin", 2, 130, 6.0F, 0.0F, 20);
+	public static final ToolMaterial TOOL_MATERIAL_BRONZE = EnumHelper.addToolMaterial("bronze", 2, 200, 6.0F, 2.0F, 15);
 
+	
+	//Armor Materials
+	public static final ArmorMaterial ARMOR_MATERIAL_ARMET = EnumHelper.addArmorMaterial("armet", KnightlyArmory.ID + ":armet", 23, new int[] { 2, 5, 8, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_KNIGHT = EnumHelper.addArmorMaterial("knight", KnightlyArmory.ID + ":knight", 23, new int[] { 2, 5, 8, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_STECHHELM = EnumHelper.addArmorMaterial("stechhelm", KnightlyArmory.ID + ":stechhelm", 34, new int[] { 3, 6, 9, 4 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_JOUSTING = EnumHelper.addArmorMaterial("jousting", KnightlyArmory.ID + ":jousting", 34, new int[] { 3, 6, 9, 4 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_SALLET = EnumHelper.addArmorMaterial("sallet", KnightlyArmory.ID + ":sallet", 23, new int[] { 2, 5, 8, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_GOTHIC = EnumHelper.addArmorMaterial("gothic", KnightlyArmory.ID + ":gothic", 23, new int[] { 2, 5, 8, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_MAXIMILIANHELMET = EnumHelper.addArmorMaterial("maximilian_helmet", KnightlyArmory.ID + ":maximilian_helmet", 34, new int[] { 3, 6, 9, 4 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.8f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_MAXIMILIAN = EnumHelper.addArmorMaterial("maximilian", KnightlyArmory.ID + ":maximilian", 34, new int[] { 3, 6, 9, 4 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.8f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_CHAINMAIL = EnumHelper.addArmorMaterial("chainmail", KnightlyArmory.ID + ":chainmail", 15, new int[] { 1, 4, 5, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0f);
+
+	public static final ArmorMaterial ARMOR_MATERIAL_KETTLEHAT = EnumHelper.addArmorMaterial("kettlehat", KnightlyArmory.ID + ":kettlehat", 18, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.3f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_PLATEMAIL = EnumHelper.addArmorMaterial("platemail", KnightlyArmory.ID + ":platemail", 18, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.3f);
+
+	public static final ArmorMaterial ARMOR_MATERIAL_BARBUTE = EnumHelper.addArmorMaterial("barbute", KnightlyArmory.ID + ":barbute", 20, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.3f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_HALFARMOR = EnumHelper.addArmorMaterial("halfarmor", KnightlyArmory.ID + ":halfarmor", 20, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.3f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	
+	public static final ArmorMaterial ARMOR_MATERIAL_CRUSADER = EnumHelper.addArmorMaterial("crusader", KnightlyArmory.ID + ":crusader", 19, new int[] { 1, 5, 6, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.6f);
+
+	public static final ArmorMaterial ARMOR_MATERIAL_BRIGANDINE = EnumHelper.addArmorMaterial("brigandine", KnightlyArmory.ID + ":brigandine", 17, new int[] { 2, 3, 5, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.25f);
+
+	public static final ArmorMaterial ARMOR_MATERIAL_GAMBESON = EnumHelper.addArmorMaterial("gambeson", KnightlyArmory.ID + ":gambeson", 8, new int[] { 1, 0, 2, 1 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0f);
+
+	public static final ArmorMaterial ARMOR_MATERIAL_CEREMONIALARMET = EnumHelper.addArmorMaterial("ceremonialarmet", KnightlyArmory.ID + ":ceremonialarmet", 23, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_CEREMONIAL = EnumHelper.addArmorMaterial("ceremonial", KnightlyArmory.ID + ":ceremonial", 23, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_SHISHAK = EnumHelper.addArmorMaterial("shishak", KnightlyArmory.ID + ":shishak", 19, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.3f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	
+	public static final ArmorMaterial ARMOR_MATERIAL_NORMAN = EnumHelper.addArmorMaterial("norman", KnightlyArmory.ID + ":norman", 17, new int[] { 2, 5, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.2f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_RUSTEDBARBUTE = EnumHelper.addArmorMaterial("rustedbarbute", KnightlyArmory.ID + ":rustedbarbute", 11, new int[] { 2, 5, 6, 2 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f);
+	
+	public static final ArmorMaterial ARMOR_MATERIAL_RUSTEDHALFARMOR = EnumHelper.addArmorMaterial("rustedhalfarmor", KnightlyArmory.ID + ":rustedhalfarmor", 11, new int[] { 1, 5, 6, 2 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f);
+	
+    public static final ArmorMaterial ARMOR_MATERIAL_RUSTEDCHAINMAIL = EnumHelper.addArmorMaterial("rustedchainmail", KnightlyArmory.ID + ":rustedchainmail", 9, new int[] { 1, 4, 5, 2 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0f);
+    
+    public static final ArmorMaterial ARMOR_MATERIAL_RUSTEDKETTLEHAT = EnumHelper.addArmorMaterial("rustedkettlehat", KnightlyArmory.ID + ":rustedkettlehat", 9, new int[] { 2, 5, 6, 2 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0f);
+    
+    public static final ArmorMaterial ARMOR_MATERIAL_RUSTEDNORMAN = EnumHelper.addArmorMaterial("rustednorman", KnightlyArmory.ID + ":rustednorman", 8, new int[] { 1, 4, 5, 2 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0f);
+    
+    public static final ArmorMaterial ARMOR_MATERIAL_RUSTEDCRUSADER = EnumHelper.addArmorMaterial("rustedcrusader", KnightlyArmory.ID + ":rustedcrusader", 9, new int[] { 1, 5, 6, 3 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0f);
+	
+	public static final ArmorMaterial ARMOR_MATERIAL_BASCINET = EnumHelper.addArmorMaterial("bascinet", KnightlyArmory.ID + ":bascinet", 21, new int[] { 2, 5, 7, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.25f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+	public static final ArmorMaterial ARMOR_MATERIAL_XIVCENTURYKNIGHT = EnumHelper.addArmorMaterial("xivcenturyknight", KnightlyArmory.ID + ":xivcenturyknight", 20, new int[] { 2, 5, 7, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.2f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_WINGEDHUSSARCHESTPLATE = EnumHelper.addArmorMaterial("wingedhussarchestplate", KnightlyArmory.ID + ":wingedhussarchestplate", 20, new int[] { 1, 0, 7, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	public static final ArmorMaterial ARMOR_MATERIAL_CUIRASSIER = EnumHelper.addArmorMaterial("cuirassier", KnightlyArmory.ID + ":cuirassier", 20, new int[] { 1, 0, 6, 2 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.5f).setRepairItem(new ItemStack(ModItems.STEEL_INGOT));
+
+	
 	//Armor
-	public static CreativeModeTab GROUP_KA;
+	public static final KnightItem ARMET = (KnightItem) new KnightItem("armet", ARMOR_MATERIAL_ARMET, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final KnightItem KNIGHT_CHESTPLATE = (KnightItem) new KnightItem("knight_chestplate", ARMOR_MATERIAL_KNIGHT, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final KnightItem KNIGHT_LEGGINGS = (KnightItem) new KnightItem("knight_leggings", ARMOR_MATERIAL_KNIGHT, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final KnightItem KNIGHT_BOOTS = (KnightItem) new KnightItem("knight_boots", ARMOR_MATERIAL_KNIGHT, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final JoustingItem STECHHELM = (JoustingItem) new JoustingItem("stechhelm", ARMOR_MATERIAL_STECHHELM, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final JoustingItem JOUSTING_CHESTPLATE = (JoustingItem) new JoustingItem("jousting_chestplate", ARMOR_MATERIAL_JOUSTING, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final JoustingItem JOUSTING_LEGGINGS = (JoustingItem) new JoustingItem("jousting_leggings", ARMOR_MATERIAL_JOUSTING, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final JoustingItem JOUSTING_BOOTS = (JoustingItem) new JoustingItem("jousting_boots", ARMOR_MATERIAL_JOUSTING, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final GothicItem SALLET = (GothicItem) new GothicItem("sallet", ARMOR_MATERIAL_SALLET, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final GothicItem GOTHIC_CHESTPLATE = (GothicItem) new GothicItem("gothic_chestplate", ARMOR_MATERIAL_GOTHIC, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final GothicItem GOTHIC_LEGGINGS = (GothicItem) new GothicItem("gothic_leggings", ARMOR_MATERIAL_GOTHIC, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final GothicItem GOTHIC_BOOTS = (GothicItem) new GothicItem("gothic_boots", ARMOR_MATERIAL_GOTHIC, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final MaximilianItem MAXIMILIAN_HELMET = (MaximilianItem) new MaximilianItem("maximilian_helmet", ARMOR_MATERIAL_MAXIMILIANHELMET, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final MaximilianItem MAXIMILIAN_CHESTPLATE = (MaximilianItem) new MaximilianItem("maximilian_chestplate", ARMOR_MATERIAL_MAXIMILIAN, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final MaximilianItem MAXIMILIAN_LEGGINGS = (MaximilianItem) new MaximilianItem("maximilian_leggings", ARMOR_MATERIAL_MAXIMILIAN, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final MaximilianItem MAXIMILIAN_BOOTS = (MaximilianItem) new MaximilianItem("maximilian_boots", ARMOR_MATERIAL_MAXIMILIAN, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final ArmorItem CHAINMAIL_HELMET = (ArmorItem) new ArmorItem("chainmail_helmet", ARMOR_MATERIAL_CHAINMAIL, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final ArmorItem CHAINMAIL_CHESTPLATE = (ArmorItem) new ArmorItem("chainmail_chestplate", ARMOR_MATERIAL_CHAINMAIL, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final ArmorItem CHAINMAIL_LEGGINGS = (ArmorItem) new ArmorItem("chainmail_leggings", ARMOR_MATERIAL_CHAINMAIL, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final ArmorItem CHAINMAIL_BOOTS = (ArmorItem) new ArmorItem("chainmail_boots", ARMOR_MATERIAL_CHAINMAIL, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final PlatemailItem KETTLEHAT = (PlatemailItem) new PlatemailItem("kettlehat", ARMOR_MATERIAL_KETTLEHAT, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final PlatemailItem PLATEMAIL_CHESTPLATE = (PlatemailItem) new PlatemailItem("platemail_chestplate", ARMOR_MATERIAL_PLATEMAIL, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final PlatemailItem PLATEMAIL_LEGGINGS = (PlatemailItem) new PlatemailItem("platemail_leggings", ARMOR_MATERIAL_PLATEMAIL, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final PlatemailItem PLATEMAIL_BOOTS = (PlatemailItem) new PlatemailItem("platemail_boots", ARMOR_MATERIAL_PLATEMAIL, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final HalfarmorItem BARBUTE = (HalfarmorItem) new HalfarmorItem("barbute", ARMOR_MATERIAL_BARBUTE, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final HalfarmorItem HALFARMOR_CHESTPLATE = (HalfarmorItem) new HalfarmorItem("halfarmor_chestplate", ARMOR_MATERIAL_HALFARMOR, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<KnightItem> ARMET = ITEMS.register("armet", () -> new KnightItem(ArmorMaterials.ARMET, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> KNIGHT_CHESTPLATE = ITEMS.register("knight_chestplate", () -> new MedievalArmorItem(ArmorMaterials.KNIGHT, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> KNIGHT_LEGGINGS = ITEMS.register("knight_leggings", () -> new MedievalArmorItem(ArmorMaterials.KNIGHT, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> KNIGHT_BOOTS = ITEMS.register("knight_boots", () -> new MedievalArmorItem(ArmorMaterials.KNIGHT, EquipmentSlot.FEET, new Item.Properties()));
+	public static final ArmorItem GREATHELM = (ArmorItem) new ArmorItem("greathelm", ARMOR_MATERIAL_CRUSADER, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final ArmorItem CRUSADER_CHESTPLATE = (ArmorItem) new ArmorItem("crusader_chestplate", ARMOR_MATERIAL_CRUSADER, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final ArmorItem CRUSADER_LEGGINGS = (ArmorItem) new ArmorItem("crusader_leggings", ARMOR_MATERIAL_CRUSADER, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final ArmorItem CRUSADER_BOOTS = (ArmorItem) new ArmorItem("crusader_boots", ARMOR_MATERIAL_CRUSADER, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<JoustingItem> STECHHELM = ITEMS.register("stechhelm", () -> new JoustingItem(ArmorMaterials.STECHHELM, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<JoustingItem> JOUSTING_CHESTPLATE = ITEMS.register("jousting_chestplate", () -> new JoustingItem(ArmorMaterials.JOUSTING, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<JoustingItem> JOUSTING_LEGGINGS = ITEMS.register("jousting_leggings", () -> new JoustingItem(ArmorMaterials.JOUSTING, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<JoustingItem> JOUSTING_BOOTS = ITEMS.register("jousting_boots", () -> new JoustingItem(ArmorMaterials.JOUSTING, EquipmentSlot.FEET, new Item.Properties()));
+	public static final KnightItem CEREMONIALARMET = (KnightItem) new KnightItem("ceremonialarmet", ARMOR_MATERIAL_CEREMONIALARMET, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final KnightItem CEREMONIAL_CHESTPLATE = (KnightItem) new KnightItem("ceremonial_chestplate", ARMOR_MATERIAL_CEREMONIAL, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final KnightItem CEREMONIAL_BOOTS = (KnightItem) new KnightItem("ceremonial_boots", ARMOR_MATERIAL_CEREMONIAL, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final ArmorItem COIF = (ArmorItem) new ArmorItem("coif", ARMOR_MATERIAL_GAMBESON, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final ArmorItem GAMBESON = (ArmorItem) new ArmorItem("gambeson_chestplate", ARMOR_MATERIAL_GAMBESON, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final ArmorItem PANTYHOSE = (ArmorItem) new ArmorItem("pantyhose", ARMOR_MATERIAL_GAMBESON, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final ArmorItem GAMBESONBOOTS = (ArmorItem) new ArmorItem("gambeson_boots", ARMOR_MATERIAL_GAMBESON, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
+	
+	public static final ArmorItem BRIGANDINE = (ArmorItem) new ArmorItem("brigandine_chestplate", ARMOR_MATERIAL_BRIGANDINE, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	
+	public static final ArmorItem NORMAN_HELMET = (ArmorItem) new ArmorItem("norman_helmet", ARMOR_MATERIAL_NORMAN, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<GothicItem> SALLET = ITEMS.register("sallet", () -> new GothicItem(ArmorMaterials.SALLET, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> GOTHIC_CHESTPLATE = ITEMS.register("gothic_chestplate", () -> new MedievalArmorItem(ArmorMaterials.GOTHIC, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> GOTHIC_LEGGINGS = ITEMS.register("gothic_leggings", () -> new MedievalArmorItem(ArmorMaterials.GOTHIC, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> GOTHIC_BOOTS = ITEMS.register("gothic_boots", () -> new MedievalArmorItem(ArmorMaterials.GOTHIC, EquipmentSlot.FEET, new Item.Properties()));
+	public static final ArmorItem SHISHAK = (ArmorItem) new ArmorItem("shishak", ARMOR_MATERIAL_SHISHAK, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<MaximilianItem> MAXIMILIAN_HELMET = ITEMS.register("maximilian_helmet", () -> new MaximilianItem(ArmorMaterials.MAXIMILIANHELMET, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> MAXIMILIAN_CHESTPLATE = ITEMS.register("maximilian_chestplate", () -> new MedievalArmorItem(ArmorMaterials.MAXIMILIAN, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> MAXIMILIAN_LEGGINGS = ITEMS.register("maximilian_leggings", () -> new MedievalArmorItem(ArmorMaterials.MAXIMILIAN, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> MAXIMILIAN_BOOTS = ITEMS.register("maximilian_boots", () -> new MedievalArmorItem(ArmorMaterials.MAXIMILIAN, EquipmentSlot.FEET, new Item.Properties()));
+	public static final HalfarmorItem RUSTEDBARBUTE = new HalfarmorItem("rustedbarbute", ARMOR_MATERIAL_RUSTEDBARBUTE, 0, EntityEquipmentSlot.HEAD);
+	public static final HalfarmorItem RUSTEDHALFARMOR_CHESTPLATE = new HalfarmorItem("rustedhalfarmor_chestplate", ARMOR_MATERIAL_RUSTEDHALFARMOR, 0, EntityEquipmentSlot.CHEST);
 
-	public static final RegistryObject<MedievalArmorItem> CHAINMAIL_HELMET = ITEMS.register("chainmail_helmet", () -> new MedievalArmorItem(ArmorMaterials.CHAINMAIL, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> CHAINMAIL_CHESTPLATE = ITEMS.register("chainmail_chestplate", () -> new MedievalArmorItem(ArmorMaterials.CHAINMAIL, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> CHAINMAIL_LEGGINGS = ITEMS.register("chainmail_leggings", () -> new MedievalArmorItem(ArmorMaterials.CHAINMAIL, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> CHAINMAIL_BOOTS = ITEMS.register("chainmail_boots", () -> new MedievalArmorItem(ArmorMaterials.CHAINMAIL, EquipmentSlot.FEET, new Item.Properties()));
+	public static final ArmorItem RUSTEDGREATHELM = new ArmorItem("rustedgreathelm", ARMOR_MATERIAL_RUSTEDCRUSADER, 0, EntityEquipmentSlot.HEAD);
+    public static final ArmorItem RUSTEDCRUSADER_CHESTPLATE = new ArmorItem("rustedcrusader_chestplate", ARMOR_MATERIAL_RUSTEDCRUSADER, 0, EntityEquipmentSlot.CHEST);
+    public static final ArmorItem RUSTEDCRUSADER_BOOTS = new ArmorItem("rustedcrusader_boots", ARMOR_MATERIAL_RUSTEDCRUSADER, 0, EntityEquipmentSlot.FEET);
 
-	public static final RegistryObject<PlatemailItem> KETTLEHAT = ITEMS.register("kettlehat", () -> new PlatemailItem(ArmorMaterials.KETTLEHAT, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> PLATEMAIL_CHESTPLATE = ITEMS.register("platemail_chestplate", () -> new MedievalArmorItem(ArmorMaterials.PLATEMAIL, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> PLATEMAIL_LEGGINGS = ITEMS.register("platemail_leggings", () -> new MedievalArmorItem(ArmorMaterials.PLATEMAIL, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> PLATEMAIL_BOOTS = ITEMS.register("platemail_boots", () -> new MedievalArmorItem(ArmorMaterials.PLATEMAIL, EquipmentSlot.FEET, new Item.Properties()));
+    public static final ArmorItem RUSTEDNORMAN_HELMET = new ArmorItem("rustednorman_helmet", ARMOR_MATERIAL_RUSTEDNORMAN, 0, EntityEquipmentSlot.HEAD);
 
-	public static final RegistryObject<HalfarmorItem> BARBUTE = ITEMS.register("barbute", () -> new HalfarmorItem(ArmorMaterials.BARBUTE, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> HALFARMOR_CHESTPLATE = ITEMS.register("halfarmor_chestplate", () -> new MedievalArmorItem(ArmorMaterials.HALFARMOR, EquipmentSlot.CHEST, new Item.Properties()));
+    public static final ArmorItem RUSTEDCHAINMAIL_HELMET = new ArmorItem("rustedchainmail_helmet", ARMOR_MATERIAL_RUSTEDCHAINMAIL, 0, EntityEquipmentSlot.HEAD);
+    public static final ArmorItem RUSTEDCHAINMAIL_CHESTPLATE = new ArmorItem("rustedchainmail_chestplate", ARMOR_MATERIAL_RUSTEDCHAINMAIL, 0, EntityEquipmentSlot.CHEST);
+    public static final ArmorItem RUSTEDCHAINMAIL_LEGGINGS = new ArmorItem("rustedchainmail_leggings", ARMOR_MATERIAL_RUSTEDCHAINMAIL, 0, EntityEquipmentSlot.LEGS);
+    public static final ArmorItem RUSTEDCHAINMAIL_BOOTS = new ArmorItem("rustedchainmail_boots", ARMOR_MATERIAL_RUSTEDCHAINMAIL, 0, EntityEquipmentSlot.FEET);
 
-	public static final RegistryObject<MedievalArmorItem> GREATHELM = ITEMS.register("greathelm", () -> new MedievalArmorItem(ArmorMaterials.CRUSADER, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<DyeableMedievalArmorItem> CRUSADER_CHESTPLATE = ITEMS.register("crusader_chestplate", () -> new DyeableMedievalArmorItem(ArmorMaterials.CRUSADER, EquipmentSlot.CHEST, new Item.Properties(), -3227226));
-	public static final RegistryObject<MedievalArmorItem> CRUSADER_LEGGINGS = ITEMS.register("crusader_leggings", () -> new MedievalArmorItem(ArmorMaterials.CRUSADER, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<DyeableMedievalArmorItem> CRUSADER_BOOTS = ITEMS.register("crusader_boots", () -> new DyeableMedievalArmorItem(ArmorMaterials.CRUSADER, EquipmentSlot.FEET, new Item.Properties(), -3227226));
+    public static final PlatemailItem RUSTEDKETTLEHAT = new PlatemailItem("rustedkettlehat", ARMOR_MATERIAL_RUSTEDKETTLEHAT, 0, EntityEquipmentSlot.HEAD);
 
-	public static final RegistryObject<KnightItem> CEREMONIALARMET = ITEMS.register("ceremonialarmet", () -> new KnightItem(ArmorMaterials.CEREMONIALARMET, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> CEREMONIAL_CHESTPLATE = ITEMS.register("ceremonial_chestplate", () -> new MedievalArmorItem(ArmorMaterials.CEREMONIAL, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> CEREMONIAL_BOOTS = ITEMS.register("ceremonial_boots", () -> new MedievalArmorItem(ArmorMaterials.CEREMONIAL, EquipmentSlot.FEET, new Item.Properties()));
+	public static final XIVCenturyKnightItem BASCINET = (XIVCenturyKnightItem) new XIVCenturyKnightItem("bascinet", ARMOR_MATERIAL_BASCINET, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+	public static final XIVCenturyKnightItem XIVCENTURYKNIGHT_CHESTPLATE = (XIVCenturyKnightItem) new XIVCenturyKnightItem("xivcenturyknight_chestplate", ARMOR_MATERIAL_XIVCENTURYKNIGHT, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+	public static final XIVCenturyKnightItem XIVCENTURYKNIGHT_LEGGINGS = (XIVCenturyKnightItem) new XIVCenturyKnightItem("xivcenturyknight_leggings", ARMOR_MATERIAL_XIVCENTURYKNIGHT, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+	public static final XIVCenturyKnightItem XIVCENTURYKNIGHT_BOOTS = (XIVCenturyKnightItem) new XIVCenturyKnightItem("xivcenturyknight_boots", ARMOR_MATERIAL_XIVCENTURYKNIGHT, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<DyeableMedievalArmorItem> COIF = ITEMS.register("coif", () -> new DyeableMedievalArmorItem(ArmorMaterials.GAMBESON, EquipmentSlot.HEAD, new Item.Properties(), -4280691));
-	public static final RegistryObject<DyeableMedievalArmorItem> GAMBESON = ITEMS.register("gambeson_chestplate", () -> new DyeableMedievalArmorItem(ArmorMaterials.GAMBESON, EquipmentSlot.CHEST, new Item.Properties(), -4280691));
-	public static final RegistryObject<DyeableMedievalArmorItem> PANTYHOSE = ITEMS.register("pantyhose", () -> new DyeableMedievalArmorItem(ArmorMaterials.GAMBESON, EquipmentSlot.LEGS, new Item.Properties(), -14531028));
-	public static final RegistryObject<DyeableMedievalArmorItem> GAMBESONBOOTS = ITEMS.register("gambeson_boots", () -> new DyeableMedievalArmorItem(ArmorMaterials.GAMBESON, EquipmentSlot.FEET, new Item.Properties(), -4280691));
+    public static final WingedHussarItem WINGEDHUSSAR_CHESTPLATE = (WingedHussarItem) new WingedHussarItem("wingedhussar_chestplate", ARMOR_MATERIAL_WINGEDHUSSARCHESTPLATE, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<DyeableMedievalArmorItem> BRIGANDINE = ITEMS.register("brigandine_chestplate", () -> new DyeableMedievalArmorItem(ArmorMaterials.BRIGANDINE, EquipmentSlot.CHEST, new Item.Properties(), 10511680));
+    public static final ArmorItem BURGONET = (ArmorItem) new ArmorItem("cuirassier_helmet", ARMOR_MATERIAL_CUIRASSIER, 0, EntityEquipmentSlot.HEAD).setCreativeTab(GROUP_KA);
+    public static final ArmorItem CUIRASSIER_CHESTPLATE = (ArmorItem) new ArmorItem("cuirassier_chestplate", ARMOR_MATERIAL_CUIRASSIER, 0, EntityEquipmentSlot.CHEST).setCreativeTab(GROUP_KA);
+    public static final ArmorItem CUIRASSIER_LEGGINGS = (ArmorItem) new ArmorItem("cuirassier_leggings", ARMOR_MATERIAL_CUIRASSIER, 0, EntityEquipmentSlot.LEGS).setCreativeTab(GROUP_KA);
+    public static final ArmorItem CUIRASSIER_BOOTS = (ArmorItem) new ArmorItem("cuirassier_boots", ARMOR_MATERIAL_CUIRASSIER, 0, EntityEquipmentSlot.FEET).setCreativeTab(GROUP_KA);
 
-	public static final RegistryObject<MedievalArmorItem> NORMAN_HELMET = ITEMS.register("norman_helmet", () -> new MedievalArmorItem(ArmorMaterials.NORMAN, EquipmentSlot.HEAD, new Item.Properties()));
-
-	public static final RegistryObject<MedievalArmorItem> SHISHAK = ITEMS.register("shishak", () -> new MedievalArmorItem(ArmorMaterials.SHISHAK, EquipmentSlot.HEAD, new Item.Properties()));
-
-	public static final RegistryObject<HalfarmorItem> RUSTEDBARBUTE = ITEMS.register("rustedbarbute", () -> new HalfarmorItem(ArmorMaterials.RUSTEDBARBUTE, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> RUSTEDHALFARMOR_CHESTPLATE = ITEMS.register("rustedhalfarmor_chestplate", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDHALFARMOR, EquipmentSlot.CHEST, new Item.Properties()));
-
-	public static final RegistryObject<MedievalArmorItem> RUSTEDGREATHELM = ITEMS.register("rustedgreathelm", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCRUSADER, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> RUSTEDCRUSADER_CHESTPLATE = ITEMS.register("rustedcrusader_chestplate", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCRUSADER, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> RUSTEDCRUSADER_BOOTS = ITEMS.register("rustedcrusader_boots", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCRUSADER, EquipmentSlot.FEET, new Item.Properties()));
-
-	public static final RegistryObject<MedievalArmorItem> RUSTEDNORMAN_HELMET = ITEMS.register("rustednorman_helmet", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDNORMAN, EquipmentSlot.HEAD, new Item.Properties()));
-
-	public static final RegistryObject<MedievalArmorItem> RUSTEDCHAINMAIL_HELMET = ITEMS.register("rustedchainmail_helmet", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCHAINMAIL, EquipmentSlot.HEAD, (new Item.Properties())));
-	public static final RegistryObject<MedievalArmorItem> RUSTEDCHAINMAIL_CHESTPLATE = ITEMS.register("rustedchainmail_chestplate", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCHAINMAIL, EquipmentSlot.CHEST, (new Item.Properties())));
-	public static final RegistryObject<MedievalArmorItem> RUSTEDCHAINMAIL_LEGGINGS = ITEMS.register("rustedchainmail_leggings", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCHAINMAIL, EquipmentSlot.LEGS, (new Item.Properties())));
-	public static final RegistryObject<MedievalArmorItem> RUSTEDCHAINMAIL_BOOTS = ITEMS.register("rustedchainmail_boots", () -> new MedievalArmorItem(ArmorMaterials.RUSTEDCHAINMAIL, EquipmentSlot.FEET, (new Item.Properties())));
-
-	public static final RegistryObject<PlatemailItem> RUSTEDKETTLEHAT = ITEMS.register("rustedkettlehat", () -> new PlatemailItem(ArmorMaterials.RUSTEDKETTLEHAT, EquipmentSlot.HEAD, (new Item.Properties())));
-
-	public static final RegistryObject<XIVCenturyKnightItem> BASCINET = ITEMS.register("bascinet", () -> new XIVCenturyKnightItem(ArmorMaterials.BASCINET, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> XIVCENTURYKNIGHT_CHESTPLATE = ITEMS.register("xivcenturyknight_chestplate", () -> new MedievalArmorItem(ArmorMaterials.XIVCENTURYKNIGHT, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> XIVCENTURYKNIGHT_LEGGINGS = ITEMS.register("xivcenturyknight_leggings", () -> new MedievalArmorItem(ArmorMaterials.XIVCENTURYKNIGHT, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> XIVCENTURYKNIGHT_BOOTS = ITEMS.register("xivcenturyknight_boots", () -> new MedievalArmorItem(ArmorMaterials.XIVCENTURYKNIGHT, EquipmentSlot.FEET, new Item.Properties()));
-
-	public static final RegistryObject<WingedHussarItem> WINGEDHUSSAR_CHESTPLATE = ITEMS.register("wingedhussar_chestplate", () -> new WingedHussarItem(ArmorMaterials.WINGEDHUSSARCHESTPLATE, EquipmentSlot.CHEST, new Item.Properties()));
-
-	public static final RegistryObject<MedievalArmorItem> BURGONET = ITEMS.register("cuirassier_helmet", () -> new MedievalArmorItem(ArmorMaterials.CUIRASSIER, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<DyeableMedievalArmorItem> CUIRASSIER_CHESTPLATE = ITEMS.register("cuirassier_chestplate", () -> new DyeableMedievalArmorItem(ArmorMaterials.CUIRASSIER, EquipmentSlot.CHEST, new Item.Properties(), -5465480));
-	public static final RegistryObject<DyeableMedievalArmorItem> CUIRASSIER_LEGGINGS = ITEMS.register("cuirassier_leggings", () -> new DyeableMedievalArmorItem(ArmorMaterials.CUIRASSIER, EquipmentSlot.LEGS, new Item.Properties(), -5465480));
-	public static final RegistryObject<MedievalArmorItem> CUIRASSIER_BOOTS = ITEMS.register("cuirassier_boots", () -> new MedievalArmorItem(ArmorMaterials.CUIRASSIER, EquipmentSlot.FEET, new Item.Properties()));
-
-	public static final RegistryObject<KastenbrustItem> GRAND_BASCINET = ITEMS.register("grand_bascinet", () -> new KastenbrustItem(ArmorMaterials.GRAND_BASCINET, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> KASTENBRUST_CHESTPLATE = ITEMS.register("kastenbrust_chestplate", () -> new MedievalArmorItem(ArmorMaterials.KASTENBRUST, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> KASTENBRUST_LEGGINGS = ITEMS.register("kastenbrust_leggings", () -> new MedievalArmorItem(ArmorMaterials.KASTENBRUST, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> KASTENBRUST_BOOTS = ITEMS.register("kastenbrust_boots", () -> new MedievalArmorItem(ArmorMaterials.KASTENBRUST, EquipmentSlot.FEET, new Item.Properties()));
-
-	public static final RegistryObject<MedievalArmorItem> FACE_HELMET = ITEMS.register("face_helmet", () -> new MedievalArmorItem(ArmorMaterials.LAMELLAR, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> LAMELLAR_CHESTPLATE = ITEMS.register("lamellar_chestplate", () -> new MedievalArmorItem(ArmorMaterials.LAMELLAR, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<MedievalArmorItem> LAMELLAR_BOOTS = ITEMS.register("lamellar_boots", () -> new MedievalArmorItem(ArmorMaterials.LAMELLAR, EquipmentSlot.FEET, new Item.Properties()));
-
-	public static final RegistryObject<Item> BARDING = ITEMS.register("barding", () -> new HorseArmorItem(12, new ResourceLocation(KnightlyArmory.ID, "textures/entity/horse/armor/barding.png"), new Item.Properties().stacksTo(1)));
-	public static final RegistryObject<Item> CHAINMAIL_HORSE_ARMOR = ITEMS.register("chainmail_horse_armor", () -> new HorseArmorItem(6, new ResourceLocation(KnightlyArmory.ID, "textures/entity/horse/armor/horse_armor_chainmail.png"), new Item.Properties().stacksTo(1)));
-
+	
+	public static final CreativeTabs GROUP_KW = new CreativeTabs(KnightlyArmory.ID + ".weapons")
+	{
+		@Override
+		public ItemStack getTabIconItem()
+		{
+			return new ItemStack(flamebladedswords.iron);
+		}
+	};
+	
+	public static final CreativeTabs GROUP_KPW = new CreativeTabs(KnightlyArmory.ID + ".particular_weapons")
+	{
+		@Override
+		public ItemStack getTabIconItem()
+		{
+			return new ItemStack(NOBLE_SWORD);
+		}
+	};
+	
+	public static final CreativeTabs GROUP_KS = new CreativeTabs(KnightlyArmory.ID + ".shields")
+	{
+		@Override
+		public ItemStack getTabIconItem()
+		{
+			return new ItemStack(heatershields.iron);
+		}
+	};
+	
+	
+	
 	//Weapons
-	public static CreativeModeTab GROUP_KW;
-
-	public static CreativeModeTab GROUP_KPW;
-
-	public static final WeaponsSupply stylets = new WeaponsSupply(WeaponsWorkshop.STYLET);
-	public static final WeaponsSupply shortswords = new WeaponsSupply(WeaponsWorkshop.SHORTSWORD);
-	public static final WeaponsSupply katzbalgers = new WeaponsSupply(WeaponsWorkshop.KATZBALGER);
-	public static final WeaponsSupply pikes = new WeaponsSupply(WeaponsWorkshop.PIKE);
-	public static final WeaponsSupply ranseurs = new WeaponsSupply(WeaponsWorkshop.RANSEUR);
-	public static final WeaponsSupply ahlspiesses = new WeaponsSupply(WeaponsWorkshop.AHLSPIESS);
-	public static final WeaponsSupply chivalrylances = new WeaponsSupply(WeaponsWorkshop.CHIVALRYLANCE);
-	public static final WeaponsSupply bastardswords = new WeaponsSupply(WeaponsWorkshop.BASTARDSWORD);
-	public static final WeaponsSupply estocs = new WeaponsSupply(WeaponsWorkshop.ESTOC);
-	public static final WeaponsSupply claymors = new WeaponsSupply(WeaponsWorkshop.CLAYMORE);
-	public static final WeaponsSupply zweihanders = new WeaponsSupply(WeaponsWorkshop.ZWEIHANDER);
-	public static final WeaponsSupply flamebladedswords = new WeaponsSupply(WeaponsWorkshop.FlAMEBLADEDSWORD);
-	public static final WeaponsSupply lochaberaxes = new WeaponsSupply(WeaponsWorkshop.LOCHABERAXE);
-	public static final WeaponsSupply concavehalberds = new WeaponsSupply(WeaponsWorkshop.CONCAVEHALBERD);
-	public static final WeaponsSupply heavymaces = new WeaponsSupply(WeaponsWorkshop.HEAVYMACE);
-	public static final WeaponsSupply heavywarhammers = new WeaponsSupply(WeaponsWorkshop.HEAVYWARHAMMER);
-	public static final WeaponsSupply lucernhammers = new WeaponsSupply(WeaponsWorkshop.LUCERNHAMMER);
-	public static final WeaponsSupply morgensterns = new WeaponsSupply(WeaponsWorkshop.MORGENSTERN);
-	public static final WeaponsSupply chainmorgensterns = new WeaponsSupply(WeaponsWorkshop.CHAINMORGENSTERN);
-	public static final WeaponsSupply guisarmes = new WeaponsSupply(WeaponsWorkshop.GUISARME);
-
-	public static final RegistryObject<Item> BLACKSMITH_HAMMER = ITEMS.register("blacksmith_hammer", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.STEEL, 5.0f, 1.0f, 4, 0.0f, 1.4f));
-	public static final RegistryObject<Item> BARBED_CLUB = ITEMS.register("barbedclub", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.IRON, 5.6f, 1.0f, 1.0f));
-	public static final RegistryObject<Item> PITCHFORK = ITEMS.register("pitchfork", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.IRON, 2.8f, 1.0f, 0, 1.0f, 1.2f));
-	public static final RegistryObject<Item> NOBLE_SWORD = ITEMS.register("noble_sword", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.IRON, 4.25f, 1.51f, 2.7f).setTwoHanded(1).setBlocking(6.0f));
-	public static final RegistryObject<Item> RUSTEDBASTARDSWORD = ITEMS.register("rusted_bastardsword", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.IRON, 2.0F, 1.51F, 2.7f).setTwoHanded(1).setBlocking(6.0f));
-	public static final RegistryObject<Item> RUSTEDHEAVYMACE = ITEMS.register("rusted_heavymace", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.IRON, 2.0F, 1.51F, 2.6f));
-	public static final RegistryObject<Item> CLUB = ITEMS.register("club", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.WOOD, 11.3F, 0.8f, 5.0f).setTwoHanded(1));
-	public static final RegistryObject<Item> MESSER_SWORD = ITEMS.register("messer_sword", () -> new MedievalWeaponItem(new Item.Properties(), ModItemTier.IRON, 3.8f, 1.56f, 1.2f).setBlocking(5.0f));
-
-	public static final RegistryObject<Item> LONGBOW = ITEMS.register("longbow", () -> new MedievalBowItem(new Item.Properties().stacksTo(1).durability(420), 4.2f, 26.0f));
-	public static final RegistryObject<Item> HEAVY_CROSSBOW = ITEMS.register("heavy_crossbow", () -> new MedievalCrossbowItem(new Item.Properties().stacksTo(1).durability(500), 4.3f, 50));
-
-	//Shields
-	public static CreativeModeTab GROUP_KS;
-
-	public static final ShieldsSupply heatershields = new ShieldsSupply(ShieldsWorkshop.HEATERSHIELD, "heatershield");
-	public static final ShieldsSupply targets = new ShieldsSupply(ShieldsWorkshop.TARGET, "target");
-	public static final ShieldsSupply bucklers = new ShieldsSupply(ShieldsWorkshop.BUCKLER, "buckler");
-	public static final ShieldsSupply rondaches = new ShieldsSupply(ShieldsWorkshop.RONDACHE, "rondache");
-	public static final ShieldsSupply tartsches = new ShieldsSupply(ShieldsWorkshop.TARTSCHE, "tartsche");
-	public static final ShieldsSupply ellipticalshields = new ShieldsSupply(ShieldsWorkshop.ELLIPTICALSHIELD, "ellipticalshield");
-	public static final ShieldsSupply roundshields = new ShieldsSupply(ShieldsWorkshop.ROUNDSHIELD, "roundshield");
-	public static final ShieldsSupply paveses = new ShieldsSupply(ShieldsWorkshop.PAVESE, "pavese");
-	public static final ShieldsSupply kiteshields = new ShieldsSupply(ShieldsWorkshop.KITESHIELD, "kiteshield");
-
-	public static final RegistryObject<MedievalShieldItem> CORRUPTEDROUNDSHIELD = ITEMS.register("corruptedroundshield", () -> new MedievalShieldItem("corruptedroundshield", "corruptedroundshield", new Item.Properties(), ModItemTier.WOOD, 100, 2, 4, false, true));
-
-	//Patterns
-	public static final RegistryObject<Item> APOSTOLIC_CROSS_PATTERN = ITEMS.register("apostolic_cross_pattern", () -> new BannerPatternItem(ModBannerPatternTags.APOSTOLIC_CROSS_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> BOWL_PATTERN = ITEMS.register("bowl_pattern", () -> new BannerPatternItem(ModBannerPatternTags.BOWL_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> BULL_PATTERN = ITEMS.register("bull_pattern", () -> new BannerPatternItem(ModBannerPatternTags.BULL_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> CHESS_PATTERN = ITEMS.register("chess_pattern", () -> new BannerPatternItem(ModBannerPatternTags.CHESS_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> CRUSADER_CROSS_PATTERN = ITEMS.register("crusader_cross_pattern", () -> new BannerPatternItem(ModBannerPatternTags.CRUSADER_CROSS_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> DRAGON_PATTERN = ITEMS.register("dragon_pattern", () -> new BannerPatternItem(ModBannerPatternTags.DRAGON_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> EAGLE_PATTERN = ITEMS.register("eagle_pattern", () -> new BannerPatternItem(ModBannerPatternTags.EAGLE_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> HORSE_PATTERN = ITEMS.register("horse_pattern", () -> new BannerPatternItem(ModBannerPatternTags.HORSE_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> LILY_PATTERN = ITEMS.register("lily_pattern", () -> new BannerPatternItem(ModBannerPatternTags.LILY_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> LION1_PATTERN = ITEMS.register("lion1_pattern", () -> new BannerPatternItem(ModBannerPatternTags.LION1_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> LION2_PATTERN = ITEMS.register("lion2_pattern", () -> new BannerPatternItem(ModBannerPatternTags.LION2_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> ORTHODOX_CROSS_PATTERN = ITEMS.register("orthodox_cross_pattern", () -> new BannerPatternItem(ModBannerPatternTags.ORTHODOX_CROSS_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> SNAKE_PATTERN = ITEMS.register("snake_pattern", () -> new BannerPatternItem(ModBannerPatternTags.SNAKE_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> SUN_PATTERN = ITEMS.register("sun_pattern", () -> new BannerPatternItem(ModBannerPatternTags.SUN_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> SWORDS_PATTERN = ITEMS.register("swords_pattern", () -> new BannerPatternItem(ModBannerPatternTags.SWORDS_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> TOWER_PATTERN = ITEMS.register("tower_pattern", () -> new BannerPatternItem(ModBannerPatternTags.TOWER_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> TREE_PATTERN = ITEMS.register("tree_pattern", () -> new BannerPatternItem(ModBannerPatternTags.TREE_PATTERN, new Item.Properties()));
-	public static final RegistryObject<Item> TWOHEADED_EAGLE_PATTERN = ITEMS.register("two-headed_eagle_pattern", () -> new BannerPatternItem(ModBannerPatternTags.TWOHEADED_EAGLE_PATTERN, new Item.Properties()));
-
-	//Materials
-	public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> STEEL_NUGGET = ITEMS.register("steel_nugget", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> STEEL_RING = ITEMS.register("steel_ring", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> STEEL_CHAINMAIL = ITEMS.register("steel_chainmail", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> STEEL_PLATE = ITEMS.register("steel_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> LEATHER_STRIP = ITEMS.register("leather_strip", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> HILT = ITEMS.register("hilt", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> STEEL_CHAIN = ITEMS.register("steel_chain", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> WOOLEN_FABRIC = ITEMS.register("woolen_fabric", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> SMALL_STEEL_PLATE = ITEMS.register("small_steel_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> LAMELLAR_ROWS = ITEMS.register("lamellar_rows", () -> new Item(new Item.Properties()));
-
-	public static class ItemsSupply<T extends Item> {
-		public RegistryObject<T> wood;
-		public RegistryObject<T> stone;
-		public RegistryObject<T> iron;
-		public RegistryObject<T> gold;
-		public RegistryObject<T> diamond;
-
-		public RegistryObject<T> copper;
-		public RegistryObject<T> steel;
-		public RegistryObject<T> silver;
-		public RegistryObject<T> netherite;
-		public RegistryObject<T> tin;
-		public RegistryObject<T> bronze;
-
-		public ItemsSupply(BiFunction<ModItemTier, Item.Properties, RegistryObject<T>> workshop, Item.Properties prop) {
-			this.wood = workshop.apply(ModItemTier.WOOD, prop);
-			this.stone = workshop.apply(ModItemTier.STONE, prop);
-			this.iron = workshop.apply(ModItemTier.IRON, prop);
-			this.gold = workshop.apply(ModItemTier.GOLD, prop);
-			this.diamond = workshop.apply(ModItemTier.DIAMOND, prop);
-			this.netherite = workshop.apply(ModItemTier.NETHERITE, prop.fireResistant());
-
-			this.copper = workshop.apply(ModItemTier.COPPER, prop);
-			this.steel = workshop.apply(ModItemTier.STEEL, prop);
-			this.silver = workshop.apply(ModItemTier.SILVER, prop);
-			this.tin = workshop.apply(ModItemTier.TIN, prop);
-			this.bronze = workshop.apply(ModItemTier.BRONZE, prop);
-		}
-
-		public ArrayList<RegistryObject<T>> get() {
-			ArrayList<RegistryObject<T>> itemRegistries = new ArrayList<>();
-			itemRegistries.add(this.wood);
-			itemRegistries.add(this.stone);
-			itemRegistries.add(this.iron);
-			itemRegistries.add(this.gold);
-			itemRegistries.add(this.diamond);
-			itemRegistries.add(this.copper);
-			itemRegistries.add(this.steel);
-			itemRegistries.add(this.silver);
-			itemRegistries.add(this.netherite);
-			itemRegistries.add(this.tin);
-			itemRegistries.add(this.bronze);
-			return itemRegistries;
-		}
-	}
-
-	public static class WeaponsSupply extends ItemsSupply<SwordItem> {
-		public WeaponsSupply(BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> workshop) {
-			super(workshop, new Item.Properties());
-		}
-	}
-
-
-	public static class ShieldsSupply extends ItemsSupply<ShieldItem> {
-		public String shieldName;
-
-		public String woodTexture;
-		public String stoneTexture;
-		public String ironTexture;
-		public String goldTexture;
-		public String diamondTexture;
-		public String netheriteTexture;
-
-		public String copperTexture;
-		public String steelTexture;
-		public String silverTexture;
-		public String tinTexture;
-		public String bronzeTexture;
-
-		public ShieldsSupply(BiFunction<ModItemTier, Properties, RegistryObject<ShieldItem>> workshop, String shieldName) {
-			super(workshop, new Item.Properties());
-
-			this.shieldName = shieldName;
-
-			this.woodTexture = "entity/" + ModItemTier.WOOD.getMaterialName() + "_" + shieldName;
-			this.stoneTexture = "entity/" + ModItemTier.STONE.getMaterialName() + "_" + shieldName;
-			this.ironTexture = "entity/" + ModItemTier.IRON.getMaterialName() + "_" + shieldName;
-			this.goldTexture = "entity/" + ModItemTier.GOLD.getMaterialName() + "_" + shieldName;
-			this.diamondTexture = "entity/" + ModItemTier.DIAMOND.getMaterialName() + "_" + shieldName;
-			this.copperTexture = "entity/" + ModItemTier.COPPER.getMaterialName() + "_" + shieldName;
-			this.steelTexture = "entity/" + ModItemTier.STEEL.getMaterialName() + "_" + shieldName;
-			this.silverTexture = "entity/" + ModItemTier.SILVER.getMaterialName() + "_" + shieldName;
-			this.netheriteTexture = "entity/" + ModItemTier.NETHERITE.getMaterialName() + "_" + shieldName;
-			this.tinTexture = "entity/" + ModItemTier.TIN.getMaterialName() + "_" + shieldName;
-			this.bronzeTexture = "entity/" + ModItemTier.BRONZE.getMaterialName() + "_" + shieldName;
-		}
-	}
-
-	public static final ShieldsSupply[] shieldsSupply = new ShieldsSupply[]{heatershields, targets, bucklers, rondaches, tartsches, ellipticalshields, roundshields, paveses, kiteshields};
-	public static final WeaponsSupply[] weaponsWithModelPropertySupply = new WeaponsSupply[]{ranseurs, ahlspiesses, chivalrylances, bastardswords, estocs, claymors, zweihanders, flamebladedswords, lochaberaxes, concavehalberds, guisarmes};
-	public static final WeaponsSupply[] weaponsSupply = new WeaponsSupply[]{stylets, shortswords, katzbalgers, pikes, ranseurs, ahlspiesses, chivalrylances, bastardswords, estocs, claymors, zweihanders, flamebladedswords, lochaberaxes, concavehalberds, heavymaces, heavywarhammers, lucernhammers, morgensterns, chainmorgensterns, guisarmes};
-
-	public static ArrayList<RegistryObject<? extends Item>> dyeableItems;
-
-	static {
-		dyeableItems = new ArrayList<>();
-		dyeableItems.add(ARMET);
-		dyeableItems.add(CRUSADER_CHESTPLATE);
-		dyeableItems.add(CRUSADER_BOOTS);
-		dyeableItems.add(CEREMONIALARMET);
-		dyeableItems.add(COIF);
-		dyeableItems.add(GAMBESON);
-		dyeableItems.add(PANTYHOSE);
-		dyeableItems.add(GAMBESONBOOTS);
-		dyeableItems.add(BRIGANDINE);
-		dyeableItems.add(CUIRASSIER_CHESTPLATE);
-		dyeableItems.add(CUIRASSIER_LEGGINGS);
-		dyeableItems.addAll(chivalrylances.get());
-	}
-
-	public static ArrayList<RegistryObject<? extends Item>> armorItems;
-
-	static {
-		armorItems = new ArrayList<>();
-		armorItems.add(ARMET);
-		armorItems.add(KNIGHT_CHESTPLATE);
-		armorItems.add(KNIGHT_LEGGINGS);
-		armorItems.add(KNIGHT_BOOTS);
-		armorItems.add(STECHHELM);
-		armorItems.add(JOUSTING_CHESTPLATE);
-		armorItems.add(JOUSTING_LEGGINGS);
-		armorItems.add(JOUSTING_BOOTS);
-		armorItems.add(SALLET);
-		armorItems.add(GOTHIC_CHESTPLATE);
-		armorItems.add(GOTHIC_LEGGINGS);
-		armorItems.add(GOTHIC_BOOTS);
-		armorItems.add(MAXIMILIAN_HELMET);
-		armorItems.add(MAXIMILIAN_CHESTPLATE);
-		armorItems.add(MAXIMILIAN_LEGGINGS);
-		armorItems.add(MAXIMILIAN_BOOTS);
-		armorItems.add(CHAINMAIL_HELMET);
-		armorItems.add(CHAINMAIL_CHESTPLATE);
-		armorItems.add(CHAINMAIL_LEGGINGS);
-		armorItems.add(CHAINMAIL_BOOTS);
-		armorItems.add(KETTLEHAT);
-		armorItems.add(PLATEMAIL_CHESTPLATE);
-		armorItems.add(PLATEMAIL_LEGGINGS);
-		armorItems.add(PLATEMAIL_BOOTS);
-		armorItems.add(BARBUTE);
-		armorItems.add(HALFARMOR_CHESTPLATE);
-		armorItems.add(GREATHELM);
-		armorItems.add(CRUSADER_CHESTPLATE);
-		armorItems.add(CRUSADER_LEGGINGS);
-		armorItems.add(CRUSADER_BOOTS);
-		armorItems.add(CEREMONIALARMET);
-		armorItems.add(CEREMONIAL_CHESTPLATE);
-		armorItems.add(CEREMONIAL_BOOTS);
-		armorItems.add(COIF);
-		armorItems.add(GAMBESON);
-		armorItems.add(PANTYHOSE);
-		armorItems.add(GAMBESONBOOTS);
-		armorItems.add(BRIGANDINE);
-		armorItems.add(NORMAN_HELMET);
-		armorItems.add(SHISHAK);
-		armorItems.add(RUSTEDBARBUTE);
-		armorItems.add(RUSTEDHALFARMOR_CHESTPLATE);
-		armorItems.add(RUSTEDGREATHELM);
-		armorItems.add(RUSTEDCRUSADER_CHESTPLATE);
-		armorItems.add(RUSTEDCRUSADER_BOOTS);
-		armorItems.add(RUSTEDNORMAN_HELMET);
-		armorItems.add(RUSTEDCHAINMAIL_HELMET);
-		armorItems.add(RUSTEDCHAINMAIL_CHESTPLATE);
-		armorItems.add(RUSTEDCHAINMAIL_LEGGINGS);
-		armorItems.add(RUSTEDCHAINMAIL_BOOTS);
-		armorItems.add(RUSTEDKETTLEHAT);
-		armorItems.add(BASCINET);
-		armorItems.add(XIVCENTURYKNIGHT_CHESTPLATE);
-		armorItems.add(XIVCENTURYKNIGHT_LEGGINGS);
-		armorItems.add(XIVCENTURYKNIGHT_BOOTS);
-		armorItems.add(WINGEDHUSSAR_CHESTPLATE);
-		armorItems.add(BURGONET);
-		armorItems.add(CUIRASSIER_CHESTPLATE);
-		armorItems.add(CUIRASSIER_LEGGINGS);
-		armorItems.add(CUIRASSIER_BOOTS);
-		armorItems.add(GRAND_BASCINET);
-		armorItems.add(KASTENBRUST_CHESTPLATE);
-		armorItems.add(KASTENBRUST_LEGGINGS);
-		armorItems.add(KASTENBRUST_BOOTS);
-		armorItems.add(FACE_HELMET);
-		armorItems.add(LAMELLAR_CHESTPLATE);
-		armorItems.add(LAMELLAR_BOOTS);
-		armorItems.add(BARDING);
-		armorItems.add(CHAINMAIL_HORSE_ARMOR);
-	}
-
-	public static ArrayList<RegistryObject<? extends Item>> particularWeaponItems;
-
-	static {
-		particularWeaponItems = new ArrayList<>();
-		particularWeaponItems.add(BLACKSMITH_HAMMER);
-		particularWeaponItems.add(BARBED_CLUB);
-		particularWeaponItems.add(PITCHFORK);
-		particularWeaponItems.add(NOBLE_SWORD);
-		particularWeaponItems.add(RUSTEDBASTARDSWORD);
-		particularWeaponItems.add(RUSTEDHEAVYMACE);
-		particularWeaponItems.add(CLUB);
-		particularWeaponItems.add(MESSER_SWORD);
-	}
-
-	public static ArrayList<RegistryObject<? extends Item>> materialItems;
-
-	static {
-		materialItems = new ArrayList<>();
-		materialItems.add(STEEL_INGOT);
-		materialItems.add(STEEL_NUGGET);
-		materialItems.add(STEEL_RING);
-		materialItems.add(STEEL_CHAINMAIL);
-		materialItems.add(STEEL_PLATE);
-		materialItems.add(LEATHER_STRIP);
-		materialItems.add(HILT);
-		materialItems.add(POLE);
-		materialItems.add(STEEL_CHAIN);
-		materialItems.add(WOOLEN_FABRIC);
-		materialItems.add(SMALL_STEEL_PLATE);
-		materialItems.add(LAMELLAR_ROWS);
-	}
-
-	static class ShieldsWorkshop {
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> HEATERSHIELD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_heatershield", () -> (new MedievalShieldItem(material.getMaterialName() + "_heatershield", "heatershield", prop, material, getDurability(material, 350, 0.8f), 4, 10, true, true))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> TARGET = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_target", () -> (new MedievalShieldItem(material.getMaterialName() + "_target", "target", prop, material, getDurability(material, 350, 0.8f), 1, 6, false, true)).setRepairItem(material::getRepairIngredient)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> BUCKLER = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_buckler", () -> (new MedievalShieldItem(material.getMaterialName() + "_buckler", "buckler", prop, material, getDurability(material, 350, 0.8f), 1, 6, false, true)).setRepairItem(material::getRepairIngredient)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> RONDACHE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_rondache", () -> (new MedievalShieldItem(material.getMaterialName() + "_rondache", "rondache", prop, material, getDurability(material, 420, 1.2f), 6, 13, false, true)).setRepairItem(material::getRepairIngredient)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> TARTSCHE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_tartsche", () -> (new MedievalShieldItem(material.getMaterialName() + "_tartsche", "tartsche", prop, material, getDurability(material, 350, 0.8f), 4, 10, true, true))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> ELLIPTICALSHIELD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_ellipticalshield", () -> (new MedievalShieldItem(material.getMaterialName() + "_ellipticalshield", "ellipticalshield", prop, material, getDurability(material, 370, 0.8f), 5, 10, true, true))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> ROUNDSHIELD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_roundshield", () -> (new MedievalShieldItem(material.getMaterialName() + "_roundshield", "roundshield", prop, material, getDurability(material, 350, 0.8f), 3, 7, true, true))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> PAVESE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_pavese", () -> (new MedievalShieldItem(material.getMaterialName() + "_pavese", "pavese", prop, material, getDurability(material, 450, 0.7f), 10, 17, true, true))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<ShieldItem>> KITESHIELD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_kiteshield", () -> (new MedievalShieldItem(material.getMaterialName() + "_kiteshield", "kiteshield", prop, material, getDurability(material, 370, 0.8f), 5, 10, true, true))));
+	public static WeaponItemsStandard stylets = new WeaponItemsStandard(WeaponsFactory.STYLET);
+	public static WeaponItemsStandard shortswords = new WeaponItemsStandard(WeaponsFactory.SHORTSWORD);
+	public static WeaponItemsStandard katzbalgers = new WeaponItemsStandard(WeaponsFactory.KATZBALGER);
+	public static WeaponItemsStandard pikes = new WeaponItemsStandard(WeaponsFactory.PIKE);
+	public static WeaponItemsStandard ranseurs = new WeaponItemsStandard(WeaponsFactory.RANSEUR);
+	public static WeaponItemsStandard ahlspiesses = new WeaponItemsStandard(WeaponsFactory.AHLSPIESS);
+	public static WeaponItemsStandard chivalrylances = new WeaponItemsStandard(WeaponsFactory.CHIVALRYLANCE);
+	public static WeaponItemsStandard bastardswords = new WeaponItemsStandard(WeaponsFactory.BASTARDSWORD);
+	public static WeaponItemsStandard estocs = new WeaponItemsStandard(WeaponsFactory.ESTOC);
+	public static WeaponItemsStandard claymors = new WeaponItemsStandard(WeaponsFactory.CLAYMORE);
+	public static WeaponItemsStandard zweihanders = new WeaponItemsStandard(WeaponsFactory.ZWEIHANDER);
+	public static WeaponItemsStandard flamebladedswords = new WeaponItemsStandard(WeaponsFactory.FlAMEBLADEDSWORD);
+	public static WeaponItemsStandard lochaberaxes = new WeaponItemsStandard(WeaponsFactory.LOCHABERAXE);
+	public static WeaponItemsStandard concavehalberds = new WeaponItemsStandard(WeaponsFactory.CONCAVEHALBERD);
+	public static WeaponItemsStandard heavymaces = new WeaponItemsStandard(WeaponsFactory.HEAVYMACE);
+	public static WeaponItemsStandard heavywarhammers = new WeaponItemsStandard(WeaponsFactory.HEAVYWARHAMMER);
+	public static WeaponItemsStandard lucernhammers = new WeaponItemsStandard(WeaponsFactory.LUCERNHAMMER);
+	public static WeaponItemsStandard morgensterns = new WeaponItemsStandard(WeaponsFactory.MORGENSTERN);
+	public static WeaponItemsStandard chainmorgensterns = new WeaponItemsStandard(WeaponsFactory.CHAINMORGENSTERN);
+	public static WeaponItemsStandard guisarmes = new WeaponItemsStandard(WeaponsFactory.GUISARME);
 	
-		private static int getDurability(Tier material, int baseDuration, float materialFactor) {
-			return (int) (baseDuration + materialFactor * material.getUses());
+	public static ShieldItemsStandard heatershields = new ShieldItemsStandard(ShieldsFactory.HEATERSHIELD);
+	public static ShieldItemsStandard targets = new ShieldItemsStandard(ShieldsFactory.TARGET);
+	public static ShieldItemsStandard bucklers = new ShieldItemsStandard(ShieldsFactory.BUCKLER);
+	public static ShieldItemsStandard rondaches = new ShieldItemsStandard(ShieldsFactory.RONDACHE);
+	public static ShieldItemsStandard tartsches = new ShieldItemsStandard(ShieldsFactory.TARTSCHE);
+	public static ShieldItemsStandard ellipticalshields = new ShieldItemsStandard(ShieldsFactory.ELLIPTICALSHIELD);
+	public static ShieldItemsStandard roundshields = new ShieldItemsStandard(ShieldsFactory.ROUNDSHIELD);
+	public static ShieldItemsStandard paveses = new ShieldItemsStandard(ShieldsFactory.PAVESE);
+	
+	public static final Item BLACKSMITH_HAMMER = new BlacksmithHammerItem("blacksmith_hammer", TOOL_MATERIAL_STEEL, 5.0f, 1.0f, -3.0f, 4).setCreativeTab(GROUP_KPW);
+	public static final Item BARBED_CLUB = new MedievalWeaponItem("barbedclub", ToolMaterial.IRON, 5.6f, 1.1f, -3.0f).setCreativeTab(GROUP_KPW);
+	public static final Item PITCHFORK = new MedievalWeaponItem("pitchfork", ToolMaterial.IRON, 2.8f, 1.0f, -3.0f, 0, 1.0f).setTwoHanded(2).setCreativeTab(GROUP_KPW);
+	public static final Item NOBLE_SWORD = new MedievalWeaponItem("noble_sword", ToolMaterial.IRON, 4.25f, 1.0f, -2.49f).setTwoHanded(1).setBlocking(5.0f, 6.0f).setCreativeTab(GROUP_KPW);
+	public static final Item RUSTEDBASTARDSWORD = new MedievalWeaponItem("rusted_bastardsword", ToolMaterial.IRON, 2.0F, 1.0F, -2.49F).setTwoHanded(1).setBlocking(4.0f, 6.0f);
+	public static final Item RUSTEDHEAVYMACE = new MedievalWeaponItem("rusted_heavymace", ToolMaterial.IRON, 2.0F, 1.0F, -2.49F);
+
+	public static class ShieldItemsStandard
+	{
+		public ItemShield wood;
+		public ItemShield stone;
+		public ItemShield iron;
+		public ItemShield gold;
+		public ItemShield diamond;
+		
+		public ItemShield copper;
+		public ItemShield steel;
+		public ItemShield silver;
+		public ItemShield tin;
+		public ItemShield bronze;
+		
+		
+		
+		public ShieldItemsStandard(BiFunction<ToolMaterial, String, ItemShield> factory) 
+		{
+			
+			this.wood = (ItemShield) factory.apply(ToolMaterial.WOOD, "wood").setCreativeTab(GROUP_KS);
+			this.stone = (ItemShield) factory.apply(ToolMaterial.STONE, "stone").setCreativeTab(GROUP_KS);
+			this.iron = (ItemShield) factory.apply(ToolMaterial.IRON, "iron").setCreativeTab(GROUP_KS);
+			this.gold = (ItemShield) factory.apply(ToolMaterial.GOLD, "gold").setCreativeTab(GROUP_KS);
+			this.diamond = (ItemShield) factory.apply(ToolMaterial.DIAMOND, "diamond").setCreativeTab(GROUP_KS);
+			
+			this.copper = (ItemShield) factory.apply(TOOL_MATERIAL_COPPER, "copper").setCreativeTab(GROUP_KS);
+			this.steel = (ItemShield) factory.apply(TOOL_MATERIAL_STEEL, "steel").setCreativeTab(GROUP_KS);
+			this.silver = (ItemShield) factory.apply(TOOL_MATERIAL_SILVER, "silver").setCreativeTab(GROUP_KS);
+			this.tin = (ItemShield) factory.apply(TOOL_MATERIAL_TIN, "tin").setCreativeTab(GROUP_KS);
+			this.bronze = (ItemShield) factory.apply(TOOL_MATERIAL_BRONZE, "bronze").setCreativeTab(GROUP_KS);
+		}
+		
+		public void registerItems(IForgeRegistry<Item> reg) 
+		{
+			Item[] shieldStandard = new Item[] { (Item)this.wood, (Item)this.stone, (Item)this.iron, (Item)this.gold, (Item)this.diamond, (Item)this.copper, (Item)this.steel, (Item)this.silver, (Item)this.tin, (Item)this.bronze };
+			reg.registerAll(shieldStandard);
+			
+			for(Item item : shieldStandard)
+			{
+				if(item instanceof IHasModel)
+				{
+					((IHasModel)item).registerModels();
+				}
+				
+				KnightlyArmory.PROXY.registerHeraldyItemStackRenderer(item);
+			}
 		}
 	}
 	
-	static class WeaponsWorkshop {
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> STYLET = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_stylet", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 2.0f, getAttackSpeed(1.6f, material, 0.0f), 15, 0.0f, 0.6f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> SHORTSWORD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_shortsword", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 2.5f, getAttackSpeed(1.7f, material, 0.0f), 0.9f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> KATZBALGER = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_katzbalger", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 3.0f, getAttackSpeed(1.65f, material, 0.0f), 1.1f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> PIKE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_pike", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 3.0f, getAttackSpeed(1.07f, material, 0.0f), 0, 1.2f, 3.0f)).setTwoHanded(2)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> RANSEUR = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_ranseur", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 3.1f, getAttackSpeed(1.07f, material, 0.0f), 0, 1.0f, 2.5f)).setTwoHanded(1).setBlocking(3.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> AHLSPIESS = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_ahlspiess", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 4.0f, getAttackSpeed(1.28f, material, 0.02f), 12, 0.5f, 4.0f)).setTwoHanded(2).setBlocking(3.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> CHIVALRYLANCE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_chivalrylance", () -> (new LanceItem(getDurability(prop, material, 1.0f), material, 2.5f, getAttackSpeed(0.84f, material, 0.0f), 10, 1.0f, 4.5f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> BASTARDSWORD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_bastardsword", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 4.25f, getAttackSpeed(1.4f, material, 0.02f), 1.8f)).setTwoHanded(1).setBlocking(5.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> ESTOC = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_estoc", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 4.1f, getAttackSpeed(1.4f, material, 0.02f), 3, 0.2f, 2.0f)).setTwoHanded(1).setBlocking(5.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> CLAYMORE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_claymore", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 5.4f, getAttackSpeed(1.22f, material, 0.04f), 2.6f)).setTwoHanded(2).setBlocking(6.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> ZWEIHANDER = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_zweihander", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 6.5f, getAttackSpeed(1.12f, material, 0.05f), 4, 0.4f, 4.0f)).setTwoHanded(2).setBlocking(6.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> FlAMEBLADEDSWORD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_flamebladedsword", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 6.4f, getAttackSpeed(1.12f, material, 0.05f), 4, 0.4f, 4.0f)).setTwoHanded(2).setFlamebladed().setBlocking(6.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> LOCHABERAXE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_lochaberaxe", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 7.0f, getAttackSpeed(1.0f, material, 0.05f), 0, 0.3f, 3.5f)).setTwoHanded(1).setBlocking(3.0f)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> CONCAVEHALBERD = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_concavehalberd", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 8.0f, getAttackSpeed(0.9f, material, 0.05f), 2, 0.5f, 4.1f)).setTwoHanded(2).setBlocking(3.0f).setHalberd()));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> HEAVYMACE = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_heavymace", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 4.5f, getAttackSpeed(1.15f, material, 0.05f), 11, 0.0f, 2.6f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> HEAVYWARHAMMER = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_heavywarhammer", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 5.2f, getAttackSpeed(1.05f, material, 0.05f), 15, 0.0f, 2.5f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> LUCERNHAMMER = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_lucernhammer", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 4.8f, getAttackSpeed(1.1f, material, 0.05f), 20, 0.0f, 2.5f)).setTwoHanded(1)));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> MORGENSTERN = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_morgenstern", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 5.0f, getAttackSpeed(1.25f, material, 0.05f), 2.5f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> CHAINMORGENSTERN = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_chainmorgenstern", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 6.2f, getAttackSpeed(1.1f, material, 0.06f), 3.0f))));
-		public static final BiFunction<ModItemTier, Item.Properties, RegistryObject<SwordItem>> GUISARME = ((material, prop) -> ModItems.ITEMS.register(material.getMaterialName() + "_guisarme", () -> (new MedievalWeaponItem(getDurability(prop, material, 1.0f), material, 3.15f, getAttackSpeed(1.02f, material, 0.0f), 0, 0.8f, 2.5f)).setTwoHanded(1).setBlocking(3.0f)));
-	
-	
-		public static Item.Properties getDurability(Item.Properties prop, ModItemTier material, float f) {
-			return prop.durability((int) (material.getUses() * f));
+	public static class WeaponItemsStandard
+	{
+		public ItemSword wood;
+		public ItemSword stone;
+		public ItemSword iron;
+		public ItemSword gold;
+		public ItemSword diamond;
+		
+		public ItemSword copper;
+		public ItemSword steel;
+		public ItemSword silver;
+		public ItemSword tin;
+		public ItemSword bronze;
+		
+		
+		public WeaponItemsStandard(BiFunction<ToolMaterial, String, ItemSword> factory) 
+		{
+			
+			this.wood = (ItemSword) factory.apply(ToolMaterial.WOOD, "wood").setCreativeTab(GROUP_KW);
+			this.stone = (ItemSword) factory.apply(ToolMaterial.STONE, "stone").setCreativeTab(GROUP_KW);
+			this.iron = (ItemSword) factory.apply(ToolMaterial.IRON, "iron").setCreativeTab(GROUP_KW);
+			this.gold = (ItemSword) factory.apply(ToolMaterial.GOLD, "gold").setCreativeTab(GROUP_KW);
+			this.diamond = (ItemSword) factory.apply(ToolMaterial.DIAMOND, "diamond").setCreativeTab(GROUP_KW);
+			
+			this.copper = (ItemSword) factory.apply(TOOL_MATERIAL_COPPER, "copper").setCreativeTab(GROUP_KW);
+			this.steel = (ItemSword) factory.apply(TOOL_MATERIAL_STEEL, "steel").setCreativeTab(GROUP_KW);
+			this.silver = (ItemSword) factory.apply(TOOL_MATERIAL_SILVER, "silver").setCreativeTab(GROUP_KW);
+			this.tin = (ItemSword) factory.apply(TOOL_MATERIAL_TIN, "tin").setCreativeTab(GROUP_KW);
+			this.bronze = (ItemSword) factory.apply(TOOL_MATERIAL_BRONZE, "bronze").setCreativeTab(GROUP_KW);
+
 		}
-	
-		public static float getAttackSpeed(float attackSpeed, ModItemTier material, float f) {
-			return -material.getDensity() * f + attackSpeed;
+		
+		public void registerItems(IForgeRegistry<Item> reg) 
+		{
+			Item[] weaponStandard = new Item[] { (Item)this.wood, (Item)this.stone, (Item)this.iron, (Item)this.gold, (Item)this.diamond, (Item)this.copper, (Item)this.steel, (Item)this.silver, (Item)this.tin, (Item)this.bronze };
+			reg.registerAll(weaponStandard);
+			
+			for(Item item : weaponStandard)
+			{
+				if(item instanceof IHasModel)
+				{
+					((IHasModel)item).registerModels();
+				}
+			}
 		}
+	}
+
+	public static final Item[] items = new Item[] {
+			STEEL_INGOT,
+			STEEL_NUGGET,
+			STEEL_PLATE,
+			STEEL_RING,
+			STEEL_CHAINMAIL,
+			LEATHER_STRIP,
+			HILT,
+			POLE,
+			STEEL_CHAIN,
+			WOOLEN_FABRIC,
+			APOSTOLIC_CROSS_PATTERN,
+			BOWL_PATTERN,
+			BULL_PATTERN,
+			CHESS_PATTERN,
+			CRUSADER_CROSS_PATTERN,
+			DRAGON_PATTERN,
+			EAGLE_PATTERN,
+			HORSE_PATTERN,
+			LILY_PATTERN,
+			LION1_PATTERN,
+			LION2_PATTERN,
+			ORTHODOX_CROSS_PATTERN,
+			SNAKE_PATTERN,
+			SUN_PATTERN,
+			SWORDS_PATTERN,
+			TOWER_PATTERN,
+			TREE_PATTERN,
+			TWOHEADED_EAGLE_PATTERN,
+			BLACKSMITH_HAMMER, 
+			ARMET, 
+			KNIGHT_CHESTPLATE, 
+			KNIGHT_LEGGINGS, 
+			KNIGHT_BOOTS, 
+			STECHHELM, 
+			JOUSTING_CHESTPLATE, 
+			JOUSTING_LEGGINGS, 
+			JOUSTING_BOOTS, 
+			SALLET, 
+			GOTHIC_CHESTPLATE, 
+			GOTHIC_LEGGINGS, 
+			GOTHIC_BOOTS, 
+			MAXIMILIAN_HELMET, 
+			MAXIMILIAN_CHESTPLATE, 
+			MAXIMILIAN_LEGGINGS, 
+			MAXIMILIAN_BOOTS, 
+			CHAINMAIL_HELMET, 
+			CHAINMAIL_CHESTPLATE, 
+			CHAINMAIL_LEGGINGS, 
+			CHAINMAIL_BOOTS, 
+			KETTLEHAT, 
+			PLATEMAIL_CHESTPLATE, 
+			PLATEMAIL_LEGGINGS, 
+			PLATEMAIL_BOOTS, 
+			BARBUTE, 
+			HALFARMOR_CHESTPLATE,
+			GREATHELM,
+			CRUSADER_CHESTPLATE,
+			CRUSADER_LEGGINGS,
+			CRUSADER_BOOTS,
+			BARBED_CLUB,
+			PITCHFORK,
+			NOBLE_SWORD,
+			RUSTEDBASTARDSWORD,
+			RUSTEDHEAVYMACE,
+			BARBUTE,
+			HALFARMOR_CHESTPLATE,
+			CEREMONIALARMET,
+			CEREMONIAL_CHESTPLATE,
+			CEREMONIAL_BOOTS,
+			COIF,
+			GAMBESON,
+			PANTYHOSE,
+			GAMBESONBOOTS,
+			BRIGANDINE,
+			NORMAN_HELMET,
+			SHISHAK,
+			RUSTEDBARBUTE,
+			RUSTEDHALFARMOR_CHESTPLATE,
+			RUSTEDGREATHELM,
+            RUSTEDCRUSADER_CHESTPLATE,
+            RUSTEDCRUSADER_BOOTS,
+            RUSTEDKETTLEHAT,
+            RUSTEDNORMAN_HELMET,
+            RUSTEDCHAINMAIL_HELMET,
+            RUSTEDCHAINMAIL_CHESTPLATE,
+            RUSTEDCHAINMAIL_LEGGINGS,
+            RUSTEDCHAINMAIL_BOOTS,
+			BASCINET,
+			XIVCENTURYKNIGHT_CHESTPLATE,
+			XIVCENTURYKNIGHT_LEGGINGS,
+			XIVCENTURYKNIGHT_BOOTS,
+			WINGEDHUSSAR_CHESTPLATE,
+            BURGONET,
+            CUIRASSIER_CHESTPLATE,
+            CUIRASSIER_LEGGINGS,
+            CUIRASSIER_BOOTS
+	};
+	
+	static IRecipe recipesShieldHeraldy = new RecipesShieldHeraldy();
+	static IRecipe recipesStandards = new RecipesShieldHeraldy();
+	
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> ev)
+	{
+		IForgeRegistry<Item> reg = ev.getRegistry();
+		
+		//Armor and ingridients
+		reg.registerAll(items);
+		
+		//Forge tags
+		OreDictionary.registerOre("ingotSteel", STEEL_INGOT);
+		OreDictionary.registerOre("nuggetSteel", STEEL_NUGGET);
+		OreDictionary.registerOre("plateSteel", STEEL_PLATE);
+		
+		//Smelting Recipes
+		if (ModConfigurations.steel_enabled)
+		{
+			GameRegistry.addSmelting(new ItemStack(Items.IRON_INGOT), new ItemStack(STEEL_INGOT), 0.1f);
+		}
+		
+		//Weapons
+		stylets.registerItems(reg);
+		shortswords.registerItems(reg);
+		katzbalgers.registerItems(reg);
+		pikes.registerItems(reg);
+		ranseurs.registerItems(reg);
+		ahlspiesses.registerItems(reg);
+		chivalrylances.registerItems(reg);
+		bastardswords.registerItems(reg);
+		estocs.registerItems(reg);
+		claymors.registerItems(reg);
+		zweihanders.registerItems(reg);
+		flamebladedswords.registerItems(reg);
+		lochaberaxes.registerItems(reg);
+		concavehalberds.registerItems(reg);
+		heavymaces.registerItems(reg);
+		heavywarhammers.registerItems(reg);
+		lucernhammers.registerItems(reg);
+		morgensterns.registerItems(reg);
+		chainmorgensterns.registerItems(reg);
+		guisarmes.registerItems(reg);
+
+		//Shields
+		heatershields.registerItems(reg);
+		targets.registerItems(reg);
+		bucklers.registerItems(reg);
+		rondaches.registerItems(reg);
+		tartsches.registerItems(reg);
+		ellipticalshields.registerItems(reg);
+		roundshields.registerItems(reg);
+		paveses.registerItems(reg);
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void registerRecipes(RegistryEvent.Register<IRecipe> ev)
+	{
+		ev.getRegistry().register(recipesShieldHeraldy);
+		ev.getRegistry().register(recipesStandards);
 	}
 }

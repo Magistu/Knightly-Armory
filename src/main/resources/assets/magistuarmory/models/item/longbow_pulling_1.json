@@ -1,6 +1,0 @@
-{
-    "parent": "magistuarmory:item/longbow",
-    "textures": {
-        "layer0": "magistuarmory:item/longbow_pulling_1"
-    }
-}

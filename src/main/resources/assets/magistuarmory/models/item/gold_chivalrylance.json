@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_chivalrylance",
   "textures": {
-    "0": "magistuarmory:item/gold_chivalrylance",
+    "0": "magistuarmory:items/gold_chivalrylance",
 	"particle": "items/gold_chivalrylance"
   },
 	"overrides": [

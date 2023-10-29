@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_concavehalberd",
   "textures": {
-    "layer0": "magistuarmory:item/gold_concavehalberd"
+    "layer0": "magistuarmory:items/gold_concavehalberd"
   },
   "overrides": [
     {

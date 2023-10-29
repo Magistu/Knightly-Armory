@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "pkp",
+    "p p"
+  ],
+  "key": {
+    "k": {
+      "item": "magistuarmory:knight_boots"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:jousting_boots",
+    "count": 1
+  }
+}

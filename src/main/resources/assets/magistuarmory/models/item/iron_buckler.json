@@ -1,5 +1,8 @@
 {
   "parent": "magistuarmory:item/buckler",
+  "textures": {
+    "layer0": "magistuarmory:items/iron_buckler"
+  },
   "overrides": [
     {
       "predicate": {

@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " m ",
+    "msm",
+    " m "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotCopper"
+    },
+    "s": {
+      "item": "magistuarmory:wood_roundshield"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:copper_roundshield",
+    "count": 1
+  }
+}

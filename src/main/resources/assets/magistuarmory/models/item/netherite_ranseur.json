@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_ranseur",
   "textures": {
-    "layer0": "magistuarmory:item/netherite_ranseur"
+    "layer0": "magistuarmory:items/netherite_ranseur"
   },
   "overrides": [
     {

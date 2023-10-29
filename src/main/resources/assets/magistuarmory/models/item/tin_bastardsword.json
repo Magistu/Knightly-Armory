@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_bastardsword",
   "textures": {
-    "layer0": "magistuarmory:item/tin_bastardsword"
+    "layer0": "magistuarmory:items/tin_bastardsword"
   },
   "overrides": [
     {

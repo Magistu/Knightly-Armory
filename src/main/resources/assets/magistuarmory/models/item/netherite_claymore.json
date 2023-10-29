@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_claymore",
   "textures": {
-    "layer0": "magistuarmory:item/netherite_claymore"
+    "layer0": "magistuarmory:items/netherite_claymore"
   },
   "overrides": [
     {

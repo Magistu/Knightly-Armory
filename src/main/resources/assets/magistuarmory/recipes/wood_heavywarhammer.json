@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mm ",
+    "msm",
+    " h "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict", 
+      "ore": "stickWood"
+    },
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:wood_heavywarhammer",
+    "count": 1
+  }
+}

@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_estoc",
   "textures": {
-    "layer0": "magistuarmory:item/copper_estoc"
+    "layer0": "magistuarmory:items/copper_estoc"
   },
   "overrides": [
     {

@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " i ",
+    "iii",
+    "pip"
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    },
+    "p": {
+      "type": "forge:ore_dict",
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:cuirassier_chestplate",
+    "count": 1
+  }
+}

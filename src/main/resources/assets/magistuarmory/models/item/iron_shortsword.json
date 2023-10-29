@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/iron_shortsword"
+		"layer0": "magistuarmory:items/iron_shortsword"
 	},
 	"display": {
 		"thirdperson_righthand": {

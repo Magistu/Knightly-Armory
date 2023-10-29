@@ -1,0 +1,16 @@
+[
+{
+  "modid": "magistuarmory",
+  "name": "Epic Knights: Armor and Weapons",
+  "description": "Adds late medieval armor and weapons.",
+  "version": "4.13",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Magistu"],
+  "credits": ["StaxiHD"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,18 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " n ",
+    "n n",
+    " n "
+  ],
+  "key": {
+    "n": {
+      "type": "forge:ore_dict", 
+      "ore": "nuggetSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:steel_ring",
+    "count": 8
+  }
+}

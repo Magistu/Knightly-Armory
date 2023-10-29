@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_lochaberaxe",
   "textures": {
-    "layer0": "magistuarmory:item/steel_lochaberaxe"
+    "layer0": "magistuarmory:items/steel_lochaberaxe"
   },
   "overrides": [
     {

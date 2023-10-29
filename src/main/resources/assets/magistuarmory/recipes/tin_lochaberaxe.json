@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " mm",
+    " m ",
+    "p  "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotTin"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:tin_lochaberaxe",
+    "count": 1
+  }
+}

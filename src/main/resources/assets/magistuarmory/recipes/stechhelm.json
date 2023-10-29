@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ppp",
+    "pbp",
+    "ppp"
+  ],
+  "key": {
+    "b": {
+      "item": "magistuarmory:barbute"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:stechhelm",
+    "count": 1
+  }
+}

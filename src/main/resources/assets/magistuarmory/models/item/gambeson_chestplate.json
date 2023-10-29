@@ -1,7 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "magistuarmory:item/gambeson_chestplate",
-    "layer1": "magistuarmory:item/gambeson_chestplate_overlay"
+    "layer0": "magistuarmory:items/gambeson_chestplate"
   }
 }

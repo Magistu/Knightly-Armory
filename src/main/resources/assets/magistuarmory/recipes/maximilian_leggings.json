@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ppp",
+    "p#p",
+    "p#p"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:blaze_powder"
+    },
+    "p": {
+      "item": "magistuarmory:steel_plate"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:maximilian_leggings",
+    "count": 1
+  }
+}

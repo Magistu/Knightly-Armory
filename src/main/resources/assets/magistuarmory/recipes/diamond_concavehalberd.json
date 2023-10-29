@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mm ",
+    "msm",
+    " p "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict", 
+      "ore": "stickWood"
+    },
+    "m": {
+      "item": "minecraft:diamond"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:diamond_concavehalberd",
+    "count": 1
+  }
+}

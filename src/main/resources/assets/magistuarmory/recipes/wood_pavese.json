@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "wmw",
+    "www",
+    "www"
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    },
+    "w": {
+      "type": "forge:ore_dict", 
+      "ore": "plankWood"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:wood_pavese",
+    "count": 1
+  }
+}

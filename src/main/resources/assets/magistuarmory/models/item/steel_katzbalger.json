@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_katzbalger",
   "textures": {
-    "layer0": "magistuarmory:item/steel_katzbalger"
+    "layer0": "magistuarmory:items/steel_katzbalger"
   }
 }

@@ -1,10 +1,9 @@
 {
 	"credit": "Made with Blockbench",
-	"gui_light": "front",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "magistuarmory:item/iron_morgenstern",
-		"particle": "magistuarmory:item/iron_morgenstern"
+		"0": "magistuarmory:items/iron_morgenstern",
+		"particle": "magistuarmory:items/iron_morgenstern"
 	},
 	"elements": [
 		{

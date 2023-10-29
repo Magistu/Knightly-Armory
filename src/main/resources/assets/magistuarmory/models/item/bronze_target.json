@@ -1,5 +1,8 @@
 {
   "parent": "magistuarmory:item/target",
+  "textures": {
+    "layer0": "magistuarmory:items/bronze_target"
+  },
   "overrides": [
     {
       "predicate": {

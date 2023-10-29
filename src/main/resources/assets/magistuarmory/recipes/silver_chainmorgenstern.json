@@ -1,0 +1,28 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " mm",
+    "scm",
+    "h  "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict", 
+      "ore": "stickWood"
+    },
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSilver"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    },
+    "c": {
+      "item": "magistuarmory:steel_chain"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:silver_chainmorgenstern",
+    "count": 1
+  }
+}

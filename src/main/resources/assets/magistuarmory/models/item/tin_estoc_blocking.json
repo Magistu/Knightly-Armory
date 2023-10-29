@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_estoc_blocking",
   "textures": {
-    "layer0": "magistuarmory:item/tin_estoc"
+    "layer0": "magistuarmory:items/tin_estoc"
   }
 }

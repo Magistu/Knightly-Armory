@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mmh",
+    "mm "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSteel"
+    },
+    "h": {
+      "type": "forge:ore_dict", 
+"ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:steel_buckler",
+    "count": 1
+  }
+}

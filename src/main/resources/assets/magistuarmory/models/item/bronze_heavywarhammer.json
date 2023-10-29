@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_heavywarhammer",
   "textures": {
-    "layer0": "magistuarmory:item/bronze_heavywarhammer"
+    "layer0": "magistuarmory:items/bronze_heavywarhammer"
   }
 }

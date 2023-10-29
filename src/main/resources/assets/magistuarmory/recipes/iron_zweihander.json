@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    "mt ",
+    "hm "
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:iron_shortsword"
+    },
+    "m": {
+      "item": "minecraft:iron_ingot"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:iron_zweihander",
+    "count": 1
+  }
+}

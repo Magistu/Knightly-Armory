@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mm ",
+    " sm",
+    " h "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict", 
+      "ore": "stickWood"
+    },
+    "m": {
+      "item": "minecraft:gold_ingot"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:gold_lucernhammer",
+    "count": 1
+  }
+}

@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_guisarme_blocking",
   "textures": {
-    "layer0": "magistuarmory:item/bronze_guisarme"
+    "layer0": "magistuarmory:items/bronze_guisarme"
   }
 }

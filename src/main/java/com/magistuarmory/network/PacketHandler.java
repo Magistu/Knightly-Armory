@@ -1,28 +1,27 @@
 package com.magistuarmory.network;
 
-import com.magistuarmory.KnightlyArmory;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.PacketLoggingHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.server.ServerLifecycleHooks;
+
+
 
 public class PacketHandler
 {
-	private static final String PROTOCOL_VERSION = "1";
-	
-	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(KnightlyArmory.ID, "main"),
-		    () -> PROTOCOL_VERSION,
-		    PROTOCOL_VERSION::equals,
-		    PROTOCOL_VERSION::equals);
+	public static PacketLoggingHandler packetHandler;
+	protected static SimpleNetworkWrapper instance;
 	protected static int currentId = 0;
 	
 	public static void init() 
 	{
-		INSTANCE.registerMessage(getNextPacketId(), PacketLongReachAttack.class, PacketLongReachAttack::write, PacketLongReachAttack::read, PacketLongReachAttack.Handler::handle);
-		INSTANCE.registerMessage(getNextPacketId(), PacketLanceCollision.class, PacketLanceCollision::write, PacketLanceCollision::read, PacketLanceCollision.Handler::handle);
+		packetHandler = new PacketLoggingHandler();
+		instance = NetworkRegistry.INSTANCE.newSimpleChannel("magistuarmory".toLowerCase());
+
+		instance.registerMessage(PacketLongReachAttack.class, PacketLongReachAttack.class, getNextPacketId(), Side.SERVER);
+		instance.registerMessage(PacketLanceCollision.class, PacketLanceCollision.class, getNextPacketId(), Side.SERVER);
 
 	}
 
@@ -33,23 +32,28 @@ public class PacketHandler
 		return id;
 	}
 	
-	public static void sendToServer(Object packet) 
+	public static void sendPacketToAll(PacketBase packet) 
 	{
-		INSTANCE.sendToServer(packet);
+		instance.sendToAll(packet);
 	}
-		  
-	public static void sendTo(Object packet, ServerPlayer player) 
+	
+	public static void sendPacketTo(PacketBase packet, EntityPlayerMP player) 
 	{
-		if (!(player instanceof net.minecraftforge.common.util.FakePlayer))
-		{
-			INSTANCE.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-		}
+		instance.sendTo(packet, player);
 	}
-		  
-	public static void sendPacketToAll(Object packet) {
-		for (ServerPlayer player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
-		{
-			sendTo(packet, player); 
-		}
+	
+	public static void sendPacketToAllAround(PacketBase packet, NetworkRegistry.TargetPoint point) 
+	{
+		instance.sendToAllAround(packet, point);
+	}
+	
+	public static void sendPacketToDimension(PacketBase packet, int dimensionId) 
+	{
+		instance.sendToDimension(packet, dimensionId);
+	}
+	
+	public static void sendPacketToServer(PacketBase packet) 
+	{
+		instance.sendToServer(packet);
 	}
 }

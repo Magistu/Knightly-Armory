@@ -1,107 +1,117 @@
 package com.magistuarmory.network;
 
+import com.magistuarmory.KnightlyArmory;
 import com.magistuarmory.item.LanceItem;
+import com.magistuarmory.item.MedievalWeaponItem;
 
-import io.netty.channel.ChannelHandler.Sharable;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
 
-import java.util.function.Supplier;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 
-@Sharable
-public class PacketLanceCollision
+public class PacketLanceCollision extends PacketBase<PacketLanceCollision>
 {
-private int entityId;
-private int bonusDamage;
+	private int entityId;
+	private int bonusDamage;
 	
-	public PacketLanceCollision(int entityId, int bonusDamage) 
+	public PacketLanceCollision() {}
+	
+	public PacketLanceCollision(int entId, int bonusDamage) 
 	{
-		this.entityId = entityId;
+		this.entityId = entId;
 		this.bonusDamage = bonusDamage;
 	}
-	
-	public static PacketLanceCollision read(FriendlyByteBuf buf) 
+
+
+	@Override
+	public void fromBytes(ByteBuf buf) 
 	{
-		return new PacketLanceCollision(buf.readInt(), buf.readInt());
+		this.entityId = ByteBufUtils.readVarInt(buf, 4);
+		this.bonusDamage = ByteBufUtils.readVarInt(buf, 4);
 	}
-	
-	public static void write(PacketLanceCollision message, FriendlyByteBuf buf) 
+
+
+	@Override
+	public void toBytes(ByteBuf buf) 
 	{
-		buf.writeInt(message.entityId);
-		buf.writeInt(message.bonusDamage);
+		ByteBufUtils.writeVarInt(buf, this.entityId, 4);
+		ByteBufUtils.writeVarInt(buf, this.bonusDamage, 4);
 	}
-	
-	public static class Handler
-	{
-		public static void handle(PacketLanceCollision packet, Supplier<NetworkEvent.Context> ctx)
-		{
-			NetworkEvent.Context context = ctx.get();
-	        if (context.getDirection().getReceptionSide() == LogicalSide.SERVER) {
-	        	context.enqueueWork(() -> handleServerSide(packet, context.getSender()));
-	        	
-	        }
-	        context.setPacketHandled(true);
-		}
-	}
-	
-	public static void handleServerSide(PacketLanceCollision message, ServerPlayer player) 
+
+
+
+	@Override
+	public void handleClientSide(PacketLanceCollision message, EntityPlayer player) {}
+
+
+	@Override
+	public void handleServerSide(PacketLanceCollision message, EntityPlayerMP player) 
 	{
 		if (message == null || player == null) 
 		{
 			return;
 		}
-		Entity victim = player.level.getEntity(message.entityId);
-		if (!(victim instanceof LivingEntity))
+		Entity victim = player.world.getEntityByID(message.entityId);
+		if (!(victim instanceof EntityLivingBase))
 		{
 			return;
 		}
 		
-		ItemStack weapon = player.getItemBySlot(EquipmentSlot.MAINHAND);
+		ItemStack weapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
 
 		
 		if (weapon.isEmpty()) 
 		{
 			return;
 		}
-		if (weapon.getItem() instanceof LanceItem lance) 
+		if (weapon.getItem() instanceof LanceItem) 
 		{
-			if (weapon.getDamageValue() >= weapon.getMaxDamage() - 1)
+			
+			if (weapon.getItemDamage() <= weapon.getItem().getMaxItemUseDuration(weapon) - 1)
 			{
-				lance.onBroken(player);
+				((LanceItem)weapon.getItem()).onBroken(player);
 			}
-			else if (!player.isCreative() && ((LivingEntity)victim).getArmorValue() >= 18)
+			else if (!player.isCreative() && ((EntityLivingBase)victim).getTotalArmorValue() >= 18)
 			{
-				weapon.setDamageValue(weapon.getDamageValue() + (int)((0.6 + message.bonusDamage / 20) * Math.random() * weapon.getMaxDamage()));
+				weapon.damageItem((int)((0.6 + bonusDamage / 20) * Math.random() * weapon.getMaxDamage()), player);
 			}
 			
-			lance.attacking = true;
-			player.attack(victim);
-			victim.hurt(DamageSource.GENERIC, lance.getAttackDamage() + message.bonusDamage + (lance.isSilver() && ((LivingEntity)victim).getMobType().equals(MobType.UNDEAD) ? lance.getSilverAttackDamage() : 0.0f));
+			((LanceItem)weapon.getItem()).attacking = true;
+			((LanceItem)weapon.getItem()).strength = bonusDamage;
+			player.attackTargetEntityWithCurrentItem(victim);
+			victim.attackEntityFrom(DamageSource.causePlayerDamage(player), ((LanceItem)weapon.getItem()).getAttackDamage() + message.bonusDamage);
 			if (weapon.getItem() instanceof LanceItem)
 			{
-				lance.attacking = false;
+				((LanceItem)weapon.getItem()).attacking = false;
 			}
 			
-			for (ItemStack itemStack : player.getInventory().items)
+			for (ItemStack itemStack : player.inventoryContainer.inventoryItemStacks)
 			{
-				lance.setRaised(player, true);
-				player.getCooldowns().addCooldown(itemStack.getItem(), (int)(40 / (4 + lance.getAttackSpeed())));
+				((LanceItem)weapon.getItem()).setRaised(player, true);
+				player.getCooldownTracker().setCooldown(itemStack.getItem(), (int)(40 / (4 + ((LanceItem)weapon.getItem()).getAttackSpeed())));
 			}
-			player.swing(InteractionHand.MAIN_HAND);
+			player.swingArm(EnumHand.MAIN_HAND);
 			
-			if (weapon.getDamageValue() >= weapon.getMaxDamage())
+			if (weapon.getItemDamage() >= weapon.getMaxDamage())
 			{
-				lance.onBroken(player);
+				((LanceItem)weapon.getItem()).onBroken(player);
 				weapon.setCount(0);
 			}
 		}

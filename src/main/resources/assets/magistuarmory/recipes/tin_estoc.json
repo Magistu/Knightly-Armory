@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " m",
+    "t "
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:tin_shortsword"
+    },
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotTin"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:tin_estoc",
+    "count": 1
+  }
+}

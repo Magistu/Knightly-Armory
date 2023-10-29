@@ -1,32 +1,82 @@
 package com.magistuarmory.item;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.proxy.ClientProxy;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import com.magistuarmory.client.renderer.model.entity.BascinetModel;
+import com.magistuarmory.client.renderer.model.entity.WingedHussarChestplateModel;
+import com.magistuarmory.proxy.ClientProxy;
+import com.magistuarmory.util.IHasModel;
 
-public class WingedHussarItem extends ArmorItem
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class WingedHussarItem extends ItemArmor implements IHasModel
 {
-    public WingedHussarItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties)
+	WingedHussarChestplateModel model;
+	
+    public WingedHussarItem(String unlocName, ArmorMaterial materialIn, int renderId, EntityEquipmentSlot slot)
     {
-        super(materialIn, slot, properties);
-    }
-
-	@Override
-	public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
+    	super(materialIn, renderId, slot);
+		setRegistryName(unlocName);
+		setUnlocalizedName(unlocName);
+		
+		if (KnightlyArmory.PROXY instanceof ClientProxy)
 		{
-			@Override
-			public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default)
+			model = new WingedHussarChestplateModel();
+		}
+	}
+	
+	@Override
+	public void registerModels() 
+	{
+		KnightlyArmory.PROXY.registerItemRenderer(this, 0, "inventory");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default)
+	{
+		if(itemStack != ItemStack.EMPTY)
+		{
+			if (armorSlot == EntityEquipmentSlot.CHEST)
 			{
-				return KnightlyArmory.PROXY instanceof ClientProxy ? ((ClientProxy) KnightlyArmory.PROXY).getWingedHussarModel(armorSlot) : null;
+				if (itemStack.getItem() instanceof ItemArmor)
+				{
+					model.bipedBody.showModel = armorSlot == EntityEquipmentSlot.CHEST;
+					
+					model.isChild = _default.isChild;
+					model.isRiding = _default.isRiding;
+					model.isSneak = _default.isSneak;
+					model.rightArmPose = _default.rightArmPose;
+					model.leftArmPose = _default.leftArmPose;
+					
+					return model;
+				}
 			}
-		});
+			else
+			{
+				super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
+	{
+		if (player.inventory.armorInventory.get(3).getItem().equals(this) && world.isRemote && player.isWearing(EnumPlayerModelParts.HAT))
+		{
+			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.HAT);
+		}
 	}
 }

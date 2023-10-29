@@ -38,23 +38,24 @@ public class EpicConfigBuilder
 	        this.penetrate_factor = penetrate_factor;
 	        this.impact_factor = 1.0f;
 	    }
-		
-		public String getName()
+
+		String getName()
 		{
 			return name;
 		}
 	}
 	
 	
-	Weapon[] weapons = { new Weapon("stylet", 0.2f, 1.0f, 0.2f, 1, "DAGGER", 0.0f, 0.0f),
+	Weapon[] weapons = { new Weapon("stylet", 0.2f, 1.0f, 0.2f, 1, "HOE", 0.0f, 0.0f),
 	           			 new Weapon("katzbalger", 0.0f, 1.0f, 0.2f, 2, "SWORD", 0.0f),
+	           			 new Weapon("shortsword", 0.0f, 1.0f, 0.2f, 2, "SWORD", 0.0f),
 	           			 new Weapon("pike", 0.02f, 1.1f, 0.3f, 1, "SPEAR", 0.01f),
 	           			 new Weapon("ranseur", 0.04f, 1.1f, 0.5f, 2, "SPEAR", 0.02f),
 	           			 new Weapon("ahlspiess", 0.18f, 1.2f, 0.55f, 1, "SPEAR", 0.02f),
 	           			 new Weapon("chivalrylance", 0.04f, 2.4f, 0.4f, 1, "SPEAR", 0.04f),
-	           			 new Weapon("bastardsword", 0.03f, 1.2f, 0.4f, 3, "LONGSWORD", 0.01f),
-	           			 new Weapon("estoc", 0.07f, 1.3f, 0.3f, 2, "LONGSWORD", 0.01f),
-	           			 new Weapon("claymore", 0.03f, 1.3f, 0.4f, 3, "LONGSWORD", 0.01f),
+	           			 new Weapon("bastardsword", 0.03f, 1.2f, 0.4f, 3, "SWORD", 0.01f),
+	           			 new Weapon("estoc", 0.07f, 1.3f, 0.3f, 2, "SWORD", 0.01f),
+	           			 new Weapon("claymore", 0.03f, 1.3f, 0.4f, 3, "SWORD", 0.01f),
 	           			 new Weapon("zweihander", 0.02f, 2.2f, 0.4f, 4, "GREATSWORD", 0.04f),
 	           			 new Weapon("flamebladedsword", 0.04f, 2.2f, 0.4f, 4, "GREATSWORD", 0.02f),
 	           			 new Weapon("lochaberaxe", 0.04f, 2.1f, 0.4f, 3, "SPEAR", 0.02f),
@@ -63,14 +64,17 @@ public class EpicConfigBuilder
 	           			 new Weapon("heavywarhammer", 0.08f, 1.9f, 0.5f, 2, "AXE", 0.04f),
 	           			 new Weapon("lucernhammer", 0.1f, 1.8f, 0.5f, 2, "AXE", 0.04f),
 	           			 new Weapon("morgenstern", 0.0f, 1.9f, 0.6f, 2, "AXE", 0.01f),
-						 new Weapon("chainmorgenstern", 0.0f, 2.1f, 0.8f, 2, "AXE", 0.01f),
-					     new Weapon("guisarme", 0.04f, 0.9f, 0.5f, 3, "SPEAR", 0.02f),};
-					
-					Weapon[] particular_weapons = { 
+	           			 new Weapon("chainmorgenstern", 0.0f, 2.1f, 0.8f, 2, "AXE", 0.01f),
+	           			 new Weapon("guisarme", 0.04f, 0.9f, 0.5f, 3, "SPEAR", 0.02f),};
+	
+	Weapon[] particular_weapons = { 
 						 new Weapon("noble_sword", 0.03f, 1.2f, 0.4f, 3, "SWORD", 0.01f),
 						 new Weapon("barbedclub", 0.0f, 2.2f, 0.7f, 2, "AXE", 0.01f),
 						 new Weapon("pitchfork", 0.02f, 1.1f, 0.3f, 1, "SPEAR", 0.01f),
-						 new Weapon("blacksmith_hammer", 0.04f, 1.9f, 0.5f, 2, "AXE", 0.04f),};
+						 new Weapon("blacksmith_hammer", 0.04f, 1.9f, 0.5f, 2, "AXE", 0.04f),
+						 new Weapon("rusted_bastardsword", 0.03f, 1.2f, 0.4f, 3, "LONGSWORD", 0.01f),
+			  			 new Weapon("rusted_heavymace", 0.04f, 1.9f, 0.5f, 2, "AXE", 0.04f)};
+	
 	
 	public class Armor
 	{
@@ -106,15 +110,16 @@ public class EpicConfigBuilder
 	             			 new Material("iron", 2f, 1.0f),
 	             			 new Material("diamond", 3f, 1.2f),
 	             			 new Material("gold", 4f, 0.8f),
-	             			 new Material("netherite", 5f, 1.0f),
 	             			 new Material("silver", 2f, 1.0f),
 	             			 new Material("copper", 1f, 1.0f),
-	             			 new Material("steel", 2f, 1.1f) };
+	             			 new Material("steel", 2f, 1.1f),
+							 new Material("tin", 0.8f, 1.0f),
+	             			 new Material("bronze", 2f, 1.0f) };
 	
 	
 	public String generateWeaponConfig()
 	{
-		String configText = "[custom_weaponry]\n";
+		String configText = "custom_weaponry {\n";
 		
 		
 		for (Weapon weapon : weapons)
@@ -131,12 +136,13 @@ public class EpicConfigBuilder
 			                                             weapon.impact_factor, 
 			                                             weapon.impact));
 		
-		        configText += "    [custom_weaponry." + weapon_name + "]\n" + 
-		                	  "        armor_ignorance = " + weapon_armor_ignorance + "\n" + 
-		                	  "        hit_at_once = " + weapon.hit_at_once + "\n" + 
-		                	  "        impact = " + weapon_impact + "\n" + 
-		                	  "        weapon_type = \"" + weapon.weapon_type + "\"\n" + 
-		                	  "        registry_name = \"" + KnightlyArmory.ID + ":" + (String)(weapon_name) + "\"\n\n";
+		        configText += "        custom_weaponry." + weapon_name + " {\n" + 
+		                	  "            D:armor_negation=" + weapon_armor_ignorance + "\n" + 
+ 		                	  "            D:impact=" + weapon_impact + "\n" + 
+		                	  "            I:max_strikes=" + weapon.hit_at_once + "\n" + 
+		                	  "            S:registry_name=" + KnightlyArmory.ID + ":" + (String)(weapon_name) + "\n" +
+		                	  "            S:weapon_type=" + weapon.weapon_type + "\n        }\n\n";
+
 		    }
 		}
 		for (Weapon weapon : particular_weapons)
@@ -152,18 +158,18 @@ public class EpicConfigBuilder
 		                                             weapon.impact_factor, 
 		                                             weapon.impact));
 	
-	        configText += configText += "    [custom_weaponry." + weapon_name + "]\n" + 
-              	  						"        armor_ignorance = " + weapon_armor_ignorance + "\n" + 
-              	  						"        hit_at_once = " + weapon.hit_at_once + "\n" + 
-              	  						"        impact = " + weapon_impact + "\n" + 
-              	  						"        weapon_type = \"" + weapon.weapon_type + "\"\n" + 
-              	  						"        registry_name = \"" + KnightlyArmory.ID + ":" + (String)(weapon_name) + "\"\n\n";
+	        configText += "        custom_weaponry." + weapon_name + " {\n" + 
+	                	  "            D:armor_negation=" + weapon_armor_ignorance + "\n" + 
+		                	  "            D:impact=" + weapon_impact + "\n" + 
+	                	  "            I:max_strikes=" + weapon.hit_at_once + "\n" + 
+	                	  "            S:registry_name=" + KnightlyArmory.ID + ":" + (String)(weapon_name) + "\n" +
+	                	  "            S:weapon_type=" + weapon.weapon_type + "\n        }\n\n";
 		}
 		return configText;
 	}
 	
 	public String generateArmorConfig() {
-		String configText = "[custom_armor]\n";
+		String configText = "custom_armor {\n";
 		return configText;
 	}
 	

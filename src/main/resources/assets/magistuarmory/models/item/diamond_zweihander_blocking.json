@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_zweihander_blocking",
   "textures": {
-    "layer0": "magistuarmory:item/diamond_zweihander"
+    "layer0": "magistuarmory:items/diamond_zweihander"
   }
 }

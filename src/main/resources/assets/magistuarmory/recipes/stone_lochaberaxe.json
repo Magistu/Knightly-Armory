@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " mm",
+    " m ",
+    "p  "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "cobblestone"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:stone_lochaberaxe",
+    "count": 1
+  }
+}

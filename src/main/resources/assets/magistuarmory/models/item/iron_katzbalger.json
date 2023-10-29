@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/iron_katzbalger"
+		"layer0": "magistuarmory:items/iron_katzbalger"
 	},
 	"display": {
 		"thirdperson_righthand": {

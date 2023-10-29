@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "pkp",
+    "ppp",
+    "ppp"
+  ],
+  "key": {
+    "k": {
+      "item": "magistuarmory:knight_chestplate"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:jousting_chestplate",
+    "count": 1
+  }
+}

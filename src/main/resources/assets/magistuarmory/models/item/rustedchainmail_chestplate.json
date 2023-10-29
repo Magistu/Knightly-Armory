@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "magistuarmory:item/rustedchainmail_chestplate"
+    "layer0": "magistuarmory:items/rustedchainmail_chestplate"
   }
 }

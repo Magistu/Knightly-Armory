@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/noble_sword"
+		"layer0": "magistuarmory:items/noble_sword"
 	},
 	"display": {
 		"thirdperson_righthand": {
@@ -36,10 +36,10 @@
 	},
 	"overrides": [
 		{
-			"predicate": {
-				"blocking": 1
-			},
-			"model": "magistuarmory:item/noble_sword_blocking"
+		"predicate": {
+			"blocking": 1
+		},
+		"model": "magistuarmory:item/noble_sword_blocking"
 		}
 	]
 }

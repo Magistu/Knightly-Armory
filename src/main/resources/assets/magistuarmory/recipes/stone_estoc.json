@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " m",
+    "t "
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:stone_shortsword"
+    },
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "cobblestone"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:stone_estoc",
+    "count": 1
+  }
+}

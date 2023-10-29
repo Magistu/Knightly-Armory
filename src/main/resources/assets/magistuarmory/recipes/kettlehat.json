@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "iii",
+    "p p",
+    "ccc"
+  ],
+  "key": {
+    "p": {
+      "item": "magistuarmory:steel_plate"
+    },
+    "c": {
+      "item": "magistuarmory:steel_chainmail"
+    },
+    "i": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:kettlehat",
+    "count": 1
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "i i",
+    "s s",
+    "l l"
+  ],
+  "key": {
+    "s": {
+      "item": "magistuarmory:leather_strip"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "i": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:platemail_boots",
+    "count": 1
+  }
+}

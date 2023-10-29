@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sl"
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict", 
+      "ore": "stickWood"
+    },
+    "l": {
+      "item": "magistuarmory:leather_strip"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:hilt",
+    "count": 1
+  }
+}

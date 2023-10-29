@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "magistuarmory:item/banner_pattern"
+    "layer0": "magistuarmory:items/banner_pattern"
   }
 }

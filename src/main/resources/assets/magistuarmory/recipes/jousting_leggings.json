@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ppp",
+    "pkp",
+    "p p"
+  ],
+  "key": {
+    "k": {
+      "item": "magistuarmory:knight_leggings"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:jousting_leggings",
+    "count": 1
+  }
+}

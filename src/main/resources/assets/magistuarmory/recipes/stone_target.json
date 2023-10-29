@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mm ",
+    "mmh"
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "cobblestone"
+    },
+    "h": {
+      "type": "forge:ore_dict", 
+"ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:stone_target",
+    "count": 1
+  }
+}

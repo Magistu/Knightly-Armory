@@ -1,34 +1,43 @@
 {
-    "parent": "builtin/entity",
-    "gui_light": "front",
-    "textures": {
-        "particle": "block/oak_planks"
-    },
-    "display": {
-        "thirdperson_righthand": {
-            "rotation": [ 45, 135, 0 ],
-            "translation": [ 2.51, 14, -2 ],
-            "scale": [ 1, 1, 1 ]
-        },
-        "thirdperson_lefthand": {
-            "rotation": [ 45, 135, 0 ],
-            "translation": [ 12.51, 6, 5 ],
-            "scale": [ 1, 1, 1 ]
-        },
-        "firstperson_righthand": {
-            "rotation": [ 0, 180, -5 ],
-            "translation": [ -15, 8, -11 ],
-            "scale": [ 1.25, 1.25, 1.25 ]
-        },
-        "firstperson_lefthand": {
-            "rotation": [ 0, 180, -5 ],
-            "translation": [ 5, 8, -11 ],
-            "scale": [ 1.25, 1.25, 1.25 ]
-        },
-        "gui": {
-            "rotation": [ 15, -25, -5 ],
-            "translation": [ 2, 3, 0 ],
-            "scale": [ 0.65, 0.65, 0.65 ]
-        }
-    }
+	"credit": "Made with Blockbench",
+	"parent": "item/handheld",
+	"overrides": [
+		{
+			"predicate": {
+				"blocking": 1
+			},
+			"model": "magistuarmory:item/buckler_blocking"
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [36, -32, 0],
+			"translation": [2, 3.25, 0.7],
+			"scale": [1.875, 1.875, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [36, -32, 0],
+			"translation": [2, 3.25, 0.7],
+			"scale": [1.875, 1.875, 1]
+		},
+		"firstperson_righthand": {
+			"translation": [-5, 4, 3],
+			"scale": [1.5, 1.5, 1]
+		},
+		"firstperson_lefthand": {
+			"translation": [-5, 4, 3],
+			"scale": [1.5, 1.5, 1]
+		},
+		"ground": {
+			"translation": [0, 4.25, 0],
+			"scale": [0.9375, 0.9375, 0.46875]
+		},
+		"gui": {
+			"scale": [1.75, 1.75, 1]
+		},
+		"fixed": {
+			"translation": [0.75, 0, 0],
+			"scale": [4, 4, 4]
+		}
+	}
 }

@@ -2,69 +2,62 @@ package com.magistuarmory.network;
 
 import com.magistuarmory.item.MedievalWeaponItem;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 
-public class PacketLongReachAttack
+public class PacketLongReachAttack extends PacketBase<PacketLongReachAttack>
 {
-private int entityId;
+	private int entityId;
 	
-	public PacketLongReachAttack(int entityId) 
-	{
-		this.entityId = entityId;
-	}
+	public PacketLongReachAttack() {}
 	
-	public static PacketLongReachAttack read(FriendlyByteBuf buf) 
+	public PacketLongReachAttack(int entId) 
 	{
-		return new PacketLongReachAttack(buf.readInt());
-	}
-	
-	public static void write(PacketLongReachAttack message, FriendlyByteBuf buf) 
-	{
-		buf.writeInt(message.entityId);
-	}
-	
-	public static class Handler
-	{
-		public static void handle(PacketLongReachAttack message, Supplier<NetworkEvent.Context> ctx)
-		{
-			NetworkEvent.Context context = ctx.get();
-	        if (context.getDirection().getReceptionSide() == LogicalSide.SERVER) {
-	        	context.enqueueWork(() -> {
-	                
-	            	handleServerSide(message, context.getSender());
-	            	
-	                });
-	        	
-	        }
-	        context.setPacketHandled(true);
-		}
+		this.entityId = entId;
 	}
 
-	
-	public static void handleServerSide(PacketLongReachAttack message, ServerPlayer player) {
-		
+
+	@Override
+	public void fromBytes(ByteBuf buf) 
+	{
+		this.entityId = ByteBufUtils.readVarInt(buf, 4);
+	}
+
+
+	@Override
+	public void toBytes(ByteBuf buf) 
+	{
+		ByteBufUtils.writeVarInt(buf, this.entityId, 4);
+	}
+
+
+
+	@Override
+	public void handleClientSide(PacketLongReachAttack message, EntityPlayer player) {}
+
+
+	@Override
+	public void handleServerSide(PacketLongReachAttack message, EntityPlayerMP player) 
+	{
 		if (message == null || player == null) 
 		{
 			return;
 		}
-		Entity victim = player.level.getEntity(message.entityId);
+		Entity victim = player.world.getEntityByID(message.entityId);
 		if (victim == null) 
 		{
 			return;
 		}
 		
-		ItemStack weapon = player.getItemBySlot(EquipmentSlot.MAINHAND);
+		ItemStack weapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
 
 		
 		if (weapon.isEmpty()) 
@@ -79,25 +72,18 @@ private int entityId;
 			if (reachDistance > 5.0f) 
 			{
 				
-				double distanceSquared = player.distanceToSqr(victim);
+				double distanceSquared = player.getDistanceSq(victim);
 				
 				double reachSquared = (reachDistance * reachDistance);
 				
 				if (reachSquared >= distanceSquared) 
 				{
 					
-					player.attack(victim);
+					player.attackTargetEntityWithCurrentItem(victim);
 				} 
 			} 
-			player.swing(InteractionHand.MAIN_HAND);
-			player.resetAttackStrengthTicker();
+			player.swingArm(EnumHand.MAIN_HAND);
+			player.resetCooldown();
 		} 
-		
-	}
-
-	
-	public static void handleClientSide(PacketLongReachAttack message, Player paramPlayer) {
-		// TODO Auto-generated method stub
-		
 	}
 }

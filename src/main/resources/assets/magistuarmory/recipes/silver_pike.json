@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    " s ",
+    "p  "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict", 
+      "ore": "stickWood"
+    },
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSilver"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:silver_pike",
+    "count": 1
+  }
+}

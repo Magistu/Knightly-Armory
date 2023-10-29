@@ -1,62 +1,105 @@
 package com.magistuarmory.item;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.proxy.ClientProxy;
+import com.magistuarmory.client.renderer.model.entity.ArmetModel;
+import com.magistuarmory.client.renderer.model.entity.BascinetModel;
+import com.magistuarmory.client.renderer.model.entity.StechhelmModel;
+import com.magistuarmory.proxy.ClientProxy;
+import com.magistuarmory.util.IHasModel;
 
-import net.minecraft.ChatFormatting;
+import ibxm.Player;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.PlayerModelPart;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EnumPlayerModelParts;
 
-public class JoustingItem extends ArmorItem implements INoHatLayer, ISurcoat
-{
-	public JoustingItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties) {
-		super(materialIn, slot, properties);
-	}
-
-	@Override
-	public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
-		{
-			@Override
-			public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default)
-			{
-				return KnightlyArmory.PROXY instanceof ClientProxy ? ((ClientProxy) KnightlyArmory.PROXY).getJoustingModel(armorSlot) : null;
-			}
-		});
-	}
+public class JoustingItem extends ItemArmor implements IHasModel {
 	
-	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player)
-	{
-		player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, false, false, false));
-
-		if (player.getInventory().armor.get(3).getItem().equals(this) && level.isClientSide && player.isModelPartShown(PlayerModelPart.HAT))
+	StechhelmModel model;
+	
+	public JoustingItem(String unlocName, ArmorMaterial materialIn, int renderId, EntityEquipmentSlot slot) {
+		super(materialIn, renderId, slot);
+		setRegistryName(unlocName);
+		setUnlocalizedName(unlocName);
+		
+		if (KnightlyArmory.PROXY instanceof ClientProxy)
 		{
-			Minecraft.getInstance().options.toggleModelPart(PlayerModelPart.HAT, false);
+			model = new StechhelmModel();
 		}
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) 
+	public void registerModels() 
 	{
-		tooltip.add(Component.translatable("Slow movement speed").withStyle(ChatFormatting.RED));
+		KnightlyArmory.PROXY.registerItemRenderer(this, 0, "inventory");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default)
+	{
+		if(itemStack != ItemStack.EMPTY)
+		{
+			if (armorSlot == EntityEquipmentSlot.HEAD)
+			{
+				if (itemStack.getItem() instanceof ItemArmor)
+				{
+					model.bipedHead.showModel = armorSlot == EntityEquipmentSlot.HEAD;
+					
+					model.isChild = _default.isChild;
+					model.isRiding = _default.isRiding;
+					model.isSneak = _default.isSneak;
+					model.rightArmPose = _default.rightArmPose;
+					model.leftArmPose = _default.leftArmPose;
+					
+					return model;
+				}
+			}
+			else
+			{
+				super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
+	{
+		player.addPotionEffect(new PotionEffect(Potion.getPotionById(2), 40, 1, false, false));
+		
+		if (player.inventory.armorInventory.get(3).getItem().equals(this) && world.isRemote && player.isWearing(EnumPlayerModelParts.HAT))
+		{
+			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.HAT);
+		}
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) 
+	{
+		tooltip.add("Slow movement speed");
 	}
 }

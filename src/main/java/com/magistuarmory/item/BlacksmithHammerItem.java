@@ -1,13 +1,19 @@
 package com.magistuarmory.item;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class BlacksmithHammerItem extends MedievalWeaponItem
 {
 
-	public BlacksmithHammerItem(Properties build, Tier material, float baseAttackDamage, float baseAttackSpeed, float weight)
+	public BlacksmithHammerItem(String unlocName, ToolMaterial material, float baseAttackDamage, float materialFactor, float baseAttackSpeed, int armorPiercing) 
 	{
-		super(build, material, baseAttackDamage, baseAttackSpeed, weight);
+		super(unlocName, material, baseAttackDamage, materialFactor, baseAttackSpeed, armorPiercing, 0.0f);
 	}
+	
+	/*
+	 * @Override public ItemStack getContainerItem(ItemStack itemstack) { ItemStack
+	 * retval = new ItemStack((IItemProvider)this);
+	 * retval.setDamageValue(itemstack.getDamageValue() + 1); if
+	 * (retval.getDamageValue() >= retval.getMaxDamage()) { return ItemStack.EMPTY;
+	 * } return retval; }
+	 */
 }

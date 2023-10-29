@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/pitchfork"
+		"layer0": "magistuarmory:items/pitchfork"
 	},
 	"display": {
 		"thirdperson_righthand": {

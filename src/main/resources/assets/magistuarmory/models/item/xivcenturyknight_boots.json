@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "magistuarmory:item/xivcenturyknight_boots"
+    "layer0": "magistuarmory:items/xivcenturyknight_boots"
   }
 }

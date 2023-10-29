@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/iron_estoc"
+		"layer0": "magistuarmory:items/iron_estoc"
 	},
 	"display": {
 		"thirdperson_righthand": {

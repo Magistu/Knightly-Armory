@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mt",
+    "p "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotBronze"
+    },
+    "t": {
+      "item": "magistuarmory:bronze_shortsword"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:bronze_guisarme",
+    "count": 1
+  }
+}

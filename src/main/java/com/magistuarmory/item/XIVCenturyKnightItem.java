@@ -1,44 +1,87 @@
 package com.magistuarmory.item;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.proxy.ClientProxy;
+import com.magistuarmory.client.renderer.model.entity.ArmetModel;
+import com.magistuarmory.client.renderer.model.entity.BascinetModel;
+import com.magistuarmory.proxy.ClientProxy;
+import com.magistuarmory.util.IHasModel;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.PlayerModelPart;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketClientSettings;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class XIVCenturyKnightItem extends ArmorItem implements INoHatLayer, ISurcoat
-{
-	public XIVCenturyKnightItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties) {
-		super(materialIn, slot, properties);
-	}
-
-	@Override
-	public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
+public class XIVCenturyKnightItem extends ItemArmor implements IHasModel {
+	
+	BascinetModel model;
+	
+	public XIVCenturyKnightItem(String unlocName, ArmorMaterial materialIn, int renderId, EntityEquipmentSlot slot) {
+		super(materialIn, renderId, slot);
+		setRegistryName(unlocName);
+		setUnlocalizedName(unlocName);
+		
+		if (KnightlyArmory.PROXY instanceof ClientProxy)
 		{
-			@Override
-			public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default)
+			model = new BascinetModel();
+		}
+	}
+	
+	@Override
+	public void registerModels() 
+	{
+		KnightlyArmory.PROXY.registerItemRenderer(this, 0, "inventory");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default)
+	{
+		if(itemStack != ItemStack.EMPTY)
+		{
+			if (armorSlot == EntityEquipmentSlot.HEAD)
 			{
-				return KnightlyArmory.PROXY instanceof ClientProxy ? ((ClientProxy) KnightlyArmory.PROXY).getXIVCenturyKnightModel(armorSlot) : null;
+				if (itemStack.getItem() instanceof ItemArmor)
+				{
+					model.bipedHead.showModel = armorSlot == EntityEquipmentSlot.HEAD;
+					
+					model.isChild = _default.isChild;
+					model.isRiding = _default.isRiding;
+					model.isSneak = _default.isSneak;
+					model.rightArmPose = _default.rightArmPose;
+					model.leftArmPose = _default.leftArmPose;
+					
+					return model;
+				}
 			}
-		});
+			else
+			{
+				super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
+			}
+		}
+		
+		return null;
 	}
-
+	
 	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player)
+	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
 	{
-		if (player.getInventory().armor.get(3).getItem().equals(this) && level.isClientSide && player.isModelPartShown(PlayerModelPart.HAT))
+		if (player.inventory.armorInventory.get(3).getItem().equals(this) && world.isRemote && player.isWearing(EnumPlayerModelParts.HAT))
 		{
-			Minecraft.getInstance().options.toggleModelPart(PlayerModelPart.HAT, false);
+			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.HAT);
 		}
 	}
 }

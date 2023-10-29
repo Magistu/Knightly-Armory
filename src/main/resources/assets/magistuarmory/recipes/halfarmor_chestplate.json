@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "i i",
+    "iii",
+    "pip"
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSteel"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:halfarmor_chestplate",
+    "count": 1
+  }
+}

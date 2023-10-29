@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mm ",
+    "mmh"
+  ],
+  "key": {
+    "m": {
+      "item": "minecraft:diamond"
+    },
+    "h": {
+      "type": "forge:ore_dict", 
+"ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:diamond_target",
+    "count": 1
+  }
+}

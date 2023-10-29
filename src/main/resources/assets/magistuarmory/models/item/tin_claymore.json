@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_claymore",
   "textures": {
-    "layer0": "magistuarmory:item/tin_claymore"
+    "layer0": "magistuarmory:items/tin_claymore"
   },
   "overrides": [
     {

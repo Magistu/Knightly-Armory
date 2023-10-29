@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    "mp ",
+    "hm "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotTin"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:tin_chivalrylance",
+    "count": 1
+  }
+}

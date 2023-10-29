@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "p#p",
+    "php",
+    "#p#"
+  ],
+  "key": {
+    "h": {
+      "item": "magistuarmory:halfarmor_chestplate"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    },
+    "#": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:maximilian_chestplate",
+    "count": 1
+  }
+}

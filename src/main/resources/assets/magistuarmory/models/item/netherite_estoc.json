@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_estoc",
   "textures": {
-    "layer0": "magistuarmory:item/netherite_estoc"
+    "layer0": "magistuarmory:items/netherite_estoc"
   },
   "overrides": [
     {

@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "wwm",
+    "www",
+    " ww"
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSteel"
+    },
+    "w": {
+      "type": "forge:ore_dict", 
+      "ore": "plankWood"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:wood_ellipticalshield",
+    "count": 1
+  }
+}

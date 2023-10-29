@@ -1,0 +1,16 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "sss",
+    "sss"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:woolen_fabric",
+    "count": 2
+  }
+}

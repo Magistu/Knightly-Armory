@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_stylet",
   "textures": {
-    "layer0": "magistuarmory:item/stone_stylet"
+    "layer0": "magistuarmory:items/stone_stylet"
   }
 }

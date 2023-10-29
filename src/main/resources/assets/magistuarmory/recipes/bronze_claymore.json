@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mt"
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:bronze_shortsword"
+    },
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotBronze"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:bronze_claymore",
+    "count": 1
+  }
+}

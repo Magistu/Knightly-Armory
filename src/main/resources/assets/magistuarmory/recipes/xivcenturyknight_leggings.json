@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ccc",
+    "p p",
+    "p p"
+  ],
+  "key": {
+    "c": {
+      "item": "magistuarmory:steel_chainmail"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:xivcenturyknight_leggings",
+    "count": 1
+  }
+}

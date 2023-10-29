@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_heavymace",
   "textures": {
-    "0": "magistuarmory:item/stone_heavymace",
-	"particle": "magistuarmory:item/stone_heavymace"
+    "0": "magistuarmory:items/stone_heavymace",
+	"particle": "magistuarmory:items/stone_heavymace"
   }
 }

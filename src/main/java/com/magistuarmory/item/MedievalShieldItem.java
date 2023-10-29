@@ -1,85 +1,96 @@
 package com.magistuarmory.item;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.proxy.ClientProxy;
-import com.magistuarmory.client.renderer.model.item.MedievalShieldModel;
-import com.magistuarmory.client.renderer.tileentity.HeraldryItemStackRenderer;
+import com.magistuarmory.client.renderer.model.item.AbstractModelBase;
+import com.magistuarmory.client.renderer.tileentity.HeraldyItemStackRenderer;
+import com.magistuarmory.init.ModItems;
+import com.magistuarmory.util.IHasModel;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.LazyLoadedValue;
-import net.minecraft.world.damagesource.CombatRules;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BannerItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.common.ToolAction;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBanner;
+import net.minecraft.item.ItemShield;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntityBanner;
+import net.minecraft.util.*;
+import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
+public class MedievalShieldItem extends ItemShield implements IHasModel
 {
-	private LazyLoadedValue<Ingredient> repairItem = new LazyLoadedValue(() -> { return Ingredient.of(ItemTags.PLANKS);});
-	private HeraldryItemStackRenderer renderer;
-	private final boolean paintable;
-	private final float maxBlockDamage;
-	private final float weight;
-
-
-	public MedievalShieldItem(String id, String name, Properties prop, ModItemTier material, int durability, float weigth, float maxBlockDamage, boolean paintable, boolean is3d)
-	{
-		super(prop.durability(durability));
-		this.paintable = paintable;
-		this.maxBlockDamage = maxBlockDamage + material.getAttackDamageBonus();
-		this.weight = weigth + material.getAttackDamageBonus();
-		if (is3d && KnightlyArmory.PROXY instanceof ClientProxy)
-		{
-			renderer = (HeraldryItemStackRenderer) ClientProxy.getHeraldryItemStackRenderer(id, name);
-		}
-
-	}
+	private int durability;
+	private Item repairItem = Item.getItemFromBlock(Blocks.PLANKS);
+	private boolean paintable;
+	private String shieldName;
+	private AbstractModelBase model;
+	private String materialName;
+	private float maxBlockDamage;
+	private float weight;
 	
-	@Override
-	public void appendHoverText(ItemStack p_43094_, @Nullable Level p_43095_, List<Component> p_43096_, TooltipFlag p_43097_)
+
+	public MedievalShieldItem(String shieldName, String materialName, ToolMaterial material, int durability, float weigth, float maxBlockDamage, boolean paintable)
     {
-    	p_43096_.add(Component.literal(getMaxBlockDamage() + " ").append(Component.translatable("maxdamageblock")).withStyle(ChatFormatting.BLUE));
-    	p_43096_.add(Component.literal(getWeight() + " ").append(Component.translatable("kgweight")).withStyle(ChatFormatting.BLUE));
+		super();
+		setRegistryName(materialName + '_' + shieldName);
+		setUnlocalizedName(materialName + '_' + shieldName);
+		this.durability = durability;
+		this.setMaxDamage(durability);
+		this.paintable = paintable;
+		this.shieldName = shieldName;
+		this.materialName = materialName;
+		this.maxBlockDamage = maxBlockDamage + material.getAttackDamage();
+		this.weight = weigth + material.getAttackDamage();
+    }
+	
+	public String getShieldName()
+    {
+        return shieldName;
+    }
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+		tooltip.add(getMaxBlockDamage() + " max damage block");
+		tooltip.add(getWeight() + "kg weight");
 		if (weight >= 10)
 		{
-			p_43096_.add(Component.translatable("slowmovementspeed").withStyle(ChatFormatting.RED));
+			tooltip.add("Slow movement speed");
 		}
-	    BannerItem.appendHoverTextFromBannerBlockEntityTag(p_43094_, p_43096_);
+        ItemBanner.appendHoverTextFromTileEntityTag(stack, tooltip);
     }
 	
 	@Override
-    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-    	if (getWeight() < 10 || !(entityIn instanceof LivingEntity) || (((LivingEntity)entityIn).getMainHandItem() != stack && ((LivingEntity)entityIn).getMainHandItem() != stack))
+    	if (getWeight() < 10 || !(entityIn instanceof EntityLivingBase) || (((EntityLivingBase)entityIn).getHeldItemMainhand() != stack && ((EntityLivingBase)entityIn).getHeldItemOffhand() != stack))
     	{
     		return;
     	}
-    	((LivingEntity)entityIn).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, false, false, false));
-    	super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+    	((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(Potion.getPotionById(2), 40, 1, false, false));
 	}
 	
 	private float getWeight() 
@@ -88,21 +99,27 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
 	}
 
 	@Override
-	public String getDescriptionId(ItemStack p_43109_)
+	public String getItemStackDisplayName(ItemStack stack)
     {
-		return getDescriptionId();
+		return I18n.translateToLocal("item." + materialName + '_' + shieldName + ".name");
     }
 	
 	@Override
-	public int getUseDuration(ItemStack p_43107_)
+	public int getMaxItemUseDuration(ItemStack stack)
     {
         return (int) (12000 * weight);
     }
 	
 	@Override
-	public boolean isValidRepairItem(ItemStack p_40392_, ItemStack p_40393_) 
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    {
+        return repair.getItem() == repairItem;
+    }
+
+	@Override
+	public void registerModels() 
 	{
-		return this.repairItem.get().test(p_40393_);
+		KnightlyArmory.PROXY.registerItemRenderer(this, 0, "inventory");
 	}
 	
 	public boolean isPaintable()
@@ -110,72 +127,54 @@ public class MedievalShieldItem extends ShieldItem implements IHasModelProperty
 		return paintable;
 	}
 	
-	public HeraldryItemStackRenderer getRenderer() 
+	public MedievalShieldItem setModel(AbstractModelBase model) 
 	{
-		return renderer;
+		this.model = model;
+		return this;
+	}
+
+	public AbstractModelBase getModel() 
+	{
+		return model;
 	}
 	
 	public float getMaxBlockDamage() 
 	{
 		return maxBlockDamage;
 	}
-
-	@Override
-	public boolean canPerformAction(ItemStack stack, ToolAction action)
-	{
-		return net.minecraftforge.common.ToolActions.DEFAULT_SHIELD_ACTIONS.contains(action);
-	}
 	
-	public MedievalShieldItem setRepairItem(Supplier<Ingredient> repairItem)
+	public MedievalShieldItem setRepairItem(Item repairItem)
     {
-		this.repairItem = new LazyLoadedValue<>(repairItem);
+		this.repairItem = repairItem;
 		return this;
     }
 
-	public void onBlocked(ItemStack stack, float damage, Player player, DamageSource source) 
+	public void onBlocked(ItemStack stack, float damage, EntityPlayer player, DamageSource source) 
 	{
 		float armorPiercingFactor = 1.0f;
-		if (source.getEntity() instanceof LivingEntity)
+		if (source.getTrueSource() instanceof EntityLivingBase)
 		{
-			LivingEntity attacker = (LivingEntity)source.getEntity();
-			if (attacker.getMainHandItem().getItem() instanceof MedievalWeaponItem)
+			EntityLivingBase attacker = (EntityLivingBase)source.getTrueSource();
+			if (attacker.getHeldItemMainhand().getItem() instanceof MedievalWeaponItem)
 			{
-				armorPiercingFactor += ((MedievalWeaponItem)attacker.getMainHandItem().getItem()).armorPiercing / 100.0f;
+				armorPiercingFactor += ((MedievalWeaponItem)attacker.getHeldItemMainhand().getItem()).armorPiercing / 100.0f;
 			}
 		}
 		
 		if (damage > getMaxBlockDamage())
 		{
-			stack.hurtAndBreak((int) (armorPiercingFactor * 1.5f * getMaxBlockDamage()), player, (p_40992_) ->
-					p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			stack.damageItem((int) (armorPiercingFactor * 0.2f * stack.getMaxDamage()), player);
 			float damage1 = damage - getMaxBlockDamage();
-			float damage2 = CombatRules.getDamageAfterAbsorb(damage1, (float)player.getArmorValue(), (float)player.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-			player.hurt(DamageSource.GENERIC, damage2);
+			float damage2 = CombatRules.getDamageAfterAbsorb(damage1, (float)player.getTotalArmorValue(), (float)player.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
+			player.attackEntityFrom(DamageSource.GENERIC, damage2);
 			return;
 		}
-		stack.hurtAndBreak((int) (armorPiercingFactor * damage), player, (p_40992_) ->
-				p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+		stack.damageItem((int) (armorPiercingFactor * damage), player);
 	}
-	
+
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
-		{
-			@Override
-		    public BlockEntityWithoutLevelRenderer getCustomRenderer()
-			{
-				return renderer;
-			}
-		});
-	}
-	
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void registerModelProperty() 
-	{
-		ItemProperties.register(this, new ResourceLocation("blocking"), (p_174590_, p_174591_, p_174592_, p_174593_) ->
-				p_174592_ != null && p_174592_.isUsingItem() && p_174592_.getUseItem() == p_174590_ ? 1.0F : 0.0F);
-	}
+    public boolean isShield(ItemStack stack, EntityLivingBase entity)
+    {
+        return true;
+    }
 }

@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "www",
+    "pbp",
+    " p "
+  ],
+  "key": {
+    "b": {
+      "item": "magistuarmory:barbute"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    },
+    "w": {
+      "item": "minecraft:wool",
+      "data": 14
+    }
+  },
+  "result": {
+    "item": "magistuarmory:armet",
+    "count": 1
+  }
+}

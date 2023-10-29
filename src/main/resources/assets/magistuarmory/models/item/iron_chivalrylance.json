@@ -1,10 +1,9 @@
 {
 	"credit": "Made with Blockbench",
-	"gui_light": "front",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "magistuarmory:item/iron_chivalrylance",
-		"particle": "magistuarmory:item/iron_chivalrylance"
+		"0": "magistuarmory:items/iron_chivalrylance",
+		"particle": "magistuarmory:items/iron_chivalrylance"
 	},
 	"elements": [
 		{

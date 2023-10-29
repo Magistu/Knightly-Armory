@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mm ",
+    "mmh"
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotBronze"
+    },
+    "h": {
+      "type": "forge:ore_dict", 
+"ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:bronze_target",
+    "count": 1
+  }
+}

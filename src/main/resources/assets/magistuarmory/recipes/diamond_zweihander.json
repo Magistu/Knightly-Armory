@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    "mt ",
+    "hm "
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:diamond_shortsword"
+    },
+    "m": {
+      "item": "minecraft:diamond"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:diamond_zweihander",
+    "count": 1
+  }
+}

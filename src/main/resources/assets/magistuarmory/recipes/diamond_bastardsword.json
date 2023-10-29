@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "m",
+    "t"
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:diamond_shortsword"
+    },
+    "m": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:diamond_bastardsword",
+    "count": 1
+  }
+}

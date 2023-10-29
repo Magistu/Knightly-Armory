@@ -1,39 +1,87 @@
 package com.magistuarmory.item;
 
 import com.magistuarmory.KnightlyArmory;
-import com.magistuarmory.client.proxy.ClientProxy;
+import com.magistuarmory.client.renderer.model.entity.ArmetModel;
+import com.magistuarmory.client.renderer.model.entity.BascinetModel;
+import com.magistuarmory.proxy.ClientProxy;
+import com.magistuarmory.util.IHasModel;
 
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.*;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketClientSettings;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class KnightItem extends ArmorItem implements INoHatLayer, ISurcoat, DyeableLeatherItem
-{
-	public KnightItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties) {
-		super(materialIn, slot, properties);
-	}
+public class KnightItem extends ItemArmor implements IHasModel {
 	
+	ArmetModel model;
 	
-	@Override 
-	public void initializeClient(java.util.function.Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
+	public KnightItem(String unlocName, ArmorMaterial materialIn, int renderId, EntityEquipmentSlot slot) {
+		super(materialIn, renderId, slot);
+		setRegistryName(unlocName);
+		setUnlocalizedName(unlocName);
+		
+		if (KnightlyArmory.PROXY instanceof ClientProxy)
 		{
-			@Override
-			public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default)
-			{
-				return KnightlyArmory.PROXY instanceof ClientProxy ? ((ClientProxy) KnightlyArmory.PROXY).getKnightModel(armorSlot) : null;
-			}
-		});
+			model = new ArmetModel();
+		}
 	}
-
+	
 	@Override
-    public int getColor(ItemStack p_200886_1_)
-    {
-        CompoundTag compoundnbt = p_200886_1_.getTagElement("display");
-        return compoundnbt != null && compoundnbt.contains("color", 99) ? compoundnbt.getInt("color") : -10092544;
-    }
+	public void registerModels() 
+	{
+		KnightlyArmory.PROXY.registerItemRenderer(this, 0, "inventory");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default)
+	{
+		if(itemStack != ItemStack.EMPTY)
+		{
+			if (armorSlot == EntityEquipmentSlot.HEAD)
+			{
+				if (itemStack.getItem() instanceof ItemArmor)
+				{
+					model.bipedHead.showModel = armorSlot == EntityEquipmentSlot.HEAD;
+					
+					model.isChild = _default.isChild;
+					model.isRiding = _default.isRiding;
+					model.isSneak = _default.isSneak;
+					model.rightArmPose = _default.rightArmPose;
+					model.leftArmPose = _default.leftArmPose;
+					
+					return model;
+				}
+			}
+			else
+			{
+				super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
+	{
+		if (player.inventory.armorInventory.get(3).getItem().equals(this) && world.isRemote && player.isWearing(EnumPlayerModelParts.HAT))
+		{
+			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.HAT);
+		}
+	}
 }

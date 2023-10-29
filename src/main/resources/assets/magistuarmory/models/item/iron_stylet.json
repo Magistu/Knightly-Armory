@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/iron_stylet"
+		"layer0": "magistuarmory:items/iron_stylet"
 	},
 	"display": {
 		"thirdperson_righthand": {

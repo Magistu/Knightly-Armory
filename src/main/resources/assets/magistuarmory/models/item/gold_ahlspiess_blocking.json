@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_ahlspiess_blocking",
   "textures": {
-    "layer0": "magistuarmory:item/gold_ahlspiess"
+    "layer0": "magistuarmory:items/gold_ahlspiess"
   }
 }

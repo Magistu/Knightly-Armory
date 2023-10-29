@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    " m ",
+    "h  "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:wood_shortsword",
+    "count": 1
+  }
+}

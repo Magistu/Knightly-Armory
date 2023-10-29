@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "iii",
+    "ini",
+    "ccc"
+  ],
+  "key": {
+    "n": {
+      "type": "forge:ore_dict", 
+      "ore": "nuggetSteel"
+    },
+    "c": {
+      "item": "magistuarmory:steel_chainmail"
+    },
+    "i": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:shishak",
+    "count": 1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "p p",
+    "php",
+    "npn"
+  ],
+  "key": {
+    "h": {
+      "item": "magistuarmory:halfarmor_chestplate"
+    },
+    "n": {
+      "type": "forge:ore_dict", 
+      "ore": "nuggetSteel"
+    },
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:gothic_chestplate",
+    "count": 1
+  }
+}

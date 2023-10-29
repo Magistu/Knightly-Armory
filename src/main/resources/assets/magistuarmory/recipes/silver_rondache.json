@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mmm",
+    "msm",
+    "mmm"
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSilver"
+    },
+    "s": {
+      "item": "magistuarmory:wood_roundshield"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:silver_rondache",
+    "count": 1
+  }
+}

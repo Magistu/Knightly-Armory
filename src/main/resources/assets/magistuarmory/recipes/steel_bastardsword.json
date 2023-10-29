@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "m",
+    "t"
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:steel_shortsword"
+    },
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSteel"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:steel_bastardsword",
+    "count": 1
+  }
+}

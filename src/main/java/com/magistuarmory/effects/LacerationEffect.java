@@ -1,27 +1,39 @@
 package com.magistuarmory.effects;
 
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class LacerationEffect extends MobEffect 
-{
+import net.minecraft.init.MobEffects;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import com.magistuarmory.KnightlyArmory;
+
+
+@EventBusSubscriber(modid = KnightlyArmory.ID)
+public class LacerationEffect extends Potion {
+	public static final LacerationEffect LACERATION = (LacerationEffect) new LacerationEffect();
+
 	private float damage = 1.0f;
 	
-	public LacerationEffect() 
-	{
-		super(MobEffectCategory.HARMFUL, -10092544);
-		addAttributeModifier(Attributes.MAX_HEALTH, "81AEAA56-376B-4498-935B-2F7F68070635", -2.0f, Operation.ADDITION);
+	public LacerationEffect() {
+		super(true, -10092544);
+		setRegistryName("laceration");
+		registerPotionAttributeModifier(SharedMonsterAttributes.MAX_HEALTH, "81AEAA56-376B-4498-935B-2F7F68070635", -2.0f, 0);
 	}
 
 	@Override
-	public String getDescriptionId() { return "effect.laceration"; }
+	public String getName() {
+		return "Laceration";
+	}
 
 	@Override
 	public boolean isBeneficial() {
@@ -29,13 +41,29 @@ public class LacerationEffect extends MobEffect
 	}
 
 	@Override
-	public boolean isInstantenous() {
+	public boolean isInstant() {
 		return false;
 	}
 
 	@Override
-	public void addAttributeModifiers(LivingEntity entity, AttributeMap attributeMapIn, int amplifier) {
-		super.addAttributeModifiers(entity, attributeMapIn, amplifier);
+	public boolean shouldRenderInvText(PotionEffect effect) {
+		return true;
+	}
+
+	@Override
+	public boolean shouldRender(PotionEffect effect) {
+		return true;
+	}
+
+	@Override
+	public boolean shouldRenderHUD(PotionEffect effect) {
+		return true;
+	}
+
+	@Override
+	public void applyAttributesModifiersToEntity(EntityLivingBase entity, AbstractAttributeMap attributeMap, int amplifier)
+	{
+		super.applyAttributesModifiersToEntity(entity, attributeMap, amplifier);
 		if (entity.getHealth() > entity.getMaxHealth())
 		{
 			entity.setHealth(entity.getMaxHealth());
@@ -43,17 +71,27 @@ public class LacerationEffect extends MobEffect
 	}
 	
 	@Override
-	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMapIn, int amplifier) {
-		super.removeAttributeModifiers(entity, attributeMapIn, amplifier);
+	public void removeAttributesModifiersFromEntity(EntityLivingBase entity, AbstractAttributeMap attributeMapIn, int amplifier)
+	{	
+		super.removeAttributesModifiersFromEntity(entity, attributeMapIn, amplifier);
 	}
 
 	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier) {
+	public boolean isReady(int duration, int amplifier) {
 		return true;
 	}
 	
+	@SubscribeEvent
+	public static void registerEffects(RegistryEvent.Register<Potion> ev) 
+	{
+		IForgeRegistry<Potion> reg = ev.getRegistry();
+		
+		reg.register(LACERATION);
+	}
+	
 	@Override
-	public double getAttributeModifierValue(int p_111183_1_, AttributeModifier p_111183_2_) {
+	public double getAttributeModifierAmount(int amplifier, AttributeModifier modifier)
+	{
 		return -0.5 * damage;
 	}
 	

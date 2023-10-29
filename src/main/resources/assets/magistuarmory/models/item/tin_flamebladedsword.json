@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_flamebladedsword",
   "textures": {
-    "layer0": "magistuarmory:item/tin_flamebladedsword"
+    "layer0": "magistuarmory:items/tin_flamebladedsword"
   },
   "overrides": [
     {

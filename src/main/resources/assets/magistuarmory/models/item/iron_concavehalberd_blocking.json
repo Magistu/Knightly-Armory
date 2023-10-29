@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "magistuarmory:item/iron_concavehalberd"
+		"layer0": "magistuarmory:items/iron_concavehalberd"
 	},
 	"display": {
 		"thirdperson_righthand": {

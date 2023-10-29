@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "mt",
+    "p "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "gemDiamond"
+    },
+    "t": {
+      "item": "magistuarmory:diamond_shortsword"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:diamond_guisarme",
+    "count": 1
+  }
+}

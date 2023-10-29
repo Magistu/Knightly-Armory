@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    "mm ",
+    "pm "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "p": {
+      "item": "magistuarmory:pole"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:wood_ahlspiess",
+    "count": 1
+  }
+}

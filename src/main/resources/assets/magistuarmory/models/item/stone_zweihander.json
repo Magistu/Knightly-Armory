@@ -1,7 +1,7 @@
 {
   "parent": "magistuarmory:item/iron_zweihander",
   "textures": {
-    "layer0": "magistuarmory:item/stone_zweihander"
+    "layer0": "magistuarmory:items/stone_zweihander"
   },
   "overrides": [
     {

@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "  m",
+    "mt ",
+    "hm "
+  ],
+  "key": {
+    "t": {
+      "item": "magistuarmory:bronze_shortsword"
+    },
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotBronze"
+    },
+    "h": {
+      "item": "magistuarmory:hilt"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:bronze_zweihander",
+    "count": 1
+  }
+}

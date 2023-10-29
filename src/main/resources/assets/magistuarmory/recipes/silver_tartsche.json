@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " m ",
+    "msm",
+    " m "
+  ],
+  "key": {
+    "m": {
+      "type": "forge:ore_dict", 
+      "ore": "ingotSilver"
+    },
+    "s": {
+      "item": "magistuarmory:wood_tartsche"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:silver_tartsche",
+    "count": 1
+  }
+}

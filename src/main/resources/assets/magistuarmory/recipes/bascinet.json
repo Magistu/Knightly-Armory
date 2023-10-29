@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "pnp"
+  ],
+  "key": {
+    "p": {
+      "type": "forge:ore_dict", 
+      "ore": "plateSteel"
+    },
+    "n": {
+      "item": "magistuarmory:norman_helmet"
+    }
+  },
+  "result": {
+    "item": "magistuarmory:bascinet",
+    "count": 1
+  }
+}

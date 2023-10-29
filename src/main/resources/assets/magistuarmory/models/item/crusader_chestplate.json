@@ -1,7 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "magistuarmory:item/crusader_chestplate",
-    "layer1": "magistuarmory:item/crusader_chestplate_overlay"
+    "layer0": "magistuarmory:items/crusader_chestplate"
   }
 }

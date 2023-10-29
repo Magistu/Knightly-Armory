@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_shortsword",
   "textures": {
-    "layer0": "magistuarmory:item/gold_shortsword"
+    "layer0": "magistuarmory:items/gold_shortsword"
   }
 }

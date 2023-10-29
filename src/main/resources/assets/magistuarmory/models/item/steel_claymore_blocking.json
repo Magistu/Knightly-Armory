@@ -1,6 +1,6 @@
 {
   "parent": "magistuarmory:item/iron_claymore_blocking",
   "textures": {
-    "layer0": "magistuarmory:item/steel_claymore"
+    "layer0": "magistuarmory:items/steel_claymore"
   }
 }
